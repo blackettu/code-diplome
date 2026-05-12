@@ -1,5 +1,6 @@
 import os
 import shutil
+import argparse
 from PIL import Image, ImageEnhance
 
 def apply_filter(image, filter_name, factor):
@@ -77,12 +78,25 @@ def process_images(input_dir, output_dir, filter_name, factor):
                 print(f"Лейбл для {filename} не найден.")
 
 
+def main():
+    parser = argparse.ArgumentParser(description="Apply a photometric filter to YOLO images.")
+    parser.add_argument("--input-dir", required=True, help="Folder with images/ and labels/.")
+    parser.add_argument("--output-dir", required=True, help="Output folder for augmented images/labels.")
+    parser.add_argument(
+        "--filter",
+        required=True,
+        choices=["contrast", "brightness", "color", "sharpness"],
+        help="Filter name.",
+    )
+    parser.add_argument("--factor", type=float, required=True, help="Filter multiplier.")
+    parser.add_argument("--preview", action="store_true", help="Show the first augmented image.")
+    args = parser.parse_args()
+
+    if args.preview:
+        preview_first_image(os.path.join(args.input_dir, "images"), args.filter, args.factor)
+
+    process_images(args.input_dir, args.output_dir, args.filter, args.factor)
+
+
 if __name__ == "__main__":
-    input_dir = r"E:\dataset\train"  # Папка с 'images' и 'labels'
-    output_dir = r"E:\dataset\images2"       # Корневая папка для сохранения результатов
-    filter_name = "brightness"  # contrast, brightness, color, sharpness
-    factor = 1.5          # Коэффициент применения фильтра
-
-    preview_first_image(os.path.join(input_dir, "images"), filter_name, factor)
-
-    process_images(input_dir, output_dir, filter_name, factor)
+    main()

@@ -1,7 +1,7 @@
 import cv2
 import os
-import sys
 import glob
+import argparse
 import numpy as np
 from ultralytics import YOLO
 from pillow_heif import open_heif
@@ -10,10 +10,10 @@ from many_seedlings import process_multiple_seedlings
 
 ######################################
 
-MODEL_PATH = r"D:\runs\train10\weights\best.pt"
-IMAGES_FOLDER = r"D:\тест"
-OUTPUT_FOLDER = r"D:\output_images"
-CONF_THRESHOLD = 0
+MODEL_PATH = os.environ.get("SEEDLING_MODEL_PATH", "")
+IMAGES_FOLDER = os.environ.get("SEEDLING_IMAGES_FOLDER", "")
+OUTPUT_FOLDER = os.environ.get("SEEDLING_OUTPUT_FOLDER", "runs/legacy_matrix")
+CONF_THRESHOLD = 0.25
 GRID_ROWS = 11
 GRID_COLS = 11
 MIN_CONTAINER_AREA = 10000
@@ -32,8 +32,6 @@ colors = {
     0: (255, 0, 255),  # контейнер
     1: (0, 255, 0)     # саженец
 }
-
-os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 #########################################
 def convert_heic_to_jpg(heic_path):
@@ -180,6 +178,41 @@ def process_image(img_path, model):
     
 # главный запуск
 def main():
+    global MODEL_PATH
+    global IMAGES_FOLDER
+    global OUTPUT_FOLDER
+    global CONF_THRESHOLD
+    global GRID_ROWS
+    global GRID_COLS
+    global MIN_CONTAINER_AREA
+    global MERGE_DISTANCE_THRESHOLD
+
+    parser = argparse.ArgumentParser(
+        description=(
+            "Legacy matrix builder. Prefer: "
+            "py -m seedling_experiments predict --config configs/example_experiment.yaml"
+        )
+    )
+    parser.add_argument("--model", default=MODEL_PATH, required=not bool(MODEL_PATH))
+    parser.add_argument("--images", default=IMAGES_FOLDER, required=not bool(IMAGES_FOLDER))
+    parser.add_argument("--output", default=OUTPUT_FOLDER)
+    parser.add_argument("--conf", type=float, default=CONF_THRESHOLD)
+    parser.add_argument("--grid-rows", type=int, default=GRID_ROWS)
+    parser.add_argument("--grid-cols", type=int, default=GRID_COLS)
+    parser.add_argument("--min-container-area", type=float, default=MIN_CONTAINER_AREA)
+    parser.add_argument("--merge-distance", type=float, default=MERGE_DISTANCE_THRESHOLD)
+    args = parser.parse_args()
+
+    MODEL_PATH = args.model
+    IMAGES_FOLDER = args.images
+    OUTPUT_FOLDER = args.output
+    CONF_THRESHOLD = args.conf
+    GRID_ROWS = args.grid_rows
+    GRID_COLS = args.grid_cols
+    MIN_CONTAINER_AREA = args.min_container_area
+    MERGE_DISTANCE_THRESHOLD = args.merge_distance
+    os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
     model = YOLO(MODEL_PATH)
     patterns = [os.path.join(IMAGES_FOLDER, ext) for ext in ('*.jpg', '*.jpeg', '*.png', '*.heic', '*.HEIC')]
     files = []

@@ -1,21 +1,21 @@
-from ultralytics import YOLO
+"""Legacy entry point for YOLO training.
 
-model = YOLO(r"C:\Users\user\Desktop\diplom_code\best.pt") 
-# model = YOLO("yolo11n.pt")
-model.train(
-    data=r'E:\dataset\data.yaml',  # Путь к файлу конфигурации данных
-    epochs=200,        # Количество эпох
-    batch=16,         # Размер батча
-    imgsz=640,        # Размер изображений
-    save=True,        # Сохранение результатов
-    project=r"E:\runs"  # Директория для сохранения
-)
+Prefer:
+    py -m seedling_experiments train --config configs/example_experiment.yaml
+"""
 
-# Оценка модели
-metrics = model.val()
+import argparse
 
-# Запись метрик в файл
-with open(r'C:\Users\user\Desktop\metrics.txt', 'w') as f:
-    f.write(str(metrics))
+from seedling_experiments.config import load_config
+from seedling_experiments.train import train_yolo_from_config
 
-print("Метрики сохранены!")
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Train YOLO from an experiment config.")
+    parser.add_argument("--config", required=True, help="Path to YAML/JSON experiment config.")
+    args = parser.parse_args()
+    train_yolo_from_config(load_config(args.config))
+
+
+if __name__ == "__main__":
+    main()

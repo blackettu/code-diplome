@@ -1,22 +1,19 @@
-from ultralytics import YOLO
-import numpy as np
+"""Print YOLO model information and validation metrics."""
 
-model_path = r"D:\runs\train\weights\best.pt"
-data_yaml  = r"E:\dataset\data.yaml"
+import argparse
 
-model   = YOLO(model_path)
-metrics = model.val(data=data_yaml)
+from seedling_experiments.config import load_config
+from seedling_experiments.train import validate_yolo_from_config
 
-# Общая информация
-print("\nИнформация о модели:")
-model.model.info(verbose=True)
 
-# Считаем среднюю точность и полноту по всем классам
-precision_mean = float(np.mean(metrics.box.p))
-recall_mean    = float(np.mean(metrics.box.r))
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Validate a YOLO model and print metrics.")
+    parser.add_argument("--config", required=True, help="Path to YAML/JSON experiment config.")
+    parser.add_argument("--split", default="val", choices=["train", "val", "test"])
+    args = parser.parse_args()
+    metrics = validate_yolo_from_config(load_config(args.config), split=args.split)
+    print(metrics)
 
-# Печатаем ключевые метрики
-print(f"mAP50:    {metrics.box.map50:.4f}")
-print(f"mAP50–95: {metrics.box.map:.4f}")
-print(f"Precision: {precision_mean:.4f}")
-print(f"Recall: {recall_mean:.4f}")
+
+if __name__ == "__main__":
+    main()

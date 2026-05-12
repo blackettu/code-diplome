@@ -88,17 +88,18 @@ def process_multiple_seedlings(img, containers, seedlings, grid_rows, grid_cols,
                         reverse=True
                     )
                     main_box = sorted_seeds[0]['box']
-                    secondary_box = sorted_seeds[1]['box']
 
                     for img_out in [img_grid, img_doubles]:
                         cv2.rectangle(img_out,
                                       tuple(map(int, main_box[:2])),
                                       tuple(map(int, main_box[2:])),
                                       (0, 255, 0), 2)
-                        cv2.rectangle(img_out,
-                                      tuple(map(int, secondary_box[:2])),
-                                      tuple(map(int, secondary_box[2:])),
-                                      (0, 0, 255), 2)
+                        for secondary in sorted_seeds[1:]:
+                            secondary_box = secondary['box']
+                            cv2.rectangle(img_out,
+                                          tuple(map(int, secondary_box[:2])),
+                                          tuple(map(int, secondary_box[2:])),
+                                          (0, 0, 255), 2)
 
     # Сохраняем результаты
     cv2.imwrite(os.path.join(output_folder, f"{basename}_all.jpg"), img_all)

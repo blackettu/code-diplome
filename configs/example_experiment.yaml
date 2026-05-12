@@ -1,0 +1,91 @@
+dataset:
+  raw_root: E:/dataset/raw_seedlings
+  prepared_root: E:/dataset/prepared_seedlings
+  class_names:
+    - container
+    - seedlings
+  split:
+    train: 0.7
+    val: 0.2
+    test: 0.1
+    seed: 42
+    # Use a capture/tray/date group if filenames contain it.
+    # Example: IMG_001_container3_aug -> group IMG_001
+    group_regex: null
+  augment_train:
+    photometric:
+      brightness: [0.75, 1.25, 1.5]
+      contrast: [0.75, 1.25, 1.5]
+      color: [0.75, 1.25]
+      sharpness: [0.75, 1.5]
+    hflip: false
+    vflip: false
+
+training:
+  model: yolo11n.pt
+  data: E:/dataset/prepared_seedlings/data.yaml
+  project: runs
+  name: yolo11n_seedlings
+  epochs: 200
+  batch: 16
+  imgsz: 640
+  seed: 42
+  deterministic: true
+  device: null
+
+validation:
+  model: runs/yolo11n_seedlings/weights/best.pt
+  data: E:/dataset/prepared_seedlings/data.yaml
+  output_dir: runs/yolo11n_seedlings_eval
+  imgsz: 640
+  conf: 0.25
+  iou: 0.7
+  run_after_train: true
+  test_after_train: false
+
+prediction:
+  model: runs/yolo11n_seedlings/weights/best.pt
+  images: E:/dataset/prepared_seedlings/test/images
+  output_dir: runs/yolo11n_seedlings_test_predictions
+  imgsz: 640
+  conf: 0.25
+  iou: 0.7
+  grid_rows: 11
+  grid_cols: 11
+  container_class: 0
+  seedling_class: 1
+  min_container_area: 10000
+  merge_distance: 50
+
+evaluation:
+  dataset: E:/dataset/prepared_seedlings
+  split: test
+  predictions: runs/yolo11n_seedlings_test_predictions/predictions.json
+  output_dir: runs/yolo11n_seedlings_cell_eval
+  grid_rows: 11
+  grid_cols: 11
+  container_class: 0
+  seedling_class: 1
+  container_iou: 0.5
+  target_match_distance_px: 25
+  # For a segmentation-only baseline with known tray boxes, set this true.
+  use_ground_truth_containers: false
+
+baseline:
+  images: E:/dataset/prepared_seedlings/test/images
+  labels: E:/dataset/prepared_seedlings/test/labels
+  output_dir: runs/baseline_green_test_predictions
+  grid_rows: 11
+  grid_cols: 11
+  container_class: 0
+  seedling_class: 1
+  use_known_containers: true
+  h_min: 25
+  h_max: 95
+  s_min: 35
+  s_max: 255
+  v_min: 30
+  v_max: 255
+  morph_kernel: 3
+  min_seedling_area: 8
+  max_seedling_area: 100000
