@@ -17,6 +17,10 @@ py -m seedling_experiments --help
 Ожидаемый результат: CLI показывает команды `prepare`, `train`, `val`,
 `predict`, `evaluate-cells`, `baseline-green`.
 
+Если проект запускает внешний разработчик, сначала сверить контракт в
+`docs/DEVELOPER_GUIDE.md`: формат YOLO-разметки, структура `predictions.json`,
+смысл `detections`/`containers` и диагностические поля `cell_metrics.json`.
+
 ## 1. Подготовить исходный датасет
 
 Собрать исходные изображения без аугментаций в структуру YOLO:
@@ -33,6 +37,17 @@ E:/dataset/raw_seedlings/
 - в `labels/` лежит YOLO-разметка с теми же именами файлов;
 - классы согласованы: `0 = container`, `1 = seedlings`;
 - аугментированные копии не лежат в исходном наборе.
+
+До `prepare` сохранить аудит исходного набора:
+
+```powershell
+py -m seedling_experiments audit --dataset E:/dataset/raw_seedlings --output E:/dataset/raw_seedlings/raw_dataset_audit.json
+```
+
+Этот raw-аудит нужен для фиксации missing labels и orphan labels до split.
+После `prepare` отсутствующие labels превращаются в пустые `.txt` в
+подготовленном наборе, поэтому prepared-аудит уже не всегда показывает исходную
+проблему как missing label.
 
 Для статьи отдельно подготовить таблицу исходных сцен:
 
@@ -65,6 +80,18 @@ Copy-Item configs/example_experiment.yaml configs/article_yolo11n.yaml
 Если несколько изображений относятся к одному контейнеру, лотку или дате,
 задать `dataset.split.group_regex`, чтобы вся группа попадала только в один split.
 
+Для каждого независимого эксперимента задать уникальные:
+
+- `dataset.prepared_root`;
+- `training.name`;
+- `validation.output_dir`;
+- `prediction.output_dir`;
+- `evaluation.output_dir`;
+- `baseline.output_dir`.
+
+Это снижает риск смешать артефакты разных запусков. Если используются
+относительные пути, команды запускать из корня `code-diplome/`.
+
 ## 3. Сделать честный split и аугментацию только train
 
 Запустить:
@@ -83,16 +110,24 @@ E:/dataset/prepared_seedlings/dataset_audit.json
 E:/dataset/prepared_seedlings/prepare_summary.json
 ```
 
-Для статьи выписать из `dataset_audit.json`:
+Для статьи выписать из prepared `dataset_audit.json`:
 
 - число изображений в `train/val/test`;
 - число объектов `container` и `seedlings`;
 - средний/минимальный/максимальный размер bbox;
-- число файлов без labels;
-- число orphan labels.
+
+Из raw `raw_dataset_audit.json` выписать:
+
+- число файлов без labels по raw-аудиту;
+- число orphan labels по raw-аудиту.
 
 Критерий готовности: в `val` и `test` нет аугментированных копий изображений из
 `train`.
+
+Дополнительно проверить, что split не только формально создан, но и пригоден для
+оценки: в `val` и `test` есть объекты `container`, `seedlings` и достаточное
+число ячеек со сложными случаями. Текущий split выполняется по группам, но не
+стратифицирует классы и состояния ячеек.
 
 ## 4. Обучить основную модель YOLO11n
 
@@ -162,6 +197,44 @@ mean coordinate error, px
 bootstrap 95% CI для cell accuracy
 ```
 
+При описании `evaluate-cells` указать алгоритм построения матрицы: bbox
+контейнера равномерно делится на `grid_rows x grid_cols`, сеянец назначается в
+ячейку по центру bbox, а target-removal эвристика оставляет в ячейке `multiple`
+самый большой bbox и удаляет остальные.
+
+После `evaluate-cells` отдельно проверить диагностику контейнеров в
+`cell_metrics.json`:
+
+```text
+container_recall
+images[].gt_containers
+images[].matched_containers
+```
+
+`matched_containers = 0` не всегда означает, что контейнер визуально не найден.
+Сопоставление выполняется по IoU между bbox из разметки и bbox из предсказаний,
+а порог задаётся `evaluation.container_iou`. В текущем контуре `evaluate-cells`
+читает сырые `detections` из `predictions.json`; поле `containers` уже содержит
+postprocessing после фильтрации и объединения. Если визуальный отчёт построен по
+`containers`, а оценка идёт по `detections`, возможна ситуация, когда на картинке
+контейнер выглядит правильным, но в метрике остаётся unmatched.
+
+Даже при unmatched контейнере `evaluate-cells` продолжает считать cell-level
+метрики: для сетки используется bbox контейнера из разметки, а в эту сетку
+раскладываются предсказанные сеянцы. Поэтому диагностику контейнеров и метрики
+ячеек нужно обсуждать отдельно.
+
+Если цель эксперимента — проверить именно матрицу ячеек и поиск сеянцев при
+известной геометрии кассеты, допустимо поставить:
+
+```yaml
+evaluation:
+  use_ground_truth_containers: true
+```
+
+Тогда в статье нужно явно написать, что cell-level метрики не являются полной
+end-to-end оценкой детектора контейнеров.
+
 ## 6. Запустить классический baseline
 
 Запустить:
@@ -188,10 +261,16 @@ py -m seedling_experiments evaluate-cells --config configs/article_yolo11n.yaml
 В статью добавить таблицу сравнения:
 
 ```text
-method, mAP@50, mAP@50-95, cell accuracy, multi-cell recall, target recall, coord error px
-HSV connected components + known containers
-YOLO11n
+method, object metrics source, mAP@50, mAP@50-95, cell accuracy, multi-cell recall, target recall, coord error px
+HSV connected components + known containers, N/A, N/A, N/A, ...
+YOLO11n, Ultralytics val, ...
 ```
+
+Для `baseline-green` в текущем контуре нет `mAP`: команда создаёт
+`predictions.json`, который оценивается через `evaluate-cells`. Поэтому baseline
+сравнивается с YOLO по cell-level и target-level метрикам, а object-level
+колонки mAP оставляются `N/A`, если не реализована отдельная оценка
+baseline-предсказаний как детектора.
 
 ## 7. Провести ablation по разрешению и порогам
 
@@ -215,6 +294,9 @@ py -m seedling_experiments evaluate-cells --config <config>
 
 После выбора лучшего разрешения подобрать `prediction.conf` и `prediction.iou`
 только на `val`. Зафиксировать выбранные значения и один раз пересчитать `test`.
+После каждого изменения `prediction.conf`, `prediction.iou` или
+`prediction.imgsz` нужно заново выполнить `predict`, а затем `evaluate-cells`;
+иначе `cell_metrics.json` будет посчитан по старому `predictions.json`.
 
 В статью добавить таблицу:
 

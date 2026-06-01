@@ -1,4 +1,6 @@
 dataset:
+  # Use a clean prepared_root for each full prepare run. The prepare command
+  # writes/copies files but does not fully clean old experiment outputs.
   raw_root: E:/dataset/raw_seedlings
   prepared_root: E:/dataset/prepared_seedlings
   class_names:
@@ -22,9 +24,12 @@ dataset:
     vflip: false
 
 training:
+  # yolo11n.pt may be downloaded by Ultralytics if it is not available locally.
+  # In offline environments, replace this with a local .pt path.
   model: yolo11n.pt
   data: E:/dataset/prepared_seedlings/data.yaml
   project: runs
+  # Use a new name for each independent run to avoid mixing artifacts.
   name: yolo11n_seedlings
   epochs: 200
   batch: 16
@@ -38,6 +43,7 @@ validation:
   data: E:/dataset/prepared_seedlings/data.yaml
   output_dir: runs/yolo11n_seedlings_eval
   imgsz: 640
+  # Validation thresholds affect val/test_metrics.json, not predictions.json.
   conf: 0.25
   iou: 0.7
   run_after_train: true
@@ -48,12 +54,16 @@ prediction:
   images: E:/dataset/prepared_seedlings/test/images
   output_dir: runs/yolo11n_seedlings_test_predictions
   imgsz: 640
+  # Prediction thresholds affect predictions.json. Rerun predict and
+  # evaluate-cells after changing them.
   conf: 0.25
   iou: 0.7
   grid_rows: 11
   grid_cols: 11
   container_class: 0
   seedling_class: 1
+  # These affect postprocessed containers/container_analysis in predictions.json.
+  # The current evaluate-cells command still reads raw detections.
   min_container_area: 10000
   merge_distance: 50
 
@@ -66,9 +76,13 @@ evaluation:
   grid_cols: 11
   container_class: 0
   seedling_class: 1
+  # IoU threshold for matching predicted container boxes to labeled containers.
+  # If matched_containers is 0 but visual boxes look close, inspect this value
+  # and whether evaluation uses raw detections or postprocessed containers.
   container_iou: 0.5
   target_match_distance_px: 25
-  # For a segmentation-only baseline with known tray boxes, set this true.
+  # Set true to evaluate cell/seedling quality under known tray boxes.
+  # This bypasses predicted-container matching and is not an end-to-end score.
   use_ground_truth_containers: false
 
 baseline:
