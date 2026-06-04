@@ -8,16 +8,30 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
-from PIL import Image
-
 from .config import write_json
 from .image_io import register_heif_if_available
 from .yolo import label_path_for, list_images, read_labels, write_data_yaml
 
 register_heif_if_available()
 
+DEFAULT_AUGMENTED_NAME_MARKERS = (
+    "_filter",
+    "_flip",
+    "_scale",
+    "_rotate",
+    "_crop",
+    "_brightness",
+    "_contrast",
+    "_color",
+    "_sharpness",
+    "_hflip",
+    "_vflip",
+)
+
 
 def _image_size(path: Path) -> tuple[int, int] | None:
+    from PIL import Image
+
     try:
         with Image.open(path) as image:
             return image.size
@@ -29,8 +43,10 @@ def audit_yolo_dataset(
     dataset_root: str | Path,
     output_path: str | Path | None = None,
     class_names: list[str] | None = None,
+    augmented_name_markers: list[str] | tuple[str, ...] | None = None,
 ) -> dict[str, Any]:
     root = Path(dataset_root)
+    markers = _normalise_markers(augmented_name_markers)
     image_dirs = [
         candidate
         for candidate in [
@@ -56,10 +72,13 @@ def audit_yolo_dataset(
         class_counts: Counter[int] = Counter()
         missing_labels: list[str] = []
         corrupt_images: list[str] = []
+        suspected_augmented_images: list[str] = []
         bbox_widths: list[float] = []
         bbox_heights: list[float] = []
 
         for image_path in images:
+            if is_suspected_augmented_name(image_path.name, markers):
+                suspected_augmented_images.append(image_path.name)
             size = _image_size(image_path)
             if size is None:
                 corrupt_images.append(image_path.name)
@@ -92,6 +111,8 @@ def audit_yolo_dataset(
             "missing_labels": missing_labels,
             "orphan_labels": orphan_labels,
             "corrupt_images": corrupt_images,
+            "suspected_augmented_images": suspected_augmented_images,
+            "suspected_augmented_count": len(suspected_augmented_images),
             "bbox_width_norm": _summary(bbox_widths),
             "bbox_height_norm": _summary(bbox_heights),
         }
@@ -185,6 +206,117 @@ def make_grouped_split(
     }
     write_json(output / "split_summary.json", summary)
     return summary
+
+
+def validate_split_integrity(
+    dataset_root: str | Path,
+    output_path: str | Path | None = None,
+    augmented_name_markers: list[str] | tuple[str, ...] | None = None,
+    eval_splits: tuple[str, ...] = ("val", "test"),
+) -> dict[str, Any]:
+    root = Path(dataset_root)
+    markers = _normalise_markers(augmented_name_markers)
+    split_images = _images_by_split(root)
+    suspected_by_split = {
+        split: [image.name for image in images if is_suspected_augmented_name(image.name, markers)]
+        for split, images in split_images.items()
+    }
+
+    base_to_splits: dict[str, dict[str, list[str]]] = defaultdict(lambda: defaultdict(list))
+    for split, images in split_images.items():
+        for image in images:
+            base_to_splits[base_image_key(image.name, markers)][split].append(image.name)
+
+    leakage = []
+    for base_key, splits in sorted(base_to_splits.items()):
+        if len(splits) <= 1:
+            continue
+        leakage.append(
+            {
+                "base_image": base_key,
+                "splits": {
+                    split: names
+                    for split, names in sorted(splits.items())
+                },
+            }
+        )
+
+    eval_augmented = {
+        split: suspected_by_split.get(split, [])
+        for split in eval_splits
+        if suspected_by_split.get(split)
+    }
+    result = {
+        "dataset_root": str(root.resolve()),
+        "markers": list(markers),
+        "images": {split: len(images) for split, images in split_images.items()},
+        "suspected_augmented_images": suspected_by_split,
+        "eval_augmented_images": eval_augmented,
+        "cross_split_base_leakage": leakage,
+        "ok": not eval_augmented and not leakage,
+    }
+    if output_path:
+        write_json(output_path, result)
+    return result
+
+
+def assert_no_suspected_augmented_source(
+    dataset_root: str | Path,
+    augmented_name_markers: list[str] | tuple[str, ...] | None = None,
+) -> None:
+    root = Path(dataset_root)
+    markers = _normalise_markers(augmented_name_markers)
+    images = list_images(root / "images")
+    suspected = [image.name for image in images if is_suspected_augmented_name(image.name, markers)]
+    if suspected:
+        preview = ", ".join(suspected[:10])
+        suffix = "" if len(suspected) <= 10 else f", ... ({len(suspected)} total)"
+        raise ValueError(
+            "Raw dataset appears to contain augmented images. "
+            "Prepare expects clean source images only; set "
+            "dataset.allow_augmented_source: true to override. "
+            f"Suspected files: {preview}{suffix}"
+        )
+
+
+def is_suspected_augmented_name(
+    image_name: str,
+    augmented_name_markers: list[str] | tuple[str, ...] | None = None,
+) -> bool:
+    stem = Path(image_name).stem.lower()
+    return any(marker in stem for marker in _normalise_markers(augmented_name_markers))
+
+
+def base_image_key(
+    image_name: str,
+    augmented_name_markers: list[str] | tuple[str, ...] | None = None,
+) -> str:
+    stem = Path(image_name).stem.lower()
+    first_marker = min(
+        (stem.find(marker) for marker in _normalise_markers(augmented_name_markers) if marker in stem),
+        default=-1,
+    )
+    return stem if first_marker < 0 else stem[:first_marker]
+
+
+def _images_by_split(root: Path) -> dict[str, list[Path]]:
+    result: dict[str, list[Path]] = {}
+    if (root / "images").exists():
+        result["all"] = list_images(root / "images")
+    for split in ["train", "val", "test"]:
+        images_dir = root / split / "images"
+        if images_dir.exists():
+            result[split] = list_images(images_dir)
+    if not result:
+        raise FileNotFoundError(f"No YOLO image directories found under {root}")
+    return result
+
+
+def _normalise_markers(
+    markers: list[str] | tuple[str, ...] | None,
+) -> tuple[str, ...]:
+    raw_markers = markers or DEFAULT_AUGMENTED_NAME_MARKERS
+    return tuple(marker.lower() for marker in raw_markers if marker)
 
 
 def _assign_groups(

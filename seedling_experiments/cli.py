@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 from typing import Any
 
-from .config import load_config, write_json
+from .config import load_config, save_run_snapshot, write_json
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -35,6 +35,23 @@ def main(argv: list[str] | None = None) -> None:
     audit_parser.add_argument("--dataset", required=True)
     audit_parser.add_argument("--output", default=None)
     audit_parser.add_argument("--class-names", default="container,seedlings")
+    audit_parser.add_argument(
+        "--augmented-name-markers",
+        default=None,
+        help="Comma-separated substrings that mark augmented image names.",
+    )
+
+    check_parser = subparsers.add_parser(
+        "check-split",
+        help="Check prepared split for augmented val/test files and cross-split base leakage.",
+    )
+    check_parser.add_argument("--dataset", required=True)
+    check_parser.add_argument("--output", default=None)
+    check_parser.add_argument(
+        "--augmented-name-markers",
+        default=None,
+        help="Comma-separated substrings that mark augmented image names.",
+    )
 
     args = parser.parse_args(argv)
     if args.command == "split":
@@ -58,6 +75,16 @@ def main(argv: list[str] | None = None) -> None:
             dataset_root=args.dataset,
             output_path=args.output,
             class_names=_class_names(args.class_names),
+            augmented_name_markers=_optional_list(args.augmented_name_markers),
+        )
+        _print_result(result)
+    elif args.command == "check-split":
+        from .dataset import validate_split_integrity
+
+        result = validate_split_integrity(
+            dataset_root=args.dataset,
+            output_path=args.output,
+            augmented_name_markers=_optional_list(args.augmented_name_markers),
         )
         _print_result(result)
     else:
@@ -101,12 +128,25 @@ def _run_config_command(command: str, config: dict[str, Any], args: argparse.Nam
 
 def prepare_from_config(config: dict[str, Any]) -> dict[str, Any]:
     from .augmentation import augment_train_split
-    from .dataset import audit_yolo_dataset, make_grouped_split
+    from .dataset import (
+        assert_no_suspected_augmented_source,
+        audit_yolo_dataset,
+        make_grouped_split,
+        validate_split_integrity,
+    )
 
     dataset = config.get("dataset", {})
     split_config = dataset.get("split", {})
     class_names = dataset.get("class_names", ["container", "seedlings"])
     output_root = dataset["prepared_root"]
+    augmented_markers = dataset.get("augmented_name_markers")
+    save_run_snapshot(output_root, config, "prepare")
+    if not bool(dataset.get("allow_augmented_source", False)):
+        assert_no_suspected_augmented_source(
+            dataset_root=dataset["raw_root"],
+            augmented_name_markers=augmented_markers,
+        )
+
     split_summary = make_grouped_split(
         source_root=dataset["raw_root"],
         output_root=output_root,
@@ -126,14 +166,28 @@ def prepare_from_config(config: dict[str, Any]) -> dict[str, Any]:
             split_name="train",
         )
 
+    split_integrity = validate_split_integrity(
+        dataset_root=output_root,
+        output_path=Path(output_root) / "split_integrity_report.json",
+        augmented_name_markers=augmented_markers,
+    )
+    if not split_integrity["ok"] and not bool(dataset.get("allow_split_integrity_issues", False)):
+        raise ValueError(
+            "Prepared split integrity check failed. See "
+            f"{Path(output_root) / 'split_integrity_report.json'} or set "
+            "dataset.allow_split_integrity_issues: true to override."
+        )
+
     audit_summary = audit_yolo_dataset(
         dataset_root=output_root,
         output_path=Path(output_root) / "dataset_audit.json",
         class_names=class_names,
+        augmented_name_markers=augmented_markers,
     )
     result = {
         "split": split_summary,
         "augmentation": augmentation_summary,
+        "split_integrity": split_integrity,
         "audit": audit_summary,
     }
     write_json(Path(output_root) / "prepare_summary.json", result)
@@ -141,6 +195,12 @@ def prepare_from_config(config: dict[str, Any]) -> dict[str, Any]:
 
 
 def _class_names(raw: str) -> list[str]:
+    return [item.strip() for item in raw.split(",") if item.strip()]
+
+
+def _optional_list(raw: str | None) -> list[str] | None:
+    if raw is None:
+        return None
     return [item.strip() for item in raw.split(",") if item.strip()]
 
 

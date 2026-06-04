@@ -15,7 +15,7 @@ py -m seedling_experiments --help
 ```
 
 Ожидаемый результат: CLI показывает команды `prepare`, `train`, `val`,
-`predict`, `evaluate-cells`, `baseline-green`.
+`predict`, `evaluate-cells`, `baseline-green`, `audit`, `check-split`.
 
 Если проект запускает внешний разработчик, сначала сверить контракт в
 `docs/DEVELOPER_GUIDE.md`: формат YOLO-разметки, структура `predictions.json`,
@@ -36,7 +36,10 @@ E:/dataset/raw_seedlings/
 - в `images/` лежат только исходные фотографии;
 - в `labels/` лежит YOLO-разметка с теми же именами файлов;
 - классы согласованы: `0 = container`, `1 = seedlings`;
-- аугментированные копии не лежат в исходном наборе.
+- аугментированные копии не лежат в исходном наборе;
+- в именах файлов нет суффиксов `_filter`, `_flip`, `_scale`, `_rotate`,
+  `_crop`, `_brightness`, `_contrast`, `_color`, `_sharpness`, `_hflip`,
+  `_vflip`, если эти файлы не являются настоящими исходными снимками.
 
 До `prepare` сохранить аудит исходного набора:
 
@@ -70,6 +73,8 @@ Copy-Item configs/example_experiment.yaml configs/article_yolo11n.yaml
 
 - `dataset.raw_root`;
 - `dataset.prepared_root`;
+- `dataset.augmented_name_markers`, если в проекте используются другие имена
+  аугментаций;
 - `training.data`;
 - `validation.data`;
 - `prediction.images`;
@@ -92,6 +97,22 @@ Copy-Item configs/example_experiment.yaml configs/article_yolo11n.yaml
 Это снижает риск смешать артефакты разных запусков. Если используются
 относительные пути, команды запускать из корня `code-diplome/`.
 
+Оставить защитные параметры включёнными:
+
+```yaml
+dataset:
+  allow_augmented_source: false
+  allow_split_integrity_issues: false
+
+evaluation:
+  strict_predictions: true
+  reject_augmented_eval_images: true
+  container_prediction_source: detections
+```
+
+`container_prediction_source: containers` использовать только как отдельный
+диагностический пересчёт, а не как тихую замену финальной end-to-end оценки.
+
 ## 3. Сделать честный split и аугментацию только train
 
 Запустить:
@@ -104,10 +125,19 @@ py -m seedling_experiments prepare --config configs/article_yolo11n.yaml
 
 ```text
 E:/dataset/prepared_seedlings/data.yaml
+E:/dataset/prepared_seedlings/config.yaml
+E:/dataset/prepared_seedlings/run_snapshot.json
 E:/dataset/prepared_seedlings/split_manifest.csv
 E:/dataset/prepared_seedlings/train_augmentation_manifest.csv
+E:/dataset/prepared_seedlings/split_integrity_report.json
 E:/dataset/prepared_seedlings/dataset_audit.json
 E:/dataset/prepared_seedlings/prepare_summary.json
+```
+
+Отдельно можно повторить проверку split:
+
+```powershell
+py -m seedling_experiments check-split --dataset E:/dataset/prepared_seedlings --output E:/dataset/prepared_seedlings/split_integrity_report.json
 ```
 
 Для статьи выписать из prepared `dataset_audit.json`:
@@ -121,8 +151,12 @@ E:/dataset/prepared_seedlings/prepare_summary.json
 - число файлов без labels по raw-аудиту;
 - число orphan labels по raw-аудиту.
 
-Критерий готовности: в `val` и `test` нет аугментированных копий изображений из
-`train`.
+Критерии готовности:
+
+- в `split_integrity_report.json` стоит `ok: true`;
+- в `val` и `test` нет аугментированных копий изображений из `train`;
+- `dataset_audit.json` не показывает подозрительные аугментированные файлы в
+  `val/test`.
 
 Дополнительно проверить, что split не только формально создан, но и пригоден для
 оценки: в `val` и `test` есть объекты `container`, `seedlings` и достаточное
@@ -141,6 +175,7 @@ py -m seedling_experiments train --config configs/article_yolo11n.yaml
 
 ```text
 runs/yolo11n_seedlings/run_snapshot.json
+runs/yolo11n_seedlings/config.yaml
 runs/yolo11n_seedlings/metrics_summary.json
 runs/yolo11n_seedlings/weights/best.pt
 ```
@@ -169,10 +204,25 @@ py -m seedling_experiments evaluate-cells --config configs/article_yolo11n.yaml
 Проверить артефакты:
 
 ```text
+runs/yolo11n_seedlings_eval/config.yaml
 runs/yolo11n_seedlings_eval/test_metrics.json
+runs/yolo11n_seedlings_test_predictions/config.yaml
 runs/yolo11n_seedlings_test_predictions/predictions.json
+runs/yolo11n_seedlings_cell_eval/config.yaml
 runs/yolo11n_seedlings_cell_eval/cell_metrics.json
 runs/yolo11n_seedlings_cell_eval/cell_confusion_matrix.csv
+```
+
+В `test_metrics.json` проверить:
+
+```text
+validation.split = test
+validation.model
+validation.data
+validation.imgsz
+validation.conf / validation.iou
+dataset.images
+dataset.class_counts
 ```
 
 В статью занести две группы метрик.
@@ -207,9 +257,21 @@ bootstrap 95% CI для cell accuracy
 
 ```text
 container_recall
+container_matching.prediction_source
+container_matching.best_iou_summary
+container_matching.best_iou_counts
+prediction_coverage.missing_predictions
+suspected_augmented_eval_images
 images[].gt_containers
+images[].pred_containers
 images[].matched_containers
+images[].best_container_iou
 ```
+
+Критерий готовности cell-eval: `prediction_coverage.missing_predictions` пустой,
+`suspected_augmented_eval_images` пустой. Если `container_recall` низкий или
+равен нулю, в статью нельзя переносить только `cell_accuracy`; нужно отдельно
+описать диагностику `container_matching`.
 
 `matched_containers = 0` не всегда означает, что контейнер визуально не найден.
 Сопоставление выполняется по IoU между bbox из разметки и bbox из предсказаний,
@@ -218,6 +280,16 @@ images[].matched_containers
 postprocessing после фильтрации и объединения. Если визуальный отчёт построен по
 `containers`, а оценка идёт по `detections`, возможна ситуация, когда на картинке
 контейнер выглядит правильным, но в метрике остаётся unmatched.
+
+Для диагностики допускается отдельный пересчёт с:
+
+```yaml
+evaluation:
+  container_prediction_source: containers
+```
+
+Такой пересчёт нужен только для объяснения причин unmatched. Финальную таблицу
+нужно подписывать по тому источнику контейнеров, который реально использован.
 
 Даже при unmatched контейнере `evaluate-cells` продолжает считать cell-level
 метрики: для сетки используется bbox контейнера из разметки, а в эту сетку
@@ -314,7 +386,18 @@ configs/article_large_seedlings.yaml
 configs/article_small_seedlings.yaml
 ```
 
-Для каждого набора повторить шаги 3-7.
+Для каждого набора повторить шаги 3-7. Для каждого датасета сохранить полный
+набор трассировки:
+
+```text
+prepared_root/split_integrity_report.json
+runs/<dataset>_<model>/config.yaml
+runs/<dataset>_<model>/run_snapshot.json
+runs/<dataset>_<model>_eval/test_metrics.json
+runs/<dataset>_<model>_predictions/predictions.json
+runs/<dataset>_<model>_cell_eval/cell_metrics.json
+runs/<dataset>_<model>_cell_eval/cell_confusion_matrix.csv
+```
 
 В статье не смешивать сезон и размер растения. Лучше использовать формулировки:
 
@@ -372,7 +455,12 @@ coordinate error px
 ```text
 config path
 run_snapshot.json
+raw_dataset_audit.json
+split_manifest.csv
+train_augmentation_manifest.csv
+split_integrity_report.json
 dataset_audit.json
+prepare_summary.json
 test_metrics.json
 predictions.json
 cell_metrics.json
@@ -386,12 +474,16 @@ weights path
 
 - split сделан до аугментации;
 - test содержит только исходные независимые изображения;
-- есть `dataset_audit.json`;
+- `split_integrity_report.json` имеет `ok: true`;
+- есть `raw_dataset_audit.json` и `dataset_audit.json`;
 - есть минимум один baseline;
 - есть YOLO11n на том же split;
 - есть test-метрики детектора;
 - есть cell-level метрики;
 - есть target-removal метрики;
+- `prediction_coverage.missing_predictions` пустой;
+- `suspected_augmented_eval_images` пустой;
+- `container_matching` проверен и интерпретирован;
 - есть bootstrap CI;
 - для мелких сеянцев выводы сформулированы осторожно;
 - все конфиги и артефакты сохранены.

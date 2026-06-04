@@ -38,6 +38,20 @@ def write_json(path: str | Path, data: Any) -> None:
     )
 
 
+def write_yaml(path: str | Path, data: Any) -> None:
+    output = Path(path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        import yaml
+    except ImportError:
+        write_json(output.with_suffix(".json"), data)
+        return
+    output.write_text(
+        yaml.safe_dump(data, allow_unicode=True, sort_keys=False),
+        encoding="utf-8",
+    )
+
+
 def package_version(name: str) -> str | None:
     try:
         return metadata.version(name)
@@ -65,6 +79,7 @@ def environment_snapshot() -> dict[str, Any]:
 def save_run_snapshot(output_dir: str | Path, config: dict[str, Any], command: str) -> None:
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
+    write_yaml(output / "config.yaml", config)
     write_json(
         output / "run_snapshot.json",
         {

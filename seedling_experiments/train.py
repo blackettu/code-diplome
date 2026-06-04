@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any
 
 from .config import save_run_snapshot, write_json
+from .yolo import label_path_for, list_images, read_labels
 
 
 def train_yolo_from_config(config: dict[str, Any]) -> dict[str, Any]:
@@ -76,6 +77,16 @@ def validate_yolo_from_config(config: dict[str, Any], split: str = "val") -> dic
         if optional_key in validation and validation[optional_key] is not None:
             args[optional_key] = validation[optional_key]
     metrics = _metrics_to_dict(model.val(**args))
+    metrics["validation"] = {
+        "source": "ultralytics.val",
+        "split": split,
+        "model": str(Path(model_path)),
+        "data": str(Path(data_yaml)),
+        "imgsz": args["imgsz"],
+        "conf": args.get("conf"),
+        "iou": args.get("iou"),
+    }
+    metrics["dataset"] = _split_stats_from_data_yaml(data_yaml, split)
     write_json(output_dir / f"{split}_metrics.json", metrics)
     return metrics
 
@@ -106,3 +117,71 @@ def _mean(values: Any) -> float | None:
     if not values_list:
         return None
     return sum(values_list) / len(values_list)
+
+
+def _split_stats_from_data_yaml(data_yaml: str | Path, split: str) -> dict[str, Any]:
+    try:
+        import yaml
+    except ImportError:
+        return {"error": "PyYAML is required to inspect data.yaml"}
+
+    data_path = Path(data_yaml)
+    data = yaml.safe_load(data_path.read_text(encoding="utf-8")) or {}
+    if not isinstance(data, dict):
+        return {"error": f"Invalid data.yaml: {data_path}"}
+
+    class_names = _class_names_from_data_yaml(data)
+    images_value = data.get(split)
+    if not images_value:
+        return {"error": f"Split {split!r} not found in {data_path}"}
+
+    root = Path(data.get("path") or data_path.parent)
+    images_dir = Path(images_value)
+    if not images_dir.is_absolute():
+        images_dir = root / images_dir
+    labels_dir = images_dir.parent / "labels"
+
+    images = list_images(images_dir) if images_dir.exists() else []
+    class_counts: dict[str, int] = {name: 0 for name in class_names}
+    missing_labels: list[str] = []
+    total_labels = 0
+    for image_path in images:
+        label_path = label_path_for(image_path, labels_dir)
+        if not label_path.exists():
+            missing_labels.append(image_path.name)
+            continue
+        for label in read_labels(label_path):
+            total_labels += 1
+            if label.class_id < len(class_names):
+                key = class_names[label.class_id]
+            else:
+                key = str(label.class_id)
+            class_counts[key] = class_counts.get(key, 0) + 1
+
+    return {
+        "data_yaml": str(data_path.resolve()),
+        "split": split,
+        "images_dir": str(images_dir.resolve()),
+        "labels_dir": str(labels_dir.resolve()),
+        "images": len(images),
+        "labels": total_labels,
+        "class_names": class_names,
+        "class_counts": class_counts,
+        "missing_labels": missing_labels,
+    }
+
+
+def _class_names_from_data_yaml(data: dict[str, Any]) -> list[str]:
+    names = data.get("names", [])
+    if isinstance(names, dict):
+        return [str(names[key]) for key in sorted(names, key=_class_name_sort_key)]
+    if isinstance(names, list):
+        return [str(name) for name in names]
+    return []
+
+
+def _class_name_sort_key(value: Any) -> tuple[int, int | str]:
+    text = str(value)
+    if text.isdigit():
+        return (0, int(text))
+    return (1, text)

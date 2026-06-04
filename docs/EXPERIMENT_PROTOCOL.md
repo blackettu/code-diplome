@@ -17,6 +17,31 @@
 `dataset.split.group_regex` в конфиге. Все изображения с одним group id попадут
 в один split.
 
+Перед split команда `prepare` проверяет имена файлов исходного набора по
+`dataset.augmented_name_markers`. По умолчанию подозрительными считаются
+суффиксы вроде `_filter`, `_flip`, `_scale`, `_brightness`, `_contrast`,
+`_color`, `_sharpness`, `_hflip`, `_vflip`. Если такие файлы найдены в
+`raw_root/images`, `prepare` останавливается, потому что исходный набор должен
+содержать только реальные фотографии. Обход этой защиты допускается только
+явным `dataset.allow_augmented_source: true` и должен быть отдельно обоснован.
+
+После подготовки датасета команда `prepare` дополнительно создаёт
+`split_integrity_report.json`. В нём фиксируются:
+
+- число изображений по split;
+- подозрительные аугментированные имена в `train/val/test`;
+- подозрительные аугментированные изображения в `val/test`;
+- базовые кадры, попавшие более чем в один split после удаления суффиксов
+  аугментации.
+
+Для независимой проверки уже подготовленного набора можно использовать:
+
+```powershell
+py -m seedling_experiments check-split --dataset E:/dataset/prepared_seedlings --output E:/dataset/prepared_seedlings/split_integrity_report.json
+```
+
+Критерий готовности: `split_integrity_report.json` должен иметь `ok: true`.
+
 ## 2. Аудит датасета
 
 `dataset_audit.json` фиксирует:
@@ -25,6 +50,7 @@
 - число bbox по классам;
 - отсутствующие labels;
 - orphan labels;
+- подозрительные аугментированные имена файлов;
 - нормированные размеры bbox.
 
 Нужно различать два аудита:
@@ -38,6 +64,18 @@ label. Orphan labels из исходного `labels/` в split не копир�
 
 Перед статьёй стоит дополнить эти аудиты внешней таблицей: дата съёмки, порода,
 размер сеянца, контейнер/лоток, число ячеек и число множественных ячеек.
+
+Минимальный набор артефактов подготовки датасета:
+
+```text
+raw_dataset_audit.json
+data.yaml
+split_manifest.csv
+train_augmentation_manifest.csv
+split_integrity_report.json
+dataset_audit.json
+prepare_summary.json
+```
 
 ## 3. Метрики конечной задачи
 
@@ -57,6 +95,19 @@ label. Orphan labels из исходного `labels/` в split не копир�
 сеянец с максимальной площадью bbox, а остальные считает кандидатами на удаление.
 Это baseline-правило, которое нужно отдельно проверять экспертной разметкой
 `keep/remove`.
+
+Перед расчётом метрик `evaluate-cells` проверяет согласованность
+`predictions.json` с выбранным split. По умолчанию включены две защиты:
+
+- `evaluation.strict_predictions: true` — каждое изображение из `evaluation.dataset`
+  / `evaluation.split` должно присутствовать в `predictions.json`;
+- `evaluation.reject_augmented_eval_images: true` — для `val` и `test` оценка
+  останавливается, если имена изображений похожи на аугментированные.
+
+В `cell_metrics.json` сохраняются диагностические поля `prediction_coverage` и
+`suspected_augmented_eval_images`. Для финальных чисел статьи список
+`missing_predictions` должен быть пустым, а `suspected_augmented_eval_images`
+должен быть пустым.
 
 ### 3.1. Диагностика сопоставления контейнеров
 
@@ -80,8 +131,27 @@ IoU ниже этого порога, контейнер остаётся unmatc
 - в разметке и предсказаниях используются разные правила обведения контейнера.
 
 Важно: `predictions.json` содержит как сырые `detections`, так и обработанные
-`containers` после фильтрации/объединения. Текущая реализация `evaluate-cells`
-использует именно `detections`.
+`containers` после фильтрации/объединения. Базовая end-to-end оценка должна
+использовать `evaluation.container_prediction_source: detections`. Для
+диагностики можно временно поставить `containers`, чтобы проверить, помогает ли
+postprocessing контейнеров сопоставлению с GT-разметкой. В статье нужно явно
+указать, какой источник использован для финальных метрик.
+
+`cell_metrics.json` содержит блок `container_matching`:
+
+```text
+prediction_source
+iou_threshold
+total_gt_containers
+matched_containers
+best_iou_summary
+best_iou_counts
+unmatched_samples
+```
+
+Если `container_recall = 0`, этот блок является обязательным источником анализа:
+он показывает, есть ли вообще ненулевые IoU и сколько контейнеров проходит
+пороги `0.25`, `0.5` и текущий `container_iou`.
 
 При unmatched контейнере cell-level метрики не обнуляются автоматически:
 `evaluate-cells` использует bbox GT-контейнера как опорную геометрию и
@@ -114,7 +184,32 @@ IoU ниже этого порога, контейнер остаётся unmatc
 HSV baseline в текущем контуре должны быть `N/A`, если не добавлена отдельная
 оценка object detection для baseline-предсказаний.
 
-## 5. Что добавить при следующем расширении
+## 5. Трассировка артефактов
+
+Каждая команда, запускаемая через конфиг (`train`, `val`, `predict`,
+`evaluate-cells`, `baseline-green`, `prepare`), должна сохранять рядом с
+результатами:
+
+```text
+config.yaml
+run_snapshot.json
+```
+
+`run_snapshot.json` фиксирует команду, конфиг и окружение; `config.yaml`
+сохраняет человекочитаемую копию конфига именно для этого этапа. Для любого
+числа в статье должно быть понятно:
+
+- из какого файла оно взято;
+- каким конфигом получено;
+- какими весами получено;
+- на каком split посчитано;
+- какой seed и какая версия Ultralytics использованы.
+
+Команда `val --split test` создаёт `test_metrics.json`. Помимо mAP/precision/recall
+в нём должны быть сохранены `validation` и `dataset`: путь к модели, data.yaml,
+split, imgsz/conf/iou, число test-изображений и число объектов по классам.
+
+## 6. Что добавить при следующем расширении
 
 - SAHI/tiling для мелких сеянцев.
 - Сравнение YOLO11n / YOLO11s / YOLOv8n на одном split.

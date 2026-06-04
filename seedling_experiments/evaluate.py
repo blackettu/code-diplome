@@ -10,6 +10,7 @@ from typing import Any
 from PIL import Image
 
 from .config import save_run_snapshot, write_json
+from .dataset import is_suspected_augmented_name
 from .grid import (
     Detection,
     assign_to_cells,
@@ -39,17 +40,48 @@ def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
     container_iou = float(evaluation.get("container_iou", 0.5))
     target_distance = float(evaluation.get("target_match_distance_px", 25.0))
     use_gt_containers = bool(evaluation.get("use_ground_truth_containers", False))
+    container_source = str(evaluation.get("container_prediction_source", "detections"))
+    strict_predictions = bool(evaluation.get("strict_predictions", True))
+    augmented_markers = evaluation.get("augmented_name_markers")
 
     confusion = [[0 for _ in range(3)] for _ in range(3)]
     container_accuracies: list[float] = []
     multi_counts = {"tp": 0, "fp": 0, "fn": 0}
     target_counts = {"tp": 0, "fp": 0, "fn": 0}
     target_distances: list[float] = []
+    best_container_ious: list[float] = []
+    unmatched_samples: list[dict[str, Any]] = []
     matched_containers = 0
     total_gt_containers = 0
     image_summaries: list[dict[str, Any]] = []
 
-    for image_path in list_images(images_dir):
+    image_paths = list_images(images_dir)
+    coverage = _prediction_coverage(image_paths, predictions)
+    if strict_predictions and coverage["missing_predictions"]:
+        preview = ", ".join(coverage["missing_predictions"][:10])
+        raise ValueError(
+            "predictions.json is missing images from evaluation dataset: "
+            f"{preview}. Set evaluation.strict_predictions: false to override."
+        )
+    suspected_eval_images = [
+        image.name
+        for image in image_paths
+        if is_suspected_augmented_name(image.name, augmented_markers)
+    ]
+    if (
+        suspected_eval_images
+        and bool(evaluation.get("reject_augmented_eval_images", True))
+        and evaluation.get("split") in {"val", "test"}
+    ):
+        preview = ", ".join(suspected_eval_images[:10])
+        suffix = "" if len(suspected_eval_images) <= 10 else f", ... ({len(suspected_eval_images)} total)"
+        raise ValueError(
+            "Evaluation split appears to contain augmented images. "
+            "Use a clean val/test split or set evaluation.reject_augmented_eval_images: false "
+            f"to override. Suspected files: {preview}{suffix}"
+        )
+
+    for image_path in image_paths:
         with Image.open(image_path) as image:
             width, height = image.size
         gt_detections = _labels_to_detections(
@@ -61,13 +93,18 @@ def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
 
         gt_containers = [item for item in gt_detections if item.class_id == container_class]
         gt_seedlings = [item for item in gt_detections if item.class_id == seedling_class]
-        pred_containers = [item for item in pred_detections if item.class_id == container_class]
+        pred_containers = _prediction_container_detections(
+            predictions.get(image_path.name, {}),
+            source=container_source,
+            container_class=container_class,
+        )
         pred_seedlings = [item for item in pred_detections if item.class_id == seedling_class]
 
         if use_gt_containers:
             matches = [(gt, gt, 1.0) for gt in gt_containers]
         else:
             matches = match_containers(gt_containers, pred_containers, container_iou)
+        best_container_ious.extend(iou for _, _, iou in matches)
 
         image_total_cells = 0
         image_correct_cells = 0
@@ -98,10 +135,25 @@ def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
             {
                 "image": image_path.name,
                 "gt_containers": len(gt_containers),
+                "pred_containers": len(pred_containers),
                 "matched_containers": sum(1 for _, pred, _ in matches if pred is not None),
+                "best_container_iou": max((iou for _, _, iou in matches), default=None),
                 "cell_accuracy": image_correct_cells / image_total_cells if image_total_cells else None,
             }
         )
+        if len(unmatched_samples) < 25:
+            for index, (gt_container, pred_container, iou) in enumerate(matches):
+                if pred_container is None:
+                    unmatched_samples.append(
+                        {
+                            "image": image_path.name,
+                            "gt_container_index": index,
+                            "best_iou": iou,
+                            "gt_box": gt_container.box,
+                        }
+                    )
+                    if len(unmatched_samples) >= 25:
+                        break
         if image_total_cells:
             container_accuracies.append(image_correct_cells / image_total_cells)
 
@@ -118,6 +170,17 @@ def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
             "matched_distances_px": target_distances,
         },
         "container_recall": matched_containers / total_gt_containers if total_gt_containers else None,
+        "container_matching": {
+            "prediction_source": container_source,
+            "iou_threshold": container_iou,
+            "total_gt_containers": total_gt_containers,
+            "matched_containers": matched_containers,
+            "best_iou_summary": _summary(best_container_ious),
+            "best_iou_counts": _iou_counts(best_container_ious, container_iou),
+            "unmatched_samples": unmatched_samples,
+        },
+        "prediction_coverage": coverage,
+        "suspected_augmented_eval_images": suspected_eval_images,
         "cell_accuracy_bootstrap_ci": _bootstrap_ci(container_accuracies),
         "images": image_summaries,
     }
@@ -169,6 +232,32 @@ def _prediction_detections(prediction: dict[str, Any]) -> list[Detection]:
             )
         )
     return detections
+
+
+def _prediction_container_detections(
+    prediction: dict[str, Any],
+    source: str,
+    container_class: int,
+) -> list[Detection]:
+    if source == "detections":
+        return [
+            item
+            for item in _prediction_detections(prediction)
+            if item.class_id == container_class
+        ]
+    if source == "containers":
+        return [
+            Detection(
+                box=[float(value) for value in item["box"]],
+                class_id=int(item.get("class_id", container_class)),
+                confidence=float(item.get("confidence", 1.0)),
+                name=item.get("name"),
+            )
+            for item in prediction.get("containers", [])
+        ]
+    raise ValueError(
+        "evaluation.container_prediction_source must be either 'detections' or 'containers'"
+    )
 
 
 def _category(count: int) -> int:
@@ -304,3 +393,38 @@ def _write_confusion_csv(path: Path, confusion: list[list[int]]) -> None:
 
 def _mean(values: list[float]) -> float | None:
     return sum(values) / len(values) if values else None
+
+
+def _prediction_coverage(image_paths: list[Path], predictions: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    dataset_images = [image.name for image in image_paths]
+    dataset_set = set(dataset_images)
+    prediction_set = set(predictions)
+    missing = sorted(dataset_set - prediction_set)
+    extra = sorted(prediction_set - dataset_set)
+    return {
+        "dataset_images": len(dataset_images),
+        "prediction_images": len(prediction_set),
+        "missing_predictions": missing,
+        "extra_predictions": extra,
+    }
+
+
+def _summary(values: list[float]) -> dict[str, float | int | None]:
+    if not values:
+        return {"count": 0, "min": None, "mean": None, "max": None}
+    ordered = sorted(values)
+    return {
+        "count": len(values),
+        "min": ordered[0],
+        "mean": sum(values) / len(values),
+        "max": ordered[-1],
+    }
+
+
+def _iou_counts(values: list[float], threshold: float) -> dict[str, int]:
+    return {
+        "gt_0": sum(1 for value in values if value > 0.0),
+        "ge_0_25": sum(1 for value in values if value >= 0.25),
+        "ge_0_5": sum(1 for value in values if value >= 0.5),
+        "ge_threshold": sum(1 for value in values if value >= threshold),
+    }

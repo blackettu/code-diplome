@@ -6,6 +6,22 @@ dataset:
   class_names:
     - container
     - seedlings
+  # Prepare rejects raw images whose names look like generated augmentations.
+  # This protects val/test from near-duplicate leakage.
+  augmented_name_markers:
+    - _filter
+    - _flip
+    - _scale
+    - _rotate
+    - _crop
+    - _brightness
+    - _contrast
+    - _color
+    - _sharpness
+    - _hflip
+    - _vflip
+  allow_augmented_source: false
+  allow_split_integrity_issues: false
   split:
     train: 0.7
     val: 0.2
@@ -80,7 +96,12 @@ evaluation:
   # If matched_containers is 0 but visual boxes look close, inspect this value
   # and whether evaluation uses raw detections or postprocessed containers.
   container_iou: 0.5
+  # Use "containers" to diagnose postprocessed container boxes from predictions.json.
+  # Keep "detections" for the default end-to-end metric described in the protocol.
+  container_prediction_source: detections
   target_match_distance_px: 25
+  strict_predictions: true
+  reject_augmented_eval_images: true
   # Set true to evaluate cell/seedling quality under known tray boxes.
   # This bypasses predicted-container matching and is not an end-to-end score.
   use_ground_truth_containers: false
