@@ -196,7 +196,7 @@ dataset_root/
     session01_tray_plane_calibration.json
   манифестs/
     image_манифест.csv
-    split_манифест.csv
+    split_manifest.csv
     annotation_audit.csv
     dataset_version.json
   processed/
@@ -998,7 +998,7 @@ raw_seedlings/
   labels/
 ```
 
-и команды `audit`, `prepare`, `train`, `val`, `predict`, `evaluate-cells`, `baseline-green`.
+и команды `audit`, `prepare`, `split`, `check-split`, `train`, `val`, `predict`, `evaluate-cells`, `baseline-green`.
 
 ### 18.1. Что сохранить
 
@@ -1006,9 +1006,9 @@ raw_seedlings/
 
 - YOLO метки для детектор объектов;
 - `class_names` в конфиге;
-- `split_манифест.csv`;
+- `split_manifest.csv`;
 - `dataset_audit.json`;
-- `train_augmentation_манифест.csv`;
+- `train_augmentation_manifest.csv`;
 - `cell_metrics.json`;
 - bootstrap CI для на уровне ячеек метрик;
 - базовый метод сравнения HSV/зелёная компонента как инженерно честную нижнюю линию.
@@ -2144,12 +2144,12 @@ image_id,file_path,sha256,session_id,group_id,tray_id,site,greenhouse,capture_da
 
 ## 53. Источники и ориентиры
 
-1. Репозиторий проекта `blackettu/code-diplome`: текущий README описывает воспроизводимый контур `seedling_experiments`, команды `audit/prepare/train/val/predict/evaluate-cells/baseline-green`, разбиение до искусственных преобразований и на уровне прикладной задачи метрики.  
+1. Репозиторий проекта `blackettu/code-diplome`: актуальная входная документация находится в `docs/README.md` и описывает воспроизводимый контур `seedling_experiments`, команды `audit/prepare/split/check-split/train/val/predict/evaluate-cells/baseline-green`, разбиение до искусственных преобразований и метрики прикладной задачи.
    <https://github.com/blackettu/code-diplome/tree/main>
-2. Руководство разработчика проекта: фиксирует входной формат YOLO, порядок классов `container/seedlings`, автоматическая проверка исходные данные/prepared набора данных, групповое разбиение, метрики на уровне ячеек и ограничения текущего контура.  
-   <https://исходные данные.githubusercontent.com/blackettu/code-diplome/main/docs/DEVELOPER_Gинтерфейс оператораDE.md>
-3. Пример конфигурации проекта: текущие классы `container` и `seedlings`, разбиение, искусственные преобразования, YOLO11n, cell eвалидационная выборкаuation и базовый метод сравнения-green.  
-   <https://исходные данные.githubusercontent.com/blackettu/code-diplome/main/configs/example_experiment.yaml>
+2. Руководство разработчика проекта: фиксирует входной формат YOLO, порядок классов `container/seedlings`, автоматическую проверку raw/prepared набора данных, групповое разбиение, метрики на уровне ячеек и ограничения текущего контура.
+   <https://raw.githubusercontent.com/blackettu/code-diplome/main/docs/DEVELOPER_GUIDE.md>
+3. Пример конфигурации проекта: текущие классы `container` и `seedlings`, разбиение, искусственные преобразования, YOLO11n, cell evaluation и baseline-green.
+   <https://raw.githubusercontent.com/blackettu/code-diplome/main/configs/example_experiment.yaml>
 4. Wilkinson et al. FAIR Guiding Principles for управления научными данными, Scientific Данные, 2016.  
    <https://www.nature.com/articles/sdata201618>
 5. Gebru et al. Данныеsheets for Данныеsets.  

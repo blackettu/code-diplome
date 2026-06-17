@@ -16,7 +16,7 @@
 Критические блокеры:
 
 1. `test` содержит аугментированные изображения.
-2. Отсутствуют обязательные артефакты `prepare`: `raw_dataset_audit.json`, `split_manifest.csv`, `train_augmentation_manifest.csv`, `dataset_audit.json`, `prepare_summary.json`.
+2. Отсутствуют обязательные артефакты `prepare`: `raw_dataset_audit.json`, `config.yaml`, `run_snapshot.json`, `split_manifest.csv`, `train_augmentation_manifest.csv`, `split_integrity_report.json`, `dataset_audit.json`, `prepare_summary.json`.
 3. Отсутствует независимый `test_metrics.json`.
 4. В архиве нет подтверждённых артефактов по крупным сеянцам.
 5. Для YOLO-запусков `container_recall = 0.0`, что требует диагностики.
@@ -86,6 +86,10 @@ _rotate
 _crop
 _brightness
 _contrast
+_color
+_sharpness
+_hflip
+_vflip
 ```
 
 3. Запустить `prepare`, который сначала делит исходные изображения на `train/val/test`, а затем применяет аугментацию только к `train`.
@@ -98,9 +102,12 @@ _contrast
 
 ```text
 raw_dataset_audit.json
+config.yaml
+run_snapshot.json
 data.yaml
 split_manifest.csv
 train_augmentation_manifest.csv
+split_integrity_report.json
 dataset_audit.json
 prepare_summary.json
 ```
@@ -302,9 +309,12 @@ evaluate-cells для baseline
 
 ```text
 prepared_root/
+  config.yaml
+  run_snapshot.json
   data.yaml
   split_manifest.csv
   train_augmentation_manifest.csv
+  split_integrity_report.json
   dataset_audit.json
   prepare_summary.json
 
@@ -1491,9 +1501,12 @@ container_recall у YOLO: 0.0
 
 ```text
 raw_dataset_audit.json
+config.yaml
+run_snapshot.json
 data.yaml
 split_manifest.csv
 train_augmentation_manifest.csv
+split_integrity_report.json
 dataset_audit.json
 prepare_summary.json
 ```
@@ -1645,9 +1658,11 @@ artifact registry
 - [ ] аугментация применена только к train;
 - [ ] test содержит только исходные независимые изображения;
 - [ ] есть `raw_dataset_audit.json`;
+- [ ] есть `config.yaml` и `run_snapshot.json` для `prepare`;
 - [ ] есть `dataset_audit.json`;
 - [ ] есть `split_manifest.csv`;
 - [ ] есть `train_augmentation_manifest.csv`;
+- [ ] есть `split_integrity_report.json` с `ok: true`;
 - [ ] есть `prepare_summary.json`;
 - [ ] есть `test_metrics.json`;
 - [ ] есть `predictions.json` для финального test;

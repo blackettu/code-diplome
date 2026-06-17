@@ -807,20 +807,19 @@ operator_review_rate
 
 ```text
 code-diplome/
-├── README.md
+├── README.md                  # только указатель на docs/README.md
 ├── requirements.txt
 ├── configs/
 │   ├── detection_yolo11n.yaml
 │   ├── cell_eval.yaml
 │   ├── calibration.yaml
 │   └── safety_limits.example.yaml
-├── data/
-│   ├── README.md
-│   └── dataset_card_template.md
 ├── docs/
+│   ├── README.md
 │   ├── ARTICLE_EXPERIMENT_PLAN.md
 │   ├── DEVELOPER_GUIDE.md
 │   ├── EXPERIMENT_PROTOCOL.md
+│   ├── DATASET_CARD_TEMPLATE.md
 │   ├── PRODUCT_VISION.md
 │   ├── ANNOTATION_GUIDE.md
 │   ├── CALIBRATION_PROTOCOL.md

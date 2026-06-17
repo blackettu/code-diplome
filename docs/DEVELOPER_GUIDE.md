@@ -27,6 +27,7 @@ evaluate-cells
 baseline-green
 split
 audit
+check-split
 ```
 
 ## 2. Входной датасет
@@ -227,9 +228,12 @@ GT и predicted `remove_center`, при котором цель удаления
 После `prepare`:
 
 ```text
+prepared_root/config.yaml
+prepared_root/run_snapshot.json
 prepared_root/data.yaml
 prepared_root/split_summary.json
 prepared_root/split_manifest.csv
+prepared_root/split_integrity_report.json
 prepared_root/dataset_audit.json
 prepared_root/prepare_summary.json
 ```

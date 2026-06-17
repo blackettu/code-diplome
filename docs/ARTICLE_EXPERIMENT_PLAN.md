@@ -15,7 +15,8 @@ py -m seedling_experiments --help
 ```
 
 Ожидаемый результат: CLI показывает команды `prepare`, `train`, `val`,
-`predict`, `evaluate-cells`, `baseline-green`, `audit`, `check-split`.
+`predict`, `evaluate-cells`, `baseline-green`, `split`, `audit`,
+`check-split`.
 
 Если проект запускает внешний разработчик, сначала сверить контракт в
 `docs/DEVELOPER_GUIDE.md`: формат YOLO-разметки, структура `predictions.json`,

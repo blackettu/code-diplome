@@ -69,6 +69,8 @@ label. Orphan labels из исходного `labels/` в split не копир�
 
 ```text
 raw_dataset_audit.json
+config.yaml
+run_snapshot.json
 data.yaml
 split_manifest.csv
 train_augmentation_manifest.csv
