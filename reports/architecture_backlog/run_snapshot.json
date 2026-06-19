@@ -1,0 +1,62 @@
+{
+  "command": "seedling-reports:architecture-audit",
+  "command_args": {
+    "command": "architecture-audit",
+    "doc": "docs\\seedlings_vilga_architecture_codex_rl_simulation.md",
+    "out": "reports\\architecture_backlog",
+    "repo_root": "."
+  },
+  "config": {
+    "command_args": {
+      "command": "architecture-audit",
+      "doc": "docs\\seedlings_vilga_architecture_codex_rl_simulation.md",
+      "out": "reports\\architecture_backlog",
+      "repo_root": "."
+    },
+    "inputs": [
+      "docs\\seedlings_vilga_architecture_codex_rl_simulation.md",
+      "."
+    ],
+    "metadata": {
+      "counts": {
+        "external_required": 1,
+        "pass": 132
+      }
+    },
+    "outputs": [
+      "reports\\architecture_backlog\\architecture_backlog_audit.json",
+      "reports\\architecture_backlog\\architecture_backlog_audit.csv",
+      "reports\\architecture_backlog\\architecture_backlog_audit.html"
+    ]
+  },
+  "config_hash": "38958c1d21434b125fa87e6150b4081529cad9318bf0e50b90608866690a75ef",
+  "environment": {
+    "created_at_utc": "2026-06-18T18:51:36.911097+00:00",
+    "packages": {
+      "Pillow": "12.2.0",
+      "PyYAML": "6.0.3",
+      "numpy": "2.4.4",
+      "opencv-python": null,
+      "pillow-heif": null,
+      "ultralytics": null
+    },
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "inputs": [
+    "docs\\seedlings_vilga_architecture_codex_rl_simulation.md",
+    "."
+  ],
+  "metadata": {
+    "counts": {
+      "external_required": 1,
+      "pass": 132
+    }
+  },
+  "outputs": [
+    "reports\\architecture_backlog\\architecture_backlog_audit.json",
+    "reports\\architecture_backlog\\architecture_backlog_audit.csv",
+    "reports\\architecture_backlog\\architecture_backlog_audit.html"
+  ],
+  "schema_version": "command_run_snapshot_v0_1"
+}

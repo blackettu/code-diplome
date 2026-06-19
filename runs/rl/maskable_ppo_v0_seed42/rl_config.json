@@ -1,0 +1,15 @@
+{
+  "algorithm": "maskable_ppo",
+  "env_config": "configs/simulation/tray_env_v0.yaml",
+  "total_timesteps": 1000000,
+  "seed": 42,
+  "policy": "MultiInputPolicy",
+  "learning_rate": 0.0003,
+  "n_steps": 2048,
+  "batch_size": 256,
+  "gamma": 0.99,
+  "run_dir": "runs/rl/maskable_ppo_v0_seed42",
+  "tensorboard_log": null,
+  "n_envs": 8,
+  "recurrent": false
+}

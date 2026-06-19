@@ -1,0 +1,827 @@
+{
+  "scene_id": "scene_000000",
+  "grid_rows": 11,
+  "grid_cols": 11,
+  "cell_size_mm": [
+    33.0,
+    33.0
+  ],
+  "plants": [
+    {
+      "object_id": "plant_000000",
+      "row": 0,
+      "col": 0,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        21.401414052464872,
+        10.262263308780554
+      ],
+      "confidence": 0.8715464118868478,
+      "radius_mm": 1.6146951848798168,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000001",
+      "row": 0,
+      "col": 1,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        57.625460377102186,
+        10.436805151870034
+      ],
+      "confidence": 0.7721888075096022,
+      "radius_mm": 2.492341207221304,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000002",
+      "row": 0,
+      "col": 3,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        105.89551617867426,
+        10.654080796287053
+      ],
+      "confidence": 0.9279640419820016,
+      "radius_mm": 2.3695313950678316,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000003",
+      "row": 0,
+      "col": 5,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        177.40913573883094,
+        7.779593328829163
+      ],
+      "confidence": 0.9541630012133351,
+      "radius_mm": 1.8693045425866948,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000004",
+      "row": 0,
+      "col": 8,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        287.2413589909128,
+        7.997490115645084
+      ],
+      "confidence": 0.9044858401772219,
+      "radius_mm": 2.35301264217824,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000005",
+      "row": 0,
+      "col": 9,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        303.7650237546002,
+        17.34167919805641
+      ],
+      "confidence": 0.8567661197809752,
+      "radius_mm": 1.4990245292864983,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000006",
+      "row": 0,
+      "col": 9,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        312.34844155765506,
+        20.733630687585293
+      ],
+      "confidence": 0.905552220221395,
+      "radius_mm": 1.461056212409409,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000007",
+      "row": 1,
+      "col": 0,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        12.969863567119631,
+        51.92491358228523
+      ],
+      "confidence": 0.9632006054444346,
+      "radius_mm": 1.3064949231480363,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000008",
+      "row": 1,
+      "col": 2,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        87.14781600986348,
+        47.08475229765874
+      ],
+      "confidence": 0.9547342711032585,
+      "radius_mm": 2.449672950860913,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000009",
+      "row": 1,
+      "col": 5,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        179.62685407488135,
+        43.467298864480064
+      ],
+      "confidence": 0.9521793619454699,
+      "radius_mm": 1.5482481650784692,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000010",
+      "row": 1,
+      "col": 5,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        183.27749128563963,
+        43.14154195120176
+      ],
+      "confidence": 0.9069759712146152,
+      "radius_mm": 2.9088215583674213,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000011",
+      "row": 1,
+      "col": 5,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        186.29483483365715,
+        49.05815497192755
+      ],
+      "confidence": 0.9053516641411965,
+      "radius_mm": 2.9373631790043673,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000012",
+      "row": 2,
+      "col": 1,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        50.0225661002323,
+        82.22221283680817
+      ],
+      "confidence": 0.82676532891577,
+      "radius_mm": 1.2636147427904043,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000013",
+      "row": 2,
+      "col": 2,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        86.91656164276414,
+        81.18099952461081
+      ],
+      "confidence": 0.7573798553465804,
+      "radius_mm": 1.9090023230161197,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000014",
+      "row": 2,
+      "col": 5,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        182.11467755259673,
+        75.72057190896538
+      ],
+      "confidence": 0.9190467675822259,
+      "radius_mm": 1.4941720762261514,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000015",
+      "row": 2,
+      "col": 9,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        312.6900291769493,
+        84.77668912157543
+      ],
+      "confidence": 0.9221929472717142,
+      "radius_mm": 1.2260940116379573,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000016",
+      "row": 2,
+      "col": 9,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        306.54766740829274,
+        83.89723295906359
+      ],
+      "confidence": 0.9348360466079437,
+      "radius_mm": 2.346803344136598,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000017",
+      "row": 2,
+      "col": 9,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        310.0869099351448,
+        81.22209535469138
+      ],
+      "confidence": 0.8966408655192838,
+      "radius_mm": 1.6235240513382438,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000018",
+      "row": 3,
+      "col": 7,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        249.8181015022101,
+        118.45875717393103
+      ],
+      "confidence": 0.8479194990971345,
+      "radius_mm": 1.8742223886823597,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000019",
+      "row": 3,
+      "col": 7,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        257.0362149624434,
+        122.89549864732537
+      ],
+      "confidence": 0.7504692843555809,
+      "radius_mm": 2.4339346248397598,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000020",
+      "row": 3,
+      "col": 8,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        274.5801060947582,
+        110.9245527681845
+      ],
+      "confidence": 0.86693614603368,
+      "radius_mm": 2.274825537752518,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000021",
+      "row": 4,
+      "col": 3,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        109.78002326913439,
+        152.2861185278951
+      ],
+      "confidence": 0.7607889414984269,
+      "radius_mm": 2.9704154537487337,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000022",
+      "row": 4,
+      "col": 3,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        125.25019303578122,
+        143.4594928184889
+      ],
+      "confidence": 0.7742851914416526,
+      "radius_mm": 2.906769593787862,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000023",
+      "row": 4,
+      "col": 3,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        124.76088582967313,
+        145.54571981970582
+      ],
+      "confidence": 0.9797051029411337,
+      "radius_mm": 2.2785832875159464,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000024",
+      "row": 4,
+      "col": 5,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        184.6364039285798,
+        141.53686572254503
+      ],
+      "confidence": 0.8398952907271834,
+      "radius_mm": 1.6529897371153572,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000025",
+      "row": 4,
+      "col": 8,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        278.80175961706504,
+        145.1235753955703
+      ],
+      "confidence": 0.920792989173616,
+      "radius_mm": 2.0574920758125677,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000026",
+      "row": 4,
+      "col": 10,
+      "class_name": "weed",
+      "position_mm": [
+        342.8370762540625,
+        145.72350023662796
+      ],
+      "confidence": 0.9877053539104129,
+      "radius_mm": 1.2242372064141067,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000027",
+      "row": 5,
+      "col": 6,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        218.48347335048368,
+        183.8669966535485
+      ],
+      "confidence": 0.8402152686829674,
+      "radius_mm": 2.5758229276528035,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000028",
+      "row": 5,
+      "col": 8,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        274.58063706923036,
+        190.7796684875049
+      ],
+      "confidence": 0.8969306848623216,
+      "radius_mm": 2.1232051026147243,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000029",
+      "row": 5,
+      "col": 9,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        307.3442260895106,
+        185.60954709463508
+      ],
+      "confidence": 0.7715627114355096,
+      "radius_mm": 2.5329466672205534,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000030",
+      "row": 6,
+      "col": 6,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        221.22036443070886,
+        213.78252297062528
+      ],
+      "confidence": 0.7711138355157479,
+      "radius_mm": 1.4569968322306015,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000031",
+      "row": 7,
+      "col": 0,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        16.919683478294136,
+        237.8570827954646
+      ],
+      "confidence": 0.8284654420280377,
+      "radius_mm": 2.245963951051546,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000032",
+      "row": 7,
+      "col": 8,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        286.8004814324883,
+        245.2976836291532
+      ],
+      "confidence": 0.9088480809654501,
+      "radius_mm": 2.14354952378229,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000033",
+      "row": 8,
+      "col": 1,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        55.445658553030505,
+        283.1171855896889
+      ],
+      "confidence": 0.9664415546052537,
+      "radius_mm": 1.9488423959123824,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000034",
+      "row": 8,
+      "col": 2,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        92.23128796253292,
+        288.5282278585532
+      ],
+      "confidence": 0.8525918676483901,
+      "radius_mm": 2.446492883087868,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000035",
+      "row": 8,
+      "col": 3,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        105.87297464888218,
+        270.7702586956263
+      ],
+      "confidence": 0.783881663290329,
+      "radius_mm": 1.2520547965100173,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000036",
+      "row": 8,
+      "col": 5,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        176.05729021755891,
+        273.4421502734146
+      ],
+      "confidence": 0.8100142386078735,
+      "radius_mm": 2.8200951573670108,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000037",
+      "row": 8,
+      "col": 6,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        205.9315901528035,
+        284.1860957383779
+      ],
+      "confidence": 0.8267421959187884,
+      "radius_mm": 2.4164390144481454,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000038",
+      "row": 8,
+      "col": 8,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        283.3444810741364,
+        270.70756783252307
+      ],
+      "confidence": 0.859704548079514,
+      "radius_mm": 1.483786300037455,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000039",
+      "row": 9,
+      "col": 0,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        11.103690553844409,
+        312.64568233261923
+      ],
+      "confidence": 0.7895655048732126,
+      "radius_mm": 1.8191726607217302,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000040",
+      "row": 9,
+      "col": 1,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        47.54660913691636,
+        306.95934610852294
+      ],
+      "confidence": 0.8440747989084687,
+      "radius_mm": 1.6259849829750546,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000041",
+      "row": 9,
+      "col": 4,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        157.71017611120297,
+        313.8779764844503
+      ],
+      "confidence": 0.7731762225461509,
+      "radius_mm": 1.3840511499188852,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000042",
+      "row": 10,
+      "col": 3,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        124.8715436583242,
+        339.0618024195424
+      ],
+      "confidence": 0.8686347628015213,
+      "radius_mm": 2.3101280892265725,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000043",
+      "row": 10,
+      "col": 5,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        180.21027637389687,
+        338.35546746629234
+      ],
+      "confidence": 0.9574128588032763,
+      "radius_mm": 2.4622805215312105,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000044",
+      "row": 10,
+      "col": 5,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        188.76225756826233,
+        350.9169166975326
+      ],
+      "confidence": 0.8354864139972704,
+      "radius_mm": 1.6265919385399121,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000045",
+      "row": 10,
+      "col": 7,
+      "class_name": "crop_seedling",
+      "position_mm": [
+        256.4175444981074,
+        339.91800594459914
+      ],
+      "confidence": 0.9880413502857748,
+      "radius_mm": 2.1875725346601307,
+      "removed": false,
+      "attributes": []
+    },
+    {
+      "object_id": "plant_000046",
+      "row": 10,
+      "col": 8,
+      "class_name": "weed",
+      "position_mm": [
+        290.1301540517352,
+        352.18749129364227
+      ],
+      "confidence": 0.9817958142726381,
+      "radius_mm": 2.0108721396707105,
+      "removed": false,
+      "attributes": []
+    }
+  ],
+  "targets": [
+    {
+      "target_id": "target_000000",
+      "object_id": "plant_000006",
+      "target_type": "remove_extra_crop",
+      "point_mm": [
+        312.34844155765506,
+        20.733630687585293
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 9.229322623525345,
+      "processed": false
+    },
+    {
+      "target_id": "target_000001",
+      "object_id": "plant_000009",
+      "target_type": "remove_extra_crop",
+      "point_mm": [
+        179.62685407488135,
+        43.467298864480064
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 8.701703247846774,
+      "processed": false
+    },
+    {
+      "target_id": "target_000002",
+      "object_id": "plant_000010",
+      "target_type": "remove_extra_crop",
+      "point_mm": [
+        183.27749128563963,
+        43.14154195120176
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 6.641586536648072,
+      "processed": false
+    },
+    {
+      "target_id": "target_000003",
+      "object_id": "plant_000015",
+      "target_type": "remove_extra_crop",
+      "point_mm": [
+        312.6900291769493,
+        84.77668912157543
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 6.205002114329501,
+      "processed": false
+    },
+    {
+      "target_id": "target_000004",
+      "object_id": "plant_000017",
+      "target_type": "remove_extra_crop",
+      "point_mm": [
+        310.0869099351448,
+        81.22209535469138
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 4.436507507736718,
+      "processed": false
+    },
+    {
+      "target_id": "target_000005",
+      "object_id": "plant_000018",
+      "target_type": "remove_extra_crop",
+      "point_mm": [
+        249.8181015022101,
+        118.45875717393103
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 8.472652289958466,
+      "processed": false
+    },
+    {
+      "target_id": "target_000006",
+      "object_id": "plant_000022",
+      "target_type": "remove_extra_crop",
+      "point_mm": [
+        125.25019303578122,
+        143.4594928184889
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 17.811105356569648,
+      "processed": false
+    },
+    {
+      "target_id": "target_000007",
+      "object_id": "plant_000023",
+      "target_type": "remove_extra_crop",
+      "point_mm": [
+        124.76088582967313,
+        145.54571981970582
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 16.42739230076128,
+      "processed": false
+    },
+    {
+      "target_id": "target_000008",
+      "object_id": "plant_000026",
+      "target_type": "remove_weed",
+      "point_mm": [
+        342.8370762540625,
+        145.72350023662796
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": null,
+      "processed": false
+    },
+    {
+      "target_id": "target_000009",
+      "object_id": "plant_000044",
+      "target_type": "remove_extra_crop",
+      "point_mm": [
+        188.76225756826233,
+        350.9169166975326
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 15.196262341043171,
+      "processed": false
+    },
+    {
+      "target_id": "target_000010",
+      "object_id": "plant_000046",
+      "target_type": "remove_weed",
+      "point_mm": [
+        290.1301540517352,
+        352.18749129364227
+      ],
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": null,
+      "processed": false
+    }
+  ],
+  "robot_position_mm": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "step_index": 0,
+  "schema_version": "sim_scene_v0_1",
+  "metadata": {
+    "generator": {
+      "grid_rows": 11,
+      "grid_cols": 11,
+      "cell_size_mm": [
+        33.0,
+        33.0
+      ],
+      "p_empty": 0.65,
+      "p_single_crop": 0.25,
+      "p_multiple_crop": 0.07,
+      "p_weed_present": 0.03,
+      "p_unknown_present": 0.0,
+      "max_extra_crops": 2,
+      "seed": null
+    }
+  }
+}

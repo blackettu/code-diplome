@@ -1,0 +1,1739 @@
+{
+  "schema_version": "architecture_backlog_audit_v0_1",
+  "ok": true,
+  "architecture_doc": "docs\\seedlings_vilga_architecture_codex_rl_simulation.md",
+  "repo_root": ".",
+  "counts": {
+    "external_required": 1,
+    "pass": 132
+  },
+  "items": [
+    {
+      "item_id": "A-001",
+      "priority": "P0",
+      "title": "Каркас пакетов и точек входа",
+      "acceptance": "Пакеты проекта и CLI-точки входа доступны для запуска и тестирования.",
+      "status": "pass",
+      "evidence": [
+        "pyproject.toml",
+        "seedling_experiments/__main__.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-002",
+      "priority": "P0",
+      "title": "Разделение зависимостей",
+      "acceptance": "Базовые зависимости и группы vision, RL, robot, dev разделены.",
+      "status": "pass",
+      "evidence": [
+        "requirements/base.txt",
+        "requirements/vision.txt",
+        "requirements/rl.txt",
+        "requirements/robot.txt",
+        "requirements/dev.txt"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-003",
+      "priority": "P0",
+      "title": "Загрузчик конфигураций",
+      "acceptance": "Конфигурации проверяют разделы, поля и пути.",
+      "status": "pass",
+      "evidence": [
+        "seedling_core/config.py",
+        "seedling_experiments/config.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-004",
+      "priority": "P0",
+      "title": "Общие схемы данных",
+      "acceptance": "Общие структуры сериализуются и валидируются.",
+      "status": "pass",
+      "evidence": [
+        "seedling_core/schemas.py",
+        "tests/unit/test_schemas.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-005",
+      "priority": "P1",
+      "title": "Общий run_snapshot",
+      "acceptance": "Все команды сохраняют версию Python, платформу, аргументы команды и хэш конфигурации.",
+      "status": "pass",
+      "evidence": [
+        "seedling_core/run_snapshot.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-006",
+      "priority": "P1",
+      "title": "Реестр артефактов",
+      "acceptance": "Каждый запуск создаёт artifact_registry.json со связями входов и выходов.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/registry.py",
+        "seedling_core/run_snapshot.py",
+        "tests/unit/test_reports_and_viewers.py",
+        "tests/unit/test_cli_smoke.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-007",
+      "priority": "P1",
+      "title": "Миграция старых предсказаний",
+      "acceptance": "Старые predictions.json переводятся в SceneState.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/migration.py",
+        "tests/unit/test_vision_migration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-008",
+      "priority": "P1",
+      "title": "CI и pre-commit",
+      "acceptance": "Проверки форматирования, lint и тестов запускаются локально и в CI.",
+      "status": "pass",
+      "evidence": [
+        ".pre-commit-config.yaml",
+        ".github/workflows/ci.yml",
+        "pyproject.toml"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-001",
+      "priority": "P0",
+      "title": "Конфигурация онтологии",
+      "acceptance": "В онтологии есть классы объектов, состояния ячеек, метки действий и атрибуты.",
+      "status": "pass",
+      "evidence": [
+        "configs/ontology/ontology_v0_1.yaml"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-002",
+      "priority": "P0",
+      "title": "Модуль онтологии данных",
+      "acceptance": "Онтология валидируется, а имена классов согласованы с датасетом.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/ontology.py",
+        "tests/unit/test_ontology_and_adapters.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-003",
+      "priority": "P1",
+      "title": "Шаблон карточки набора данных",
+      "acceptance": "Карточка фиксирует идентичность, источники, разбиение и ограничения безопасности.",
+      "status": "pass",
+      "evidence": [
+        "docs/DATASET_CARD_TEMPLATE.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-004",
+      "priority": "P0",
+      "title": "Руководство по разметке",
+      "acceptance": "Руководство описывает объекты, ячейки и точки действия.",
+      "status": "pass",
+      "evidence": [
+        "docs/ANNOTATION_GUIDE.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-005",
+      "priority": "P0",
+      "title": "Групповое разбиение",
+      "acceptance": "Группы разделяются до аугментации.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/dataset.py",
+        "tests/unit/test_dataset_split.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-006",
+      "priority": "P0",
+      "title": "Генератор image_manifest.csv",
+      "acceptance": "Для каждого изображения есть хэш, размер, группа, сессия и кассета.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/manifests.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-007",
+      "priority": "P0",
+      "title": "Проверка утечки аугментаций",
+      "acceptance": "В val и test нет утечки исходников из train.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/dataset.py",
+        "tests/unit/test_dataset_split.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-008",
+      "priority": "P0",
+      "title": "Проверка близких дублей",
+      "acceptance": "Хэши и перцептивные хэши проверяются между частями разбиения.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/duplicates.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-009",
+      "priority": "P0",
+      "title": "Разметка ячеек",
+      "acceptance": "Схема и аудит разметки ячеек реализованы.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/annotations.py",
+        "docs/ANNOTATION_GUIDE.md",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-010",
+      "priority": "P0",
+      "title": "Разметка точек действия",
+      "acceptance": "Экспертные точки действия доступны и проверяются.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/annotations.py",
+        "docs/ANNOTATION_GUIDE.md",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-011",
+      "priority": "P0",
+      "title": "Согласованность ячеек и действий",
+      "acceptance": "Точки действия сверяются с разметкой ячеек.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/annotations.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-012",
+      "priority": "P1",
+      "title": "Флаги безопасности разметки",
+      "acceptance": "Небезопасные и неопределённые цели требуют проверки человеком.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/annotations.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-013",
+      "priority": "P1",
+      "title": "Сводка набора данных",
+      "acceptance": "Markdown/HTML-сводка показывает разбиение, классы, ячейки и действия.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/registry.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-014",
+      "priority": "P1",
+      "title": "Журнал изменений набора данных",
+      "acceptance": "Версии набора данных имеют неизменяемые записи журнала.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/changelog.py",
+        "docs/DATASET_CHANGELOG_TEMPLATE.md",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-001",
+      "priority": "P0",
+      "title": "Интерфейс DetectorAdapter",
+      "acceptance": "Детекторы предоставляют загрузку, предсказание и метаданные.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/base.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-002",
+      "priority": "P0",
+      "title": "Адаптер Ultralytics YOLO",
+      "acceptance": "Предсказание возвращает DetectionResultV1.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/ultralytics_yolo.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-003",
+      "priority": "P0",
+      "title": "HSV-детектор базового метода",
+      "acceptance": "Базовый HSV-метод возвращает схему выхода детектора.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/baseline_green.py",
+        "tests/unit/test_registry_selector_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-004",
+      "priority": "P0",
+      "title": "Адаптер записанных предсказаний",
+      "acceptance": "Существующие predictions.json можно воспроизводить.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/recorded_prediction.py",
+        "tests/unit/test_ontology_and_adapters.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-005",
+      "priority": "P1",
+      "title": "ONNX-адаптер",
+      "acceptance": "ONNX-модели подключаются без среды выполнения Ultralytics.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/onnx.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-006",
+      "priority": "P1",
+      "title": "Оценщик неопределённости",
+      "acceptance": "Уверенность, bbox и энтропийные флаги доступны в выходе.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/uncertainty.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-007",
+      "priority": "P1",
+      "title": "Постобработка контейнеров",
+      "acceptance": "Оценщик может использовать явные выходы контейнеров.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/postprocess.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-008",
+      "priority": "P1",
+      "title": "Метаданные модели",
+      "acceptance": "Реестр хранит модель, датасет, онтологию и версию схемы.",
+      "status": "pass",
+      "evidence": [
+        "seedling_core/registry.py",
+        "configs/registry/model_registry_v0_1.yaml",
+        "tests/unit/test_registry_selector_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-009",
+      "priority": "P2",
+      "title": "Пакетный вывод",
+      "acceptance": "Поддерживаются обработка набора изображений и журналы прогресса.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/batch.py",
+        "seedling_vision/cli.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-010",
+      "priority": "P2",
+      "title": "Визуальный отчёт с наложением",
+      "acceptance": "Отрисовываются bbox, сетка, цели и ошибки.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/overlays.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-001",
+      "priority": "P0",
+      "title": "Построитель сетки",
+      "acceptance": "bbox/углы кассеты делятся на строки и столбцы.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/grid.py",
+        "tests/unit/test_grid.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-002",
+      "priority": "P0",
+      "title": "Схема CellState",
+      "acceptance": "Состояния ячеек хранят классы, объекты, флаги проверки и риск.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/cell_state.py",
+        "tests/unit/test_grid.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-003",
+      "priority": "P0",
+      "title": "Построитель CellState",
+      "acceptance": "Детекции и геометрия кассеты формируют строки CellState.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/cell_state.py",
+        "tests/unit/test_target_generation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-004",
+      "priority": "P0",
+      "title": "Генерация целей",
+      "acceptance": "Крупнейший bbox является стратегией, а не жёстко прошитым правилом.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/target_generation.py",
+        "tests/unit/test_target_generation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-005",
+      "priority": "P0",
+      "title": "Метрики ячеек",
+      "acceptance": "Считаются доля верных ячеек, macro-F1 и метрики целей.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/evaluate.py",
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-006",
+      "priority": "P1",
+      "title": "Диагностика сопоставления контейнеров",
+      "acceptance": "Сообщаются случаи отсутствующих и низко-IoU контейнеров.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/evaluate.py",
+        "seedling_vision/postprocess.py",
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-007",
+      "priority": "P1",
+      "title": "Метрики с ценой ошибок",
+      "acceptance": "Критические биологические и решающие ошибки имеют отдельную стоимость.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/evaluate.py",
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-008",
+      "priority": "P1",
+      "title": "Оценщик SceneState",
+      "acceptance": "Богатые состояния ячеек и цели оцениваются совместно.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/evaluation.py",
+        "tests/unit/test_scene_state_evaluation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-009",
+      "priority": "P1",
+      "title": "Метрики краёв и углов",
+      "acceptance": "Краевые и угловые ячейки суммируются отдельно.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/evaluation.py",
+        "tests/unit/test_scene_state_evaluation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-010",
+      "priority": "P1",
+      "title": "Таксономия ошибок",
+      "acceptance": "Ошибки группируются по изображению, геометрии, биологии и решению.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/evaluation.py",
+        "seedling_reports/diagnostics.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-011",
+      "priority": "P2",
+      "title": "Бутстрэп-доверительные интервалы",
+      "acceptance": "Для основных метрик формируются бутстрэп-интервалы.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/diagnostics.py",
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-012",
+      "priority": "P2",
+      "title": "Отчёт по таксономии ошибок",
+      "acceptance": "Диагностика пишет артефакты таксономии.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/diagnostics.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-001",
+      "priority": "P0",
+      "title": "Схемы калибровки",
+      "acceptance": "JSON содержит гомографию, преобразования, px/mm и сводку ошибок.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/schemas.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-002",
+      "priority": "P0",
+      "title": "Преобразование пикселей в миллиметры кассеты",
+      "acceptance": "Известные точки отображаются корректно.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/transforms.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-003",
+      "priority": "P0",
+      "title": "Преобразование кассеты в систему робота",
+      "acceptance": "Поддерживается смещение инструмента.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/transforms.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-004",
+      "priority": "P0",
+      "title": "Валидатор калибровки",
+      "acceptance": "Проверяются срок действия, RMS/P95 и тип кассеты.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/validator.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-005",
+      "priority": "P1",
+      "title": "Карта ошибок",
+      "acceptance": "Формируется тепловая карта ошибок.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/estimation.py",
+        "docs/CALIBRATION_PROTOCOL.md",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-006",
+      "priority": "P1",
+      "title": "Координаты в целях действия",
+      "acceptance": "ActionTarget получает пиксельные, миллиметровые и роботные координаты.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/transforms.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-007",
+      "priority": "P1",
+      "title": "CLI калибровки",
+      "acceptance": "Команды estimate, validate, error-map создают артефакты.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/cli.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-008",
+      "priority": "P2",
+      "title": "Калибровка внутренних параметров камеры",
+      "acceptance": "Поддерживаются шахматная доска, ArUco и фидуциальные метки.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/intrinsics.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-001",
+      "priority": "P0",
+      "title": "Интерфейс DecisionPolicy",
+      "acceptance": "Политики совместимы с преобразованием SceneState в ActionPlan.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/base.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-002",
+      "priority": "P0",
+      "title": "NoOpPolicy",
+      "acceptance": "Цели отправляются на проверку.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-003",
+      "priority": "P0",
+      "title": "RasterScanPolicy",
+      "acceptance": "Безопасные цели упорядочиваются по строкам и столбцам.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-004",
+      "priority": "P0",
+      "title": "NearestNeighborPolicy",
+      "acceptance": "Цели упорядочиваются по расстоянию робота.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-005",
+      "priority": "P0",
+      "title": "RiskAwareRulePolicy",
+      "acceptance": "Правила риска отфильтровывают небезопасные цели.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-006",
+      "priority": "P0",
+      "title": "ActionMaskBuilder",
+      "acceptance": "Небезопасные, недопустимые и обработанные действия маскируются.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/action_masks.py",
+        "tests/unit/test_decision_and_safety.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-007",
+      "priority": "P0",
+      "title": "SafetyGate",
+      "acceptance": "Выполнение действия требует решения безопасности.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/safety_gate.py",
+        "seedling_robot/adapters/dry_run_serial.py",
+        "tests/unit/test_decision_and_safety.py",
+        "tests/unit/test_dry_run_and_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-008",
+      "priority": "P0",
+      "title": "Запретные зоны",
+      "acceptance": "Правила риска учитывают зоны сохранения и границы кассеты.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/action_masks.py",
+        "seedling_decision/policies/builtin.py",
+        "seedling_decision/safety_gate.py",
+        "tests/unit/test_decision_and_safety.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-009",
+      "priority": "P1",
+      "title": "HumanReviewPolicy",
+      "acceptance": "Runtime получает цели проверки с причинами.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-010",
+      "priority": "P1",
+      "title": "Метрики сравнения политик",
+      "acceptance": "Политики сравниваются на одной сцене.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/scenario.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-011",
+      "priority": "P2",
+      "title": "RoutePlanningPolicy",
+      "acceptance": "Маршрутный базовый метод жадно минимизирует движение.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-001",
+      "priority": "P0",
+      "title": "Схема SimScene",
+      "acceptance": "Сцены сериализуются в JSON и валидируются.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/schemas.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-002",
+      "priority": "P0",
+      "title": "Логический симулятор кассеты",
+      "acceptance": "Сцена, растения, цели и состояние робота дают пошаговые исходы.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/logical_tray.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-003",
+      "priority": "P0",
+      "title": "Модель шума детекции",
+      "acceptance": "Настраиваются пропуски, ложные объекты и шум классов.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/detection_noise.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-004",
+      "priority": "P0",
+      "title": "Модель ошибки привода",
+      "acceptance": "Есть механическая ошибка, задержка, дрейф и ошибка зоны.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/actuator_model.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-005",
+      "priority": "P0",
+      "title": "Заглушка модели реакции растения",
+      "acceptance": "Успех и повреждение моделируются вероятностно без реальных параметров лазера.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/plant_response_model.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-006",
+      "priority": "P0",
+      "title": "Генератор сцен",
+      "acceptance": "Генерируются пустые, одиночные, множественные, сорные и неизвестные сцены.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/scene_generator.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-007",
+      "priority": "P1",
+      "title": "Сцены на основе реальных данных",
+      "acceptance": "Сцены строятся из доказательств SceneState.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/image_backed.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-008",
+      "priority": "P1",
+      "title": "Журнал воспроизведения",
+      "acceptance": "Каждый шаг хранит наблюдение, действие, награду и сведения.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/replay.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-009",
+      "priority": "P1",
+      "title": "Статический рендерер",
+      "acceptance": "SVG/HTML/PNG показывают сетку, растения, цели и путь.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/renderers.py",
+        "tests/unit/test_simulation.py",
+        "tests/unit/test_rl_env.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-010",
+      "priority": "P1",
+      "title": "Просмотрщик воспроизведения политики",
+      "acceptance": "Действия можно пошагово просматривать визуально.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/replay_viewer.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-011",
+      "priority": "P2",
+      "title": "Рендерер синтетических изображений",
+      "acceptance": "Генерируются простые 2D-изображения.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/renderers.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-012",
+      "priority": "P2",
+      "title": "Наборы доменной рандомизации",
+      "acceptance": "Есть пресеты освещения, фокуса, шума и дрейфа калибровки.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/domain_randomization.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-001",
+      "priority": "P0",
+      "title": "Среда SeedlingTrayEnv",
+      "acceptance": "Среда Gymnasium оборачивает симулятор кассеты.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/envs.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-002",
+      "priority": "P0",
+      "title": "Наблюдения RL",
+      "acceptance": "Наблюдения кодируют состояние ячеек, цели, робота и маски действий.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/envs.py",
+        "tests/unit/test_rl_env.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-003",
+      "priority": "P0",
+      "title": "Действия RL",
+      "acceptance": "Действия выбирают цель, пропуск или завершение эпизода.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/reward.py",
+        "tests/unit/test_rl_env.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-004",
+      "priority": "P0",
+      "title": "Базовые политики RL",
+      "acceptance": "Базовые политики оцениваются тем же протоколом, что и обученные политики.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/baseline_eval.py",
+        "tests/unit/test_rl_env.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-005",
+      "priority": "P0",
+      "title": "Награда RL",
+      "acceptance": "Награда учитывает удаление, повреждения, риск, движение и блокировки.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/training.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-006",
+      "priority": "P1",
+      "title": "Обучение MaskablePPO",
+      "acceptance": "Обучение с масками действий создаёт артефакты и метрики.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/training.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-007",
+      "priority": "P1",
+      "title": "Рекуррентное обучение",
+      "acceptance": "Рекуррентная политика поддерживает историю наблюдений.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/policy_adapter.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-008",
+      "priority": "P1",
+      "title": "Адаптер политики",
+      "acceptance": "Обученная RL-политика может использоваться как DecisionPolicy.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/callbacks.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-009",
+      "priority": "P1",
+      "title": "Сравнение политик RL",
+      "acceptance": "RL и базовые политики сравниваются на одинаковых сценах.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/vectorized_env.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-010",
+      "priority": "P1",
+      "title": "План экспериментов RL",
+      "acceptance": "План задаёт сцены, seed, метрики и артефакты.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/curriculum.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-011",
+      "priority": "P2",
+      "title": "Стабильность по seed",
+      "acceptance": "Запуски по нескольким seed агрегируются в сводку устойчивости.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/policy_adapter.py",
+        "configs/rl/recurrent_ppo_v0.yaml",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-012",
+      "priority": "P2",
+      "title": "Офлайн-оценка воспроизведений",
+      "acceptance": "Журналы воспроизведения оцениваются без шага среды.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/offline_replay.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-013",
+      "priority": "P2",
+      "title": "План sweep",
+      "acceptance": "Сетки гиперпараметров раскрываются в воспроизводимый план.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/sweep.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-001",
+      "priority": "P0",
+      "title": "Протокол команд робота",
+      "acceptance": "Команды робота имеют тип, координаты, токен безопасности и статус.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/adapters/base.py",
+        "docs/ROBOT_PROTOCOL.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-002",
+      "priority": "P0",
+      "title": "Адаптер симулятора робота",
+      "acceptance": "Команды робота исполняются в логическом симуляторе.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/adapters/simulator.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-003",
+      "priority": "P0",
+      "title": "Исполнитель команд",
+      "acceptance": "Исполнитель проверяет SafetyGate до движения.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/protocol.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-004",
+      "priority": "P0",
+      "title": "Адаптер сухого прогона",
+      "acceptance": "Команды выполняются в безопасном режиме без опасного воздействия.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/adapters/dry_run_serial.py",
+        "tests/unit/test_dry_run_and_feedback.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-005",
+      "priority": "P0",
+      "title": "Телеметрия робота",
+      "acceptance": "SafetyGate видит готовность, базирование и концевики.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/protocol.py",
+        "seedling_decision/safety_gate.py",
+        "seedling_robot/adapters/dry_run_serial.py",
+        "tests/unit/test_decision_and_safety.py",
+        "tests/unit/test_dry_run_and_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-006",
+      "priority": "P1",
+      "title": "Проверка межблокировки",
+      "acceptance": "Выполнение требует подтверждения межблокировки.",
+      "status": "pass",
+      "evidence": [
+        "docs/ROBOT_PROTOCOL.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-007",
+      "priority": "P1",
+      "title": "Воспроизведение движения",
+      "acceptance": "Команды движения можно повторно проиграть для диагностики.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/motion_replay.py",
+        "tests/unit/test_dry_run_and_feedback.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-008",
+      "priority": "P1",
+      "title": "Сухой прогон плана",
+      "acceptance": "План действий исполняется сухим прогоном с отчётом.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/dry_run_runner.py",
+        "seedling_robot/cli.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-009",
+      "priority": "P0",
+      "title": "HIL-прогон с указателем",
+      "acceptance": "Реальная проверка оборудования остаётся внешним этапом.",
+      "status": "external_required",
+      "evidence": [
+        "seedling_robot/hil_runner.py",
+        "seedling_robot/adapters/real_gantry_serial.py",
+        "docs/ROBOT_PROTOCOL.md"
+      ],
+      "missing_evidence": [],
+      "notes": "Software scaffold exists if evidence is present; real hardware validation remains external."
+    },
+    {
+      "item_id": "J-001",
+      "priority": "P0",
+      "title": "Офлайн-просмотрщик",
+      "acceptance": "Загружаются изображение, предсказания, состояние ячеек и цели.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/offline_viewer.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-002",
+      "priority": "P0",
+      "title": "Просмотрщик воспроизведения симуляции",
+      "acceptance": "Есть запуск, пауза, шаг, сброс и шкала действий.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/replay_viewer.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-003",
+      "priority": "P0",
+      "title": "Причины проверки и блокировки",
+      "acceptance": "Оператор видит, почему цель заблокирована.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/offline_viewer.py",
+        "seedling_decision/policies/builtin.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-004",
+      "priority": "P1",
+      "title": "Выбор модели и политики",
+      "acceptance": "Детектор и политика выбираются из реестра.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/cli.py",
+        "seedling_core/registry.py",
+        "tests/unit/test_registry_selector_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-005",
+      "priority": "P1",
+      "title": "Сравнение сценариев",
+      "acceptance": "На одной сцене сравниваются политика на правилах и RL.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/scenario.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-006",
+      "priority": "P1",
+      "title": "Экспорт отчёта",
+      "acceptance": "HTML/Markdown-отчёт строится для кассеты или эпизода.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/report_export.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-007",
+      "priority": "P2",
+      "title": "Режим обратной связи по разметке",
+      "acceptance": "Оператор может отметить ошибку модели для переразметки.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/feedback.py",
+        "seedling_ui/offline_viewer.py",
+        "tests/unit/test_registry_selector_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-001",
+      "priority": "P0",
+      "title": "Единый CLI экспериментов",
+      "acceptance": "prepare, train, val, predict, evaluate, sim, rl имеют единый стиль.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/cli.py",
+        "tests/unit/test_cli_smoke.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-002",
+      "priority": "P0",
+      "title": "Реестр экспериментов",
+      "acceptance": "Каждая команда регистрирует входы и выходы.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/cli.py",
+        "seedling_experiments/config.py",
+        "seedling_reports/registry.py",
+        "tests/unit/test_cli_smoke.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-003",
+      "priority": "P0",
+      "title": "dataset_summary.csv",
+      "acceptance": "Таблица строится из артефактов.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/tables.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-004",
+      "priority": "P0",
+      "title": "object_level_results.csv",
+      "acceptance": "Источник данных — test_metrics.json.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/tables.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-005",
+      "priority": "P0",
+      "title": "task_level_results.csv",
+      "acceptance": "Источник данных — cell_metrics.json.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/tables.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-006",
+      "priority": "P1",
+      "title": "artifact_registry.csv",
+      "acceptance": "Таблица артефактов поддерживает статью и воспроизводимость.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/registry.py",
+        "seedling_reports/tables.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-007",
+      "priority": "P1",
+      "title": "HTML-генератор отчётов",
+      "acceptance": "Единый отчёт эксперимента включает изображения и таблицы.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/html.py",
+        "seedling_reports/cli.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-008",
+      "priority": "P2",
+      "title": "Сравнение запусков",
+      "acceptance": "Сравниваются модели, пороги, seed и ограничения качества.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-001",
+      "priority": "P0",
+      "title": "Модульные тесты схем",
+      "acceptance": "Тесты схем покрывают геометрию объектов и round-trip сериализацию.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_schemas.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-002",
+      "priority": "P0",
+      "title": "Модульные тесты сетки",
+      "acceptance": "Тесты сетки покрывают границы, присвоение и многоугольники.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_grid.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-003",
+      "priority": "P0",
+      "title": "Тесты генерации целей",
+      "acceptance": "Тесты целей покрывают crop, weed и случаи проверки.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_target_generation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-004",
+      "priority": "P0",
+      "title": "Тесты безопасности и политик",
+      "acceptance": "Тесты покрывают маски действий и телеметрию робота.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_decision_and_safety.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-005",
+      "priority": "P0",
+      "title": "Тесты калибровки",
+      "acceptance": "Тесты покрывают преобразования, оценку и валидацию.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-006",
+      "priority": "P0",
+      "title": "Интеграционный тест политики",
+      "acceptance": "Политика на правилах завершает сцену через SafetyGate.",
+      "status": "pass",
+      "evidence": [
+        "tests/integration/test_scene_policy_sim.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-007",
+      "priority": "P0",
+      "title": "Интеграционный тест симулятора",
+      "acceptance": "Роботный адаптер исполняет команды симулятора.",
+      "status": "pass",
+      "evidence": [
+        "tests/integration/test_scene_policy_sim.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-008",
+      "priority": "P1",
+      "title": "Тесты RL и сравнения",
+      "acceptance": "Покрыты dry-run обучения RL, адаптер политики и устойчивость seed.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-009",
+      "priority": "P1",
+      "title": "Тесты метрик ячеек",
+      "acceptance": "Метрики покрывают калиброванные ошибки целей и входы сцен.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-010",
+      "priority": "P1",
+      "title": "Smoke-тесты CLI",
+      "acceptance": "Покрыты справка CLI, зависимости и команды сухого прогона.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_cli_smoke.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-011",
+      "priority": "P2",
+      "title": "Тесты производительности",
+      "acceptance": "Пакетный вывод и обучение симуляции не деградируют.",
+      "status": "pass",
+      "evidence": [
+        "tests/performance/test_performance_smoke.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-001",
+      "priority": "P0",
+      "title": "Документация README",
+      "acceptance": "README связывает документы, быстрый старт и отчёты.",
+      "status": "pass",
+      "evidence": [
+        "docs/README.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-002",
+      "priority": "P0",
+      "title": "Архитектурная документация",
+      "acceptance": "Архитектура покрывает каркас, поток данных, безопасность и реестры.",
+      "status": "pass",
+      "evidence": [
+        "docs/ARCHITECTURE.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-003",
+      "priority": "P0",
+      "title": "Спецификация RL",
+      "acceptance": "RL-спецификация покрывает среду, награды, алгоритмы и sweep.",
+      "status": "pass",
+      "evidence": [
+        "docs/RL_SPEC.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-004",
+      "priority": "P0",
+      "title": "Спецификация симуляции",
+      "acceptance": "Спецификация покрывает симулятор, шумы и run-policy.",
+      "status": "pass",
+      "evidence": [
+        "docs/SIMULATION_SPEC.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-005",
+      "priority": "P0",
+      "title": "Документация API плагинов",
+      "acceptance": "Документ покрывает контракты детекторов, политик и безопасности.",
+      "status": "pass",
+      "evidence": [
+        "docs/MODEL_PLUGIN_API.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-006",
+      "priority": "P0",
+      "title": "Концепция безопасности",
+      "acceptance": "Концепция покрывает ворота, блокировки и HIL-проверку.",
+      "status": "pass",
+      "evidence": [
+        "docs/SAFETY_CONCEPT.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-007",
+      "priority": "P0",
+      "title": "Протокол калибровки",
+      "acceptance": "Документ покрывает артефакт, валидатор и реестр.",
+      "status": "pass",
+      "evidence": [
+        "docs/CALIBRATION_PROTOCOL.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-008",
+      "priority": "P1",
+      "title": "Документация режимов отказа",
+      "acceptance": "Таблица отказов покрывает обнаружение и меры снижения.",
+      "status": "pass",
+      "evidence": [
+        "docs/FAILURE_MODES.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-009",
+      "priority": "P1",
+      "title": "Шаблон отчёта статьи",
+      "acceptance": "Шаблон покрывает источники, таблицы и воспроизводимость.",
+      "status": "pass",
+      "evidence": [
+        "docs/ARTICLE_REPORT_TEMPLATE.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-010",
+      "priority": "P1",
+      "title": "Черновик руководства оператора",
+      "acceptance": "Руководство покрывает режимы, сухой прогон, обратную связь и проверку.",
+      "status": "pass",
+      "evidence": [
+        "docs/OPERATOR_MANUAL_DRAFT.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    }
+  ]
+}

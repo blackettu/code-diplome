@@ -1,0 +1,71 @@
+{
+  "runs": [
+    {
+      "run_id": "readiness_seedling_reports_readiness_check_readiness_report",
+      "command": "seedling-reports:readiness-check",
+      "run_dir": "reports\\software_readiness_smoke\\readiness",
+      "created_at": "2026-06-18T15:54:40.467180+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "reports\\software_readiness_smoke",
+          "artifact_type": "directory",
+          "role": "input",
+          "command": "seedling-reports:readiness-check",
+          "sha256": null,
+          "bytes": null,
+          "created_at": "2026-06-18T15:54:40.462965+00:00",
+          "metadata": {}
+        },
+        {
+          "path": ".",
+          "artifact_type": "directory",
+          "role": "input",
+          "command": "seedling-reports:readiness-check",
+          "sha256": null,
+          "bytes": null,
+          "created_at": "2026-06-18T15:54:40.463096+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\readiness\\readiness_report.json",
+          "artifact_type": "readiness_report",
+          "role": "output",
+          "command": "seedling-reports:readiness-check",
+          "sha256": "1859d260837665fd5f698d76a4bc3789301d574c826b1d657dc99c355d31d092",
+          "bytes": 6293,
+          "created_at": "2026-06-18T15:54:40.464529+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\readiness\\readiness_report.csv",
+          "artifact_type": "readiness_report",
+          "role": "output",
+          "command": "seedling-reports:readiness-check",
+          "sha256": "14cc2798c78f671288dd858fc9ff7954716ea5c730963ccca7faf89015789e7c",
+          "bytes": 3300,
+          "created_at": "2026-06-18T15:54:40.465829+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\readiness\\readiness_report.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-reports:readiness-check",
+          "sha256": "b7374ecfd89717568ad4690bfb4197ff3dfa35ee38db00bd755d92b03ccfaf50",
+          "bytes": 3273,
+          "created_at": "2026-06-18T15:54:40.466952+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "counts": {
+          "pass": 18,
+          "external_required": 2
+        },
+        "physical_validation_required": true
+      }
+    }
+  ]
+}

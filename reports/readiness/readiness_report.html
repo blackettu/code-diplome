@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Seedling Architecture Readiness</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; color: #1f2528; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 28px; font-size: 13px; }
+    td, th { border: 1px solid #ddd; padding: 6px 8px; text-align: left; vertical-align: top; }
+    th { background: #f2f2ed; }
+    code { font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <h1>Seedling Architecture Readiness</h1>
+  <section><h2>Readiness Items</h2><table><thead><tr><th>item_id</th><th>status</th><th>requirement</th><th>evidence_count</th><th>notes</th></tr></thead><tbody><tr><td>DOD-001</td><td>pass</td><td>SceneState / CellState / ActionTarget / ActionCommand schemas exist.</td><td>1</td><td></td></tr>
+<tr><td>DOD-002</td><td>pass</td><td>Detector models connect through DetectorAdapter and registries.</td><td>2</td><td></td></tr>
+<tr><td>DOD-003</td><td>pass</td><td>Policies connect through DecisionPolicy and registry.</td><td>2</td><td></td></tr>
+<tr><td>DOD-004</td><td>pass</td><td>Robot and simulator connect through RobotAdapter.</td><td>3</td><td></td></tr>
+<tr><td>DOD-005</td><td>pass</td><td>Action execution is gated by SafetyGate contracts.</td><td>2</td><td></td></tr>
+<tr><td>DOD-006</td><td>pass</td><td>Calibration artifact and error map evidence exists.</td><td>4</td><td></td></tr>
+<tr><td>DOD-007</td><td>pass</td><td>Model registry exists.</td><td>1</td><td></td></tr>
+<tr><td>DOD-008</td><td>pass</td><td>Dataset registry exists.</td><td>1</td><td></td></tr>
+<tr><td>DOD-009</td><td>pass</td><td>Simulation environment exists.</td><td>2</td><td></td></tr>
+<tr><td>DOD-010</td><td>pass</td><td>RL training block exists.</td><td>2</td><td></td></tr>
+<tr><td>DOD-011</td><td>pass</td><td>RL has been compared with baseline policies in generated artifacts.</td><td>1</td><td>Validated generated comparison evidence containing both RL and baseline policies.</td></tr>
+<tr><td>DOD-012</td><td>pass</td><td>Replay viewer exists.</td><td>1</td><td></td></tr>
+<tr><td>DOD-013</td><td>pass</td><td>Offline analysis UI exists.</td><td>1</td><td></td></tr>
+<tr><td>DOD-014</td><td>pass</td><td>Dry-run mode without dangerous actuation exists.</td><td>3</td><td></td></tr>
+<tr><td>DOD-015</td><td>pass</td><td>Actions are logged in command logs or replay artifacts.</td><td>2</td><td></td></tr>
+<tr><td>DOD-016</td><td>pass</td><td>Metrics are generated from artifacts.</td><td>2</td><td></td></tr>
+<tr><td>DOD-017</td><td>pass</td><td>Tests cover grid, calibration, safety, simulation and policies.</td><td>5</td><td></td></tr>
+<tr><td>DOD-018</td><td>pass</td><td>Documentation describes limitations and blocks autonomous dangerous actuation.</td><td>3</td><td></td></tr>
+<tr><td>EXT-001</td><td>external_required</td><td>Physical gantry HIL validation is externally verified.</td><td>0</td><td>Requires a real supervised stand run and operator safety review; software artifacts alone are not proof. No candidate evidence artifact was found.</td></tr>
+<tr><td>EXT-002</td><td>external_required</td><td>Delayed biological post-action validation is externally verified.</td><td>0</td><td>Requires real 24h/48h/72h observations under a documented biological protocol. No candidate evidence artifact was found.</td></tr></tbody></table></section>
+</body>
+</html>

@@ -1,0 +1,89 @@
+{
+  "ok": true,
+  "schema_version": "rl_sweep_stability_v0_1",
+  "plan_path": "reports/rl_sweep_smoke/sweep_plan.json",
+  "metric_files": [
+    "reports\\rl_sweep_smoke\\sweep_001_seed_041\\rl_eval_metrics.json"
+  ],
+  "group_count": 1,
+  "run_count": 1,
+  "groups": [
+    {
+      "group_id": "algorithm_maskable_ppo_batch_size_128_env_config_configs_simulation_tray_env_v0_yaml_gamma_0_99_",
+      "config": {
+        "algorithm": "maskable_ppo",
+        "env_config": "configs/simulation/tray_env_v0.yaml",
+        "total_timesteps": 100000,
+        "policy": "route_planning",
+        "n_envs": 4,
+        "n_steps": 1024,
+        "batch_size": 128,
+        "gamma": 0.99,
+        "learning_rate": 0.0003,
+        "mode": "baseline"
+      },
+      "run_count": 1,
+      "seeds": [
+        41
+      ],
+      "seed_count": 1,
+      "metrics": {
+        "reward_mean": {
+          "count": 1,
+          "mean": 185.2412688957499,
+          "std": 0.0,
+          "min": 185.2412688957499,
+          "max": 185.2412688957499,
+          "range": 0.0
+        },
+        "critical_error_rate": {
+          "count": 1,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "range": 0.0
+        },
+        "successful_target_rate": {
+          "count": 1,
+          "mean": 1.0,
+          "std": 0.0,
+          "min": 1.0,
+          "max": 1.0,
+          "range": 0.0
+        },
+        "review_rate": {
+          "count": 1,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "range": 0.0
+        },
+        "actions_per_tray": {
+          "count": 1,
+          "mean": 20.0,
+          "std": 0.0,
+          "min": 20.0,
+          "max": 20.0,
+          "range": 0.0
+        }
+      },
+      "runs": [
+        {
+          "run_id": "sweep_001_seed_041",
+          "seed": 41,
+          "metrics_path": "reports\\rl_sweep_smoke\\sweep_001_seed_041\\rl_eval_metrics.json",
+          "metrics": {
+            "reward_mean": 185.2412688957499,
+            "critical_error_rate": 0.0,
+            "successful_target_rate": 1.0,
+            "review_rate": 0.0,
+            "actions_per_tray": 20.0
+          }
+        }
+      ]
+    }
+  ],
+  "warnings": []
+}

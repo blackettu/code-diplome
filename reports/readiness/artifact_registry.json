@@ -1,0 +1,81 @@
+{
+  "runs": [
+    {
+      "run_id": "readiness_seedling_reports_readiness_check_readiness_report",
+      "command": "seedling-reports:readiness-check",
+      "run_dir": "reports\\readiness",
+      "created_at": "2026-06-18T19:44:54.707070+00:00",
+      "config_path": null,
+      "snapshot_path": "reports\\readiness\\run_snapshot.json",
+      "artifacts": [
+        {
+          "path": "reports\\software_readiness_smoke",
+          "artifact_type": "directory",
+          "role": "input",
+          "command": "seedling-reports:readiness-check",
+          "sha256": null,
+          "bytes": null,
+          "created_at": "2026-06-18T19:44:54.703894+00:00",
+          "metadata": {}
+        },
+        {
+          "path": ".",
+          "artifact_type": "directory",
+          "role": "input",
+          "command": "seedling-reports:readiness-check",
+          "sha256": null,
+          "bytes": null,
+          "created_at": "2026-06-18T19:44:54.703941+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\readiness\\readiness_report.json",
+          "artifact_type": "readiness_report",
+          "role": "output",
+          "command": "seedling-reports:readiness-check",
+          "sha256": "d7664ad92c1100603373cb6238c2dfb382152532b9914c3b2d99651a7c41fcc4",
+          "bytes": 6458,
+          "created_at": "2026-06-18T19:44:54.704731+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\readiness\\readiness_report.csv",
+          "artifact_type": "readiness_report",
+          "role": "output",
+          "command": "seedling-reports:readiness-check",
+          "sha256": "31909dbd1d891a0cfe41fc2fe733100359865c436857819bfd0be31de1842e76",
+          "bytes": 3465,
+          "created_at": "2026-06-18T19:44:54.705403+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\readiness\\readiness_report.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-reports:readiness-check",
+          "sha256": "f6d7ecee13e684a29e3f5b77e627ee9acc3a3702e01981aa1bfef4c3e127a335",
+          "bytes": 3438,
+          "created_at": "2026-06-18T19:44:54.706098+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\readiness\\run_snapshot.json",
+          "artifact_type": "run_snapshot",
+          "role": "output",
+          "command": "seedling-reports:readiness-check",
+          "sha256": "8a61a1b2fafd38e87f88a4214b0d902955c93ba5c19b4cd7e27178c174f8e247",
+          "bytes": 1770,
+          "created_at": "2026-06-18T19:44:54.706895+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "counts": {
+          "pass": 18,
+          "external_required": 2
+        },
+        "physical_validation_required": true
+      }
+    }
+  ]
+}

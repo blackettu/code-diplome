@@ -1,0 +1,65 @@
+{
+  "runs": [
+    {
+      "run_id": "rl_logging_smoke",
+      "command": "rl-evaluate:baseline",
+      "run_dir": "reports\\rl_logging_smoke",
+      "created_at": "2026-06-17T17:57:53.707773+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "reports\\rl_logging_smoke\\rl_eval_metrics.json",
+          "artifact_type": "rl_eval_metrics",
+          "role": "output",
+          "command": "rl-evaluate:baseline",
+          "sha256": "e1436f4e04453aed01f03623dbb616859a0cc447692826300c5f09bd82e75cd1",
+          "bytes": 1415,
+          "created_at": "2026-06-17T17:57:53.705505+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\rl_logging_smoke\\critical_events.json",
+          "artifact_type": "critical_events",
+          "role": "output",
+          "command": "rl-evaluate:baseline",
+          "sha256": "ca52912c8a6671b0379021120fba870c27b43af41ea4423b882c957604660236",
+          "bytes": 29,
+          "created_at": "2026-06-17T17:57:53.706042+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\rl_logging_smoke\\rl_metrics.jsonl",
+          "artifact_type": "jsonl",
+          "role": "output",
+          "command": "rl-evaluate:baseline",
+          "sha256": "05686d5bde2c23536081512360e9da5517131bc537af80500278c201cee071dd",
+          "bytes": 7051,
+          "created_at": "2026-06-17T17:57:53.706605+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\rl_logging_smoke\\rl_metrics.csv",
+          "artifact_type": "rl_metrics",
+          "role": "output",
+          "command": "rl-evaluate:baseline",
+          "sha256": "7f38bc514e88e4a09cbca55174e959ed869254c1d77537b796e4e24015cc8263",
+          "bytes": 2984,
+          "created_at": "2026-06-17T17:57:53.707166+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\rl_logging_smoke\\replays\\route_planning_episode_0000.json",
+          "artifact_type": "route_planning_episode_0000",
+          "role": "output",
+          "command": "rl-evaluate:baseline",
+          "sha256": "f42b0455ae053b7f66c875f1fb49cbcef9a484a205fd7a0406f93a0237614cab",
+          "bytes": 66958,
+          "created_at": "2026-06-17T17:57:53.707719+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {}
+    }
+  ]
+}

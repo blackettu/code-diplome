@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "mode": "baseline",
+  "episodes": 1,
+  "results": [
+    {
+      "policy": "route_planning",
+      "episodes": 1,
+      "reward_mean": 185.2412688957499,
+      "successful_target_rate": 1.0,
+      "critical_error_rate": 0.0,
+      "review_rate": 0.0,
+      "actions_per_tray": 20.0,
+      "details": [
+        {
+          "episode": 0,
+          "reward": 185.2412688957499,
+          "actions": 20,
+          "replay_path": "reports\\rl_eval_replay_smoke\\replays\\route_planning_episode_0000.json"
+        }
+      ]
+    }
+  ],
+  "replay_dir": "reports\\rl_eval_replay_smoke\\replays",
+  "replay_paths": [
+    "reports\\rl_eval_replay_smoke\\replays\\route_planning_episode_0000.json"
+  ],
+  "critical_events_path": "reports\\rl_eval_replay_smoke\\critical_events.json",
+  "critical_events": []
+}

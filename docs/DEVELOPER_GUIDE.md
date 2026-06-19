@@ -1,4 +1,4 @@
-# Developer guide для воспроизводимого контура
+# Руководство разработчика для воспроизводимого контура
 
 Этот файл фиксирует практический контракт для разработчика, который впервые
 запускает проект без устных пояснений. Научную интерпретацию результатов см.
@@ -12,7 +12,9 @@
 
 ```powershell
 cd code-diplome
-py -m pip install -r requirements.txt
+py -m pip install -e .
+py -m pip install -r requirements/base.txt
+py -m pip install -r requirements/dev.txt
 py -m seedling_experiments --help
 ```
 
@@ -63,19 +65,22 @@ YOLO-разметке. Для текущих конфигов ожидается
 датасете. Это удобно для запуска, но для статьи такие случаи надо отдельно
 проверять до `prepare`.
 
-Перед первым `prepare` полезно сохранить аудит исходного набора:
+`prepare` автоматически сохраняет аудит исходного набора в
+`prepared_root/raw_dataset_audit.json`. Для ручной проверки того же raw-набора
+можно отдельно запустить:
 
 ```powershell
 py -m seedling_experiments audit --dataset E:/dataset/raw_seedlings --output E:/dataset/raw_seedlings/raw_dataset_audit.json
 ```
 
 Это важно, потому что `prepare` копирует изображения в `prepared_root`, а при
-отсутствующем исходном label-файле создаёт пустой `.txt`. После этого аудит
-подготовленного датасета уже видит существующий пустой label, а не missing label.
-Orphan labels из исходного `labels/` также не копируются в split. Поэтому для
-статьи лучше сохранять оба аудита: raw до `prepare` и prepared после `prepare`.
+отсутствующем исходном файле разметки создаёт пустой `.txt`. После этого аудит
+подготовленного датасета уже видит существующий пустой файл, а не отсутствие
+разметки. Лишние файлы разметки из исходного `labels/` также не копируются в
+разбиение. Поэтому `prepare` сохраняет оба аудита: исходный до разбиения и
+подготовленный после разбиения/аугментации.
 
-## 3. Основной pipeline
+## 3. Основной конвейер
 
 Минимальная последовательность:
 
@@ -94,17 +99,17 @@ py -m seedling_experiments evaluate-cells --config configs/example_experiment.ya
 - сохраняет аудит подготовленного датасета.
 
 Аудит, который создаёт `prepare`, относится к `dataset.prepared_root`. Он нужен
-для проверки финального train/val/test набора. Для поиска исходных missing labels
-и orphan labels используйте отдельный `audit` на `dataset.raw_root` до запуска
+для проверки финального набора `train`/`val`/`test`. Для поиска исходных
+отсутствующих и лишних файлов разметки используйте отдельный `audit` на `dataset.raw_root` до запуска
 `prepare`.
 
 `group_regex` в конфиге нужен, если несколько файлов относятся к одной кассете,
-дате или серии съёмки. Все изображения с одним group id попадут в один split.
+дате или серии съёмки. Все изображения с одним group id попадут в одно разбиение.
 Если `group_regex` не задан, каждое изображение считается отдельной группой.
 
-Split строится по перемешанным группам и последовательно заполняет `train`,
+Разбиение строится по перемешанным группам и последовательно заполняет `train`,
 затем `val`, затем `test`. Поэтому при крупных группах фактические доли могут
-немного отличаться от `0.7/0.2/0.1`. Split не стратифицирует классы и состояния
+немного отличаться от `0.7/0.2/0.1`. Разбиение не стратифицирует классы и состояния
 ячеек, поэтому после `prepare` обязательно проверьте `dataset_audit.json` и
 убедитесь, что в `val` и `test` есть нужные классы и сложные случаи.
 
@@ -145,8 +150,8 @@ baseline:
 ```
 
 `prediction.images`, `evaluation.dataset + evaluation.split` и
-`baseline.images/labels` должны указывать на один и тот же split, если
-сравниваются YOLO, baseline и cell-level метрики.
+`baseline.images/labels` должны указывать на одну и ту же часть разбиения, если
+сравниваются YOLO, базовый метод и метрики уровня ячеек.
 
 Для воспроизводимого перезапуска используйте новый пустой `dataset.prepared_root`
 или вручную очистите старый подготовленный датасет перед `prepare`. Текущая
@@ -209,12 +214,14 @@ py -m seedling_experiments predict --config <config>
 сопоставлении GT-контейнера с предсказанным контейнером в `evaluate-cells`.
 
 `evaluation.target_match_distance_px` — максимальное расстояние в пикселях между
-GT и predicted `remove_center`, при котором цель удаления считается matched.
+эталонным и предсказанным `remove_center`, при котором цель удаления считается сопоставленной.
 
 `prediction.min_container_area` и `prediction.merge_distance` применяются только
 к postprocessed полю `containers` и `container_analysis` в `predictions.json`.
-Текущая реализация `evaluate-cells` читает сырые `detections`, поэтому изменение
-этих двух параметров само по себе не исправит `matched_containers`.
+Legacy-режим `evaluate-cells` по умолчанию читает сырые `detections`; для
+диагностики postprocessed контейнеров задайте
+`evaluation.container_prediction_source: containers`. Schema-first режим
+`evaluate-cells` читает `evaluation.gt_scene` и `evaluation.pred_scene`.
 
 Отдельный нюанс: если `validation.run_after_train: true`, команда `train`
 запускает внутреннюю валидацию Ultralytics после обучения и сохраняет её в
@@ -230,23 +237,23 @@ GT и predicted `remove_center`, при котором цель удаления
 ```text
 prepared_root/config.yaml
 prepared_root/run_snapshot.json
+prepared_root/raw_dataset_audit.json
 prepared_root/data.yaml
 prepared_root/split_summary.json
 prepared_root/split_manifest.csv
+prepared_root/train_augmentation_manifest.csv
 prepared_root/split_integrity_report.json
 prepared_root/dataset_audit.json
 prepared_root/prepare_summary.json
+prepared_root/artifact_registry.json
+prepared_root/artifact_registry.csv
 ```
 
-`prepared_root/dataset_audit.json` описывает уже подготовленный набор. Если
-нужно зафиксировать проблемы исходного датасета, дополнительно сохраните
-`raw_dataset_audit.json` до `prepare`.
-
-Если в конфиге включён блок `dataset.augment_train`, дополнительно создаётся:
-
-```text
-prepared_root/train_augmentation_manifest.csv
-```
+`prepared_root/raw_dataset_audit.json` описывает исходный набор до разбиения и
+создания пустых label-файлов. `prepared_root/dataset_audit.json` описывает уже
+подготовленный набор. Если `dataset.augment_train` выключен,
+`train_augmentation_manifest.csv` все равно создаётся с одним заголовком, чтобы
+набор обязательных артефактов `prepare` был стабильным.
 
 После `train`:
 
@@ -295,7 +302,7 @@ container_analysis
 
 Смысл полей:
 
-- `detections` — сырые bbox, полученные от YOLO или baseline.
+- `detections` — сырые `bbox`, полученные от YOLO или базового метода.
 - `containers` — bbox контейнеров после фильтрации и объединения мелких
   фрагментов.
 - `seedlings` — bbox сеянцев, выбранные из сырых `detections` по
@@ -318,9 +325,12 @@ container_analysis
 
 Здесь `box` уже в пикселях, формат `xyxy`, а не нормированный YOLO-формат.
 
-Важно: текущая команда `evaluate-cells` берёт предсказанные объекты из
+Важно: legacy-режим `evaluate-cells` по умолчанию берёт предсказанные объекты из
 `detections`, а не из `containers`. Поэтому визуализация по `container_analysis`
 может выглядеть лучше, чем диагностика `matched_containers` в `cell_metrics.json`.
+Для schema-first оценки задайте в конфиге `evaluation.gt_scene` и
+`evaluation.pred_scene`; команда запишет совместимый `cell_metrics.json` и полный
+блок `scene_state_metrics`.
 
 ## 8. Как строится матрица ячеек
 
@@ -339,6 +349,12 @@ container_analysis
 маске. Если центр bbox сеянца находится за пределами bbox контейнера, этот
 сеянец не попадает ни в одну ячейку.
 
+Это описание относится к legacy `predictions.json` / `evaluate-cells` режиму.
+В schema-first режиме `CellStateBuilder` использует `TrayState.corners_px`,
+если они заданы: сетка состоит из polygon cells, а назначение объекта выполняется
+через алгоритм «точка внутри многоугольника». Поэтому объект внутри внешнего `bbox` углов, но вне
+реальной трапеции кассеты, не попадает в ячейку.
+
 `matrix` в `container_analysis` — это двумерный список размера
 `grid_rows x grid_cols`, где каждое число означает количество сеянцев в ячейке.
 Для метрик эти количества сворачиваются в три класса:
@@ -352,7 +368,7 @@ container_analysis
 `removal_targets` формируются только для ячеек класса `multiple`. Текущая
 эвристика оставляет сеянец с максимальной площадью bbox (`keep_box`), а все
 остальные bbox в этой ячейке считает кандидатами на удаление (`remove_box`,
-`remove_center`). Это baseline-правило, а не биологически доказанный критерий
+`remove_center`). Это базовое правило сравнения, а не биологически доказанный критерий
 качества сеянца.
 
 Пример одного target:
@@ -376,11 +392,19 @@ container_analysis
 - `cell_confusion_matrix` — матрица ошибок.
 - `multi_seedling_cell` — precision/recall/F1 для ячеек с несколькими сеянцами.
 - `removal_targets` — precision/recall/F1 целей удаления и ошибка координат.
+- `cost_sensitive` — взвешенная сводка критических ошибок с
+  `cost_breakdown`, `critical_error_counts`, `critical_error_total`,
+  `critical_error_rate_per_cell` и `normalized_cost_per_cell`.
 - `container_recall` — доля GT-контейнеров, сопоставленных с предсказанными.
-- `cell_accuracy_bootstrap_ci` — bootstrap 95% CI для image-level точности
+- `cell_accuracy_bootstrap_ci` — bootstrap 95% CI для точности уровня изображений
   ячеек. В текущей реализации ресэмплируются значения `cell_accuracy` по
   изображениям, где были оценённые ячейки.
-- `images` — краткая диагностика по каждому изображению.
+- `images` — краткая диагностика по каждому изображению. Если доступен
+  `evaluation.image_manifest` или `dataset/manifests/image_manifest.csv`, строки
+  также включают `group_id`, `tray_id`, `session_id`, `split` и другие поля манифеста
+  поля. Эти поля используются внешней диагностикой, например
+  `seedling_reports diagnose-cell-metrics --group-key group_id`, чтобы bootstrap
+  не считал кадры одной кассеты независимыми.
 
 Классы ячеек:
 
@@ -396,11 +420,16 @@ container_analysis
 
 Цели удаления сопоставляются по расстоянию между центрами `remove_center`.
 Порог задаётся `evaluation.target_match_distance_px`.
+Если в конфиге задан `evaluation.calibration`, `evaluate-cells` дополнительно
+переводит совпавшие target centers через `image_px -> tray_mm` и пишет
+`mean_coordinate_error_mm` / `matched_distances_mm`. Поле
+`evaluation.target_match_distance_mm` можно использовать как дополнительный
+порог сопоставления; без calibration этот порог считается ошибкой конфигурации.
 
 ## 10. Контейнеры и `matched_containers`
 
 При `evaluation.use_ground_truth_containers: false` оценка работает как
-end-to-end pipeline:
+сквозной конвейер:
 
 1. Берёт GT-контейнеры из YOLO-разметки.
 2. Берёт предсказанные контейнеры из сырых `detections`.
@@ -409,7 +438,7 @@ end-to-end pipeline:
 
 По умолчанию `container_iou: 0.5`.
 
-Если контейнер unmatched, cell-level оценка всё равно выполняется: для сетки
+Если контейнер не сопоставлен, оценка уровня ячеек всё равно выполняется: для сетки
 используется GT bbox контейнера, а предсказанные сеянцы раскладываются по этой
 сетке. Поэтому `matched_containers` и `container_recall` нужно читать как
 отдельную диагностику контейнеров, а не как прямую замену `cell_accuracy`.
@@ -431,10 +460,10 @@ evaluation:
   use_ground_truth_containers: true
 ```
 
-В таком режиме cell-level метрики нельзя называть полной end-to-end оценкой
+В таком режиме метрики уровня ячеек нельзя называть полной сквозной оценкой
 детектора контейнеров.
 
-## 11. Baseline
+## 11. Базовый метод сравнения
 
 `baseline-green` ищет зелёные компоненты по HSV-порогам и превращает каждый
 компонент в bbox сеянца. Если в конфиге задано:
@@ -444,21 +473,21 @@ baseline:
   use_known_containers: true
 ```
 
-то bbox контейнеров добавляются из разметки. Это честный baseline для сравнения
-поиска сеянцев и матрицы ячеек, но не baseline для детекции контейнера.
+то bbox контейнеров добавляются из разметки. Это честный базовый метод для
+сравнения поиска сеянцев и матрицы ячеек, но не базовый метод детекции контейнера.
 
-Чтобы оценить baseline через `evaluate-cells`, в `evaluation.predictions` нужно
+Чтобы оценить базовый метод через `evaluate-cells`, в `evaluation.predictions` нужно
 временно указать `predictions.json`, созданный командой `baseline-green`.
 
-Важно: `baseline-green` не запускает Ultralytics validation и не создаёт
+Важно: `baseline-green` не запускает проверку Ultralytics и не создаёт
 `test_metrics.json`, `mAP@50` или `mAP@50-95`. Его корректно сравнивать с YOLO
-по task-level метрикам из `cell_metrics.json`: `cell_accuracy`,
-`multi_seedling_cell`, `removal_targets`, coordinate error. Object-level mAP для
-YOLO берётся из команды `val`; для HSV baseline в текущем контуре это поле
-следует оставлять `N/A`, если не реализована отдельная object-detection оценка
-baseline-предсказаний.
+по метрикам конечной задачи из `cell_metrics.json`: `cell_accuracy`,
+`multi_seedling_cell`, `removal_targets`, ошибку координат. mAP на уровне объектов для
+YOLO берётся из команды `val`; для HSV-метода в текущем контуре это поле
+следует оставлять `N/A`, если не реализована отдельная объектная оценка
+предсказаний базового метода.
 
-Все bbox от HSV baseline получают `confidence = 1.0` и имя `green_component`.
+Все bbox от HSV-метода получают `confidence = 1.0` и имя `green_component`.
 Это не вероятность модели, а техническое значение для совместимости формата
 `predictions.json`.
 
@@ -466,7 +495,7 @@ baseline-предсказаний.
 
 Если `cell_accuracy` равен `null` или почти нет ячеек:
 
-- проверьте, что в test-разметке есть объекты класса `container`;
+- проверьте, что в разметке `test` есть объекты класса `container`;
 - проверьте `evaluation.container_class` и `evaluation.seedling_class`;
 - проверьте, что `evaluation.dataset` и `evaluation.split` указывают на тот же
   набор, по которому создавался `predictions.json`.
@@ -484,9 +513,9 @@ baseline-предсказаний.
 - сравните bbox из `detections` и `containers` в `predictions.json`;
 - временно уменьшите `evaluation.container_iou` только для диагностики;
 - проверьте, что визуализация использует те же поля, что `evaluate-cells`;
-- при оценке только cell-level задачи включите `use_ground_truth_containers`.
+- при оценке только задачи уровня ячеек включите `use_ground_truth_containers`.
 - не ожидайте, что `prediction.min_container_area` или `merge_distance` изменят
-  matching в `evaluate-cells`, пока оценка читает сырые `detections`.
+  matching в legacy `evaluate-cells`, пока оценка читает сырые `detections`.
 
 Если изменили `prediction.conf`, `prediction.iou` или `prediction.imgsz`:
 
@@ -494,16 +523,16 @@ baseline-предсказаний.
 - затем заново запустите `evaluate-cells`;
 - убедитесь, что `evaluation.predictions` указывает на новый `predictions.json`.
 
-Если в таблице baseline появляются `mAP`-значения:
+Если в таблице базового метода появляются `mAP`-значения:
 
 - проверьте, откуда они взяты;
-- не переносите `mAP` из YOLO-валидации в строку HSV baseline;
-- для текущего `baseline-green` используйте `N/A` в object-level колонках и
-  сравнивайте методы по cell-level метрикам.
+- не переносите `mAP` из YOLO-валидации в строку HSV-метода;
+- для текущего `baseline-green` используйте `N/A` в объектных колонках и
+  сравнивайте методы по метрикам уровня ячеек.
 
 Если метрики кажутся слишком хорошими:
 
-- убедитесь, что split был сделан до аугментации;
+- убедитесь, что разбиение было сделано до аугментации;
 - проверьте `split_manifest.csv`;
 - используйте `group_regex` для серий изображений одной кассеты или даты;
 - проверьте, что `runs/...` и `prepared_root` относятся именно к текущему
@@ -514,9 +543,10 @@ baseline-предсказаний.
 - проверьте, какой набор аудировался: raw или prepared;
 - помните, что `prepare` создаёт пустые label-файлы для изображений без исходной
   разметки;
-- для исходных missing/orphan labels смотрите raw-аудит, сделанный до `prepare`.
+- для исходных отсутствующих и лишних файлов разметки смотрите аудит исходного
+  набора, сделанный до `prepare`.
 
-Если после повторного `prepare` неожиданно выросло число train-изображений:
+Если после повторного `prepare` неожиданно выросло число изображений в `train`:
 
 - проверьте, не запускалась ли аугментация поверх уже аугментированного
   `prepared_root`;

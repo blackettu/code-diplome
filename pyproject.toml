@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "code-diplome-seedlings"
+version = "0.1.0"
+description = "Reproducible seedling vision experiments and product architecture skeleton."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26.0",
+  "Pillow>=10.0.0",
+  "PyYAML>=6.0.0",
+]
+
+[project.optional-dependencies]
+vision = [
+  "opencv-python>=4.9.0",
+  "onnxruntime>=1.17.0",
+  "pillow-heif>=0.16.0",
+]
+training = [
+  "ultralytics>=8.3.0",
+]
+rl = [
+  "gymnasium>=0.29.0",
+  "stable-baselines3>=2.3.0",
+  "sb3-contrib>=2.3.0",
+]
+robot = [
+  "pyserial>=3.5",
+]
+dev = [
+  "gymnasium>=0.29.0",
+  "pre-commit>=3.7.0",
+  "pytest>=8.0.0",
+  "ruff>=0.6.9",
+]
+
+[project.scripts]
+seedling-calibration = "seedling_calibration.cli:main"
+seedling-data = "seedling_data.cli:main"
+seedling-experiments = "seedling_experiments.cli:main"
+seedling-reports = "seedling_reports.cli:main"
+seedling-rl = "seedling_rl.cli:main"
+seedling-robot = "seedling_robot.cli:main"
+seedling-sim = "seedling_sim.cli:main"
+seedling-ui = "seedling_ui.cli:main"
+seedling-vision = "seedling_vision.cli:main"
+
+[tool.setuptools.packages.find]
+include = [
+  "seedling_*",
+  "seedling_*.*",
+]

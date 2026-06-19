@@ -1,0 +1,67 @@
+version: policies_registry_v0_1
+entries:
+  - entry_id: policy_noop_v0
+    kind: policy
+    name: noop
+    backend: seedling_decision.policies.NoOpPolicy
+    status: draft
+    tags: [baseline, safe]
+    metadata:
+      safety_level: offline_only
+      requires_safety_gate: true
+  - entry_id: policy_human_review_v0
+    kind: policy
+    name: human_review
+    backend: seedling_decision.policies.HumanReviewPolicy
+    status: draft
+    tags: [review, operator]
+    metadata:
+      safety_level: offline_only
+      requires_safety_gate: true
+  - entry_id: policy_raster_scan_v0
+    kind: policy
+    name: raster_scan
+    backend: seedling_decision.policies.RasterScanPolicy
+    status: draft
+    tags: [baseline, deterministic]
+    metadata:
+      safety_level: dry_run
+      requires_safety_gate: true
+  - entry_id: policy_nearest_neighbor_v0
+    kind: policy
+    name: nearest_neighbor
+    backend: seedling_decision.policies.NearestNeighborPolicy
+    status: draft
+    tags: [baseline, route]
+    metadata:
+      safety_level: dry_run
+      requires_safety_gate: true
+  - entry_id: policy_route_planning_v0
+    kind: policy
+    name: route_planning
+    backend: seedling_decision.policies.RoutePlanningPolicy
+    status: draft
+    tags: [baseline, route, tsp_like]
+    metadata:
+      safety_level: dry_run
+      requires_safety_gate: true
+  - entry_id: policy_risk_aware_rule_v0
+    kind: policy
+    name: risk_aware_rule
+    backend: seedling_decision.policies.RiskAwareRulePolicy
+    status: draft
+    tags: [baseline, safety]
+    metadata:
+      safety_level: dry_run
+      requires_safety_gate: true
+  - entry_id: policy_rl_adapter_v0
+    kind: policy
+    name: rl_policy_adapter
+    backend: seedling_rl.policy_adapter.RLPolicyAdapter
+    status: draft
+    tags: [rl, simulation_only]
+    metadata:
+      safety_level: simulation_only
+      requires_safety_gate: true
+      requires_action_mask: true
+      direct_hardware_access: false

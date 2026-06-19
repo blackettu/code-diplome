@@ -1,0 +1,19 @@
+base:
+  algorithm: maskable_ppo
+  env_config: configs/simulation/tray_env_v0.yaml
+  total_timesteps: 100000
+  policy: MultiInputPolicy
+  n_envs: 4
+  n_steps: 1024
+  batch_size: 128
+grid:
+  learning_rate:
+    - 0.0003
+    - 0.0001
+  gamma:
+    - 0.99
+    - 0.97
+seeds:
+  - 41
+  - 42
+  - 43

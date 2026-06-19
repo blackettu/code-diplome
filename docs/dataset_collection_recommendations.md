@@ -1106,7 +1106,7 @@ target_match_distance_mm: 2.0
 - точность/полнота кандидатов на удаление;
 - доля ложных целей на сохраняемых сеянцах;
 - средняя ошибка action point;
-- median/P90/P95/P99 ошибка action point;
+- median/P90/P95/P99 ошибка точки действия;
 - ошибка в пикселях и миллиметрах;
 - доля целей в запрещённой зоне;
 - доля случаев с недостаточным безопасным расстоянием;
@@ -1168,7 +1168,7 @@ operator_notes
 - возник дым, запах или пожарный риск;
 - оператор отменил действие.
 
-### 20.3. Почему это нельзя заменить detection-метриками
+### 20.3. Почему это нельзя заменить метриками детекции
 
 Даже идеальная детекция не доказывает, что воздействие биологически эффективно и безопасно. Удаление — отдельный эксперимент с отдельной эталонная разметка.
 
@@ -1277,7 +1277,7 @@ operator_notes
 - разрешение;
 - дату создания;
 - источник;
-- версия annotation guide.
+- версия руководства по разметке.
 
 ### 24.3. Версионирование
 
@@ -1309,10 +1309,10 @@ changelog
 - рекомендуемые применения;
 - запрещённые применения;
 - протокол разбиения;
-- annotation protocol;
-- quality control;
-- licensing/access;
-- contact/responsible person.
+- протокол разметки;
+- контроль качества;
+- лицензия и доступ;
+- контактное лицо / ответственный.
 
 ### 24.5. Лицензии и доступ
 
@@ -1433,7 +1433,7 @@ changelog
 
 Перед массовой разметкой:
 
-- показать annotation guide;
+- показать руководство по разметке;
 - разметить общий эталонный набор;
 - обсудить расхождения;
 - обновить guide;
@@ -1650,7 +1650,7 @@ foreign_object_present
 
 ## 34. Возможная архитектура набора данных для двух задач
 
-### 34.1. Детекция объектов dataset
+### 34.1. Набор данных для детекции объектов
 
 ```text
 classes:
@@ -1662,7 +1662,7 @@ classes:
 
 Используется для на уровне отдельных объектов обучения.
 
-### 34.2. Cell state dataset
+### 34.2. Набор данных состояний ячеек
 
 ```text
 cell classes:
@@ -1676,7 +1676,7 @@ cell classes:
 
 Используется для на уровне прикладной задачи метрик.
 
-### 34.3. Action dataset
+### 34.3. Набор данных действий
 
 ```text
 action classes:
@@ -1689,7 +1689,7 @@ action classes:
 
 Используется для будущего модуль принятия решений.
 
-### 34.4. Calibration dataset
+### 34.4. Набор данных калибровки
 
 ```text
 calibration targets:
@@ -1743,7 +1743,7 @@ calibration targets:
 - в валидационная/тестовая выборки есть `multiple` и `weed`, если эти классы заявлены;
 - есть базовый метод сравнения;
 - есть паспорт набора данных;
-- есть annotation guide;
+- есть руководство по разметке;
 - есть замороженная тестовая выборка;
 - есть скрипт для воспроизведения подготовки.
 
@@ -1882,7 +1882,7 @@ calibration targets:
 - исходные данные images или согласованная обработанные данные version;
 - annotations;
 - ontology;
-- annotation guide;
+- руководство по разметке;
 - разбиение манифестs;
 - паспорт набора данных;
 - checksums;
@@ -1900,7 +1900,7 @@ calibration targets:
 
 - есть чёткая постановка задачи;
 - классы определены письменно;
-- есть annotation guide;
+- есть руководство по разметке;
 - есть метаданные;
 - есть проверка исходных данных;
 - есть групповое разбиение;
@@ -2095,7 +2095,7 @@ image_id,file_path,sha256,session_id,group_id,tray_id,site,greenhouse,capture_da
 - [ ] Руководство по разметке приложен.
 - [ ] Разбиение манифест сохранён.
 - [ ] Calibration файлы сохранены.
-- [ ] Changelog написан.
+- [ ] Журнал изменений написан.
 - [ ] Базовый метод сравнения запущен.
 - [ ] Отчёт о качестве создан.
 - [ ] Версия набора данных присвоена.
@@ -2148,27 +2148,27 @@ image_id,file_path,sha256,session_id,group_id,tray_id,site,greenhouse,capture_da
    <https://github.com/blackettu/code-diplome/tree/main>
 2. Руководство разработчика проекта: фиксирует входной формат YOLO, порядок классов `container/seedlings`, автоматическую проверку raw/prepared набора данных, групповое разбиение, метрики на уровне ячеек и ограничения текущего контура.
    <https://raw.githubusercontent.com/blackettu/code-diplome/main/docs/DEVELOPER_GUIDE.md>
-3. Пример конфигурации проекта: текущие классы `container` и `seedlings`, разбиение, искусственные преобразования, YOLO11n, cell evaluation и baseline-green.
+3. Пример конфигурации проекта: текущие классы `container` и `seedlings`, разбиение, искусственные преобразования, YOLO11n, оценка ячеек и `baseline-green`.
    <https://raw.githubusercontent.com/blackettu/code-diplome/main/configs/example_experiment.yaml>
-4. Wilkinson et al. FAIR Guiding Principles for управления научными данными, Scientific Данные, 2016.  
+4. Wilkinson et al. Принципы FAIR для управления научными данными, Scientific Data, 2016.
    <https://www.nature.com/articles/sdata201618>
-5. Gebru et al. Данныеsheets for Данныеsets.  
+5. Gebru et al. Паспорта наборов данных.
    <https://arxiv.org/abs/1803.09010>
-6. Ultralytics documentation: детекция объектов datasets and YOLO метка organization.  
+6. Документация Ultralytics: наборы данных детекции объектов и организация YOLO-разметки.
    <https://docs.ultralytics.com/datasets/detect>
-7. CVAT documentation: Ultralytics YOLO formats and annotation/поддержку экспорта.  
+7. Документация CVAT: форматы Ultralytics YOLO и поддержка экспорта разметки.
    <https://docs.cvat.ai/docs/dataset_management/formats/format-yolo-ultralytics/>
-8. Метка Studio documentation: экспорт аннотаций, including YOLO экспорт разметки для детекции объектов.  
+8. Документация Label Studio: экспорт аннотаций, включая YOLO-разметку для детекции объектов.
    <https://меткиtud.io/guide/export>
-9. Sudars et al. Данныеset of annotated food кадрированиеs and weed images for robotic computer vision control, Данные in Brief, 2020.  
+9. Sudars et al. Набор размеченных изображений культурных растений и сорняков для роботизированного компьютерного зрения, Data in Brief, 2020.
    <https://pmc.ncbi.nlm.nih.gov/articles/PMC7305380/>
-10. Genze et al. Moving Fields Weed Данныеset, Scientific Данные, 2024.  
+10. Genze et al. Набор данных Moving Fields Weed Dataset, Scientific Data, 2024.
     <https://www.nature.com/articles/s41597-024-02945-6>
-11. IEC 60825-1:2014, Безопасность of laser products — equipment classification and requirements.  
+11. IEC 60825-1:2014, безопасность лазерной продукции: классификация оборудования и требования.
     <https://webstore.iec.ch/en/publication/3587>
-12. ISO 12100:2010, Безопасность of machinery — risk assessment and risk reduction.  
+12. ISO 12100:2010, безопасность машин: оценка и снижение риска.
     <https://www.iso.org/standard/51528.html>
-13. ISO 13849-1:2023, Безопасность-related parts of control systems.  
+13. ISO 13849-1:2023, части систем управления, связанные с функциональной безопасностью.
     <https://www.iso.org/standard/73481.html>
-14. IEC 60204-1:2016, Electrical equipment of machines.  
+14. IEC 60204-1:2016, электрооборудование машин.
     <https://webstore.iec.ch/en/publication/26037>

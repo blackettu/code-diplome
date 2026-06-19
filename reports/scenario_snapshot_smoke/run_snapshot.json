@@ -1,0 +1,68 @@
+{
+  "command": "seedling-reports:scenario-compare",
+  "command_args": {
+    "command": "scenario-compare",
+    "out": "reports\\scenario_snapshot_smoke",
+    "policies": [
+      "raster_scan",
+      "route_planning",
+      "risk_aware_rule"
+    ],
+    "scene": "reports\\software_readiness_smoke\\scene_state.json"
+  },
+  "config": {
+    "command_args": {
+      "command": "scenario-compare",
+      "out": "reports\\scenario_snapshot_smoke",
+      "policies": [
+        "raster_scan",
+        "route_planning",
+        "risk_aware_rule"
+      ],
+      "scene": "reports\\software_readiness_smoke\\scene_state.json"
+    },
+    "inputs": [
+      "reports\\software_readiness_smoke\\scene_state.json"
+    ],
+    "metadata": {
+      "policies": [
+        "raster_scan",
+        "route_planning",
+        "risk_aware_rule"
+      ]
+    },
+    "outputs": [
+      "reports\\scenario_snapshot_smoke\\scenario_compare.json",
+      "reports\\scenario_snapshot_smoke\\scenario_compare.html"
+    ]
+  },
+  "config_hash": "507eeb6e984cc68b973d671038d41cb0660e5916a3ddda51b8a018520272e84d",
+  "environment": {
+    "created_at_utc": "2026-06-18T15:59:53.326389+00:00",
+    "packages": {
+      "Pillow": "12.2.0",
+      "PyYAML": "6.0.3",
+      "numpy": "2.4.4",
+      "opencv-python": null,
+      "pillow-heif": null,
+      "ultralytics": null
+    },
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "inputs": [
+    "reports\\software_readiness_smoke\\scene_state.json"
+  ],
+  "metadata": {
+    "policies": [
+      "raster_scan",
+      "route_planning",
+      "risk_aware_rule"
+    ]
+  },
+  "outputs": [
+    "reports\\scenario_snapshot_smoke\\scenario_compare.json",
+    "reports\\scenario_snapshot_smoke\\scenario_compare.html"
+  ],
+  "schema_version": "command_run_snapshot_v0_1"
+}

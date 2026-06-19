@@ -1,0 +1,114 @@
+{
+  "command": "seedling-reports:compare-runs",
+  "command_args": {
+    "command": "compare-runs",
+    "max_error_budget_total_mm": null,
+    "max_hardware_positioning_error_p95_mm": null,
+    "max_post_action_crop_damage_rate": null,
+    "max_post_action_regrowth_rate": null,
+    "max_rl_block_rate": null,
+    "max_rl_blocked_actions": null,
+    "max_rl_critical_error_rate": null,
+    "max_rl_critical_events_count": null,
+    "max_rl_crop_damage_count": null,
+    "max_rl_reward_std": null,
+    "max_run_snapshot_missing_config_hash": 0.0,
+    "max_safety_aborted_runs": null,
+    "max_safety_forbidden_zone_violation_count": null,
+    "max_safety_real_action_guard_blocks": null,
+    "max_safety_skipped_commands": null,
+    "max_safety_unsafe_action_escape_count": null,
+    "max_safety_unsupported_tool_profile_blocks": null,
+    "min_cell_accuracy": null,
+    "min_corner_cell_accuracy": null,
+    "min_edge_cell_accuracy": null,
+    "min_hardware_move_success_rate": null,
+    "min_post_action_coverage_rate": null,
+    "min_post_action_delayed_success_rate": null,
+    "min_rl_seed_count": null,
+    "min_rl_successful_target_rate": null,
+    "min_target_recall": null,
+    "out": "reports\\software_readiness_compare",
+    "require_error_budget_complete": false,
+    "require_run_snapshots": true,
+    "runs": [
+      "reports\\software_readiness_smoke"
+    ]
+  },
+  "config": {
+    "command_args": {
+      "command": "compare-runs",
+      "max_error_budget_total_mm": null,
+      "max_hardware_positioning_error_p95_mm": null,
+      "max_post_action_crop_damage_rate": null,
+      "max_post_action_regrowth_rate": null,
+      "max_rl_block_rate": null,
+      "max_rl_blocked_actions": null,
+      "max_rl_critical_error_rate": null,
+      "max_rl_critical_events_count": null,
+      "max_rl_crop_damage_count": null,
+      "max_rl_reward_std": null,
+      "max_run_snapshot_missing_config_hash": 0.0,
+      "max_safety_aborted_runs": null,
+      "max_safety_forbidden_zone_violation_count": null,
+      "max_safety_real_action_guard_blocks": null,
+      "max_safety_skipped_commands": null,
+      "max_safety_unsafe_action_escape_count": null,
+      "max_safety_unsupported_tool_profile_blocks": null,
+      "min_cell_accuracy": null,
+      "min_corner_cell_accuracy": null,
+      "min_edge_cell_accuracy": null,
+      "min_hardware_move_success_rate": null,
+      "min_post_action_coverage_rate": null,
+      "min_post_action_delayed_success_rate": null,
+      "min_rl_seed_count": null,
+      "min_rl_successful_target_rate": null,
+      "min_target_recall": null,
+      "out": "reports\\software_readiness_compare",
+      "require_error_budget_complete": false,
+      "require_run_snapshots": true,
+      "runs": [
+        "reports\\software_readiness_smoke"
+      ]
+    },
+    "inputs": [
+      "reports\\software_readiness_smoke"
+    ],
+    "metadata": {
+      "failed": 0,
+      "runs": 1
+    },
+    "outputs": [
+      "reports\\software_readiness_compare\\compare_runs.csv",
+      "reports\\software_readiness_compare\\compare_runs.html",
+      "reports\\software_readiness_compare\\compare_runs_summary.json"
+    ]
+  },
+  "config_hash": "e65b4b56e2c668c186498fe9026087016630f209f23d5df53d4588bf38e58f44",
+  "environment": {
+    "created_at_utc": "2026-06-18T16:02:13.912655+00:00",
+    "packages": {
+      "Pillow": "12.2.0",
+      "PyYAML": "6.0.3",
+      "numpy": "2.4.4",
+      "opencv-python": null,
+      "pillow-heif": null,
+      "ultralytics": null
+    },
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "inputs": [
+    "reports\\software_readiness_smoke"
+  ],
+  "metadata": {
+    "failed": 0,
+    "runs": 1
+  },
+  "outputs": [
+    "reports\\software_readiness_compare\\compare_runs.csv",
+    "reports\\software_readiness_compare\\compare_runs.html",
+    "reports\\software_readiness_compare\\compare_runs_summary.json"
+  ],
+  "schema_version": "command_run_snapshot_v0_1"
+}

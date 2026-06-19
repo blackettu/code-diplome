@@ -3,11 +3,11 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .config import save_run_snapshot, write_json
+from .config import register_run_artifacts, save_run_snapshot, write_json
 from .yolo import label_path_for, list_images, read_labels
 
 
-def train_yolo_from_config(config: dict[str, Any]) -> dict[str, Any]:
+def train_yolo_from_config(config: dict[str, Any], command_args: dict[str, Any] | None = None) -> dict[str, Any]:
     try:
         from ultralytics import YOLO
     except ImportError as exc:
@@ -20,7 +20,7 @@ def train_yolo_from_config(config: dict[str, Any]) -> dict[str, Any]:
     name = training.get("name", "seedlings")
     output_dir = project / name
     output_dir.mkdir(parents=True, exist_ok=True)
-    save_run_snapshot(output_dir, config, "train")
+    save_run_snapshot(output_dir, config, "train", command_args=command_args)
 
     train_args = {
         "data": data_yaml,
@@ -47,11 +47,31 @@ def train_yolo_from_config(config: dict[str, Any]) -> dict[str, Any]:
         metrics["val"] = _metrics_to_dict(model.val(data=data_yaml, split="val"))
     if validation.get("test_after_train", False):
         metrics["test"] = _metrics_to_dict(model.val(data=data_yaml, split="test"))
-    write_json(output_dir / "metrics_summary.json", metrics)
+    metrics_path = output_dir / "metrics_summary.json"
+    write_json(metrics_path, metrics)
+    result_dir = Path(metrics["train_results_dir"])
+    extra_outputs = [metrics_path]
+    if result_dir != output_dir:
+        extra_outputs.append(result_dir)
+    weights_dir = result_dir / "weights"
+    if weights_dir.exists():
+        extra_outputs.extend(sorted(weights_dir.glob("*.pt")))
+    register_run_artifacts(
+        output_dir,
+        "train",
+        config=config,
+        command_args=command_args,
+        input_paths=[model_path, data_yaml],
+        output_paths=extra_outputs,
+    )
     return metrics
 
 
-def validate_yolo_from_config(config: dict[str, Any], split: str = "val") -> dict[str, Any]:
+def validate_yolo_from_config(
+    config: dict[str, Any],
+    split: str = "val",
+    command_args: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     try:
         from ultralytics import YOLO
     except ImportError as exc:
@@ -65,7 +85,7 @@ def validate_yolo_from_config(config: dict[str, Any], split: str = "val") -> dic
 
     output_dir = Path(validation.get("output_dir", "runs/validation"))
     output_dir.mkdir(parents=True, exist_ok=True)
-    save_run_snapshot(output_dir, config, f"val:{split}")
+    save_run_snapshot(output_dir, config, f"val:{split}", command_args=command_args)
 
     model = YOLO(model_path)
     args = {
@@ -87,7 +107,16 @@ def validate_yolo_from_config(config: dict[str, Any], split: str = "val") -> dic
         "iou": args.get("iou"),
     }
     metrics["dataset"] = _split_stats_from_data_yaml(data_yaml, split)
-    write_json(output_dir / f"{split}_metrics.json", metrics)
+    metrics_path = output_dir / f"{split}_metrics.json"
+    write_json(metrics_path, metrics)
+    register_run_artifacts(
+        output_dir,
+        f"val:{split}",
+        config=config,
+        command_args=command_args,
+        input_paths=[model_path, data_yaml],
+        output_paths=[metrics_path],
+    )
     return metrics
 
 

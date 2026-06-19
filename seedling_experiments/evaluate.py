@@ -9,7 +9,9 @@ from typing import Any
 
 from PIL import Image
 
-from .config import save_run_snapshot, write_json
+from seedling_cells.evaluation import cost_sensitive_metrics_from_legacy
+
+from .config import register_run_artifacts, save_run_snapshot, write_json
 from .dataset import is_suspected_augmented_name
 from .grid import (
     Detection,
@@ -25,11 +27,30 @@ from .yolo import label_path_for, list_images, read_labels
 register_heif_if_available()
 
 
-def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
+def evaluate_cells_from_config(
+    config: dict[str, Any],
+    command: str = "evaluate-cells",
+    command_args: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     evaluation = config.get("evaluation", {})
     output_dir = Path(evaluation.get("output_dir", "runs/evaluation"))
     output_dir.mkdir(parents=True, exist_ok=True)
-    save_run_snapshot(output_dir, config, "evaluate-cells")
+    save_run_snapshot(output_dir, config, command, command_args=command_args)
+
+    if evaluation.get("gt_scene") or evaluation.get("pred_scene"):
+        metrics = _evaluate_scene_state_cells(evaluation, output_dir)
+        register_run_artifacts(
+            output_dir,
+            command,
+            config=config,
+            command_args=command_args,
+            input_paths=_evaluation_input_paths(evaluation),
+            output_paths=[
+                output_dir / "cell_metrics.json",
+                output_dir / "cell_confusion_matrix.csv",
+            ],
+        )
+        return metrics
 
     predictions = _load_predictions(evaluation["predictions"])
     images_dir, labels_dir = _dataset_dirs(evaluation["dataset"], evaluation.get("split"))
@@ -43,12 +64,23 @@ def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
     container_source = str(evaluation.get("container_prediction_source", "detections"))
     strict_predictions = bool(evaluation.get("strict_predictions", True))
     augmented_markers = evaluation.get("augmented_name_markers")
+    calibration_artifact = _load_calibration_artifact(
+        evaluation.get("calibration") or evaluation.get("calibration_artifact")
+    )
+    target_distance_mm = _optional_float(evaluation.get("target_match_distance_mm"))
+    if target_distance_mm is not None and calibration_artifact is None:
+        raise ValueError("evaluation.target_match_distance_mm requires evaluation.calibration")
+    image_manifest_metadata = _load_image_manifest_metadata(
+        evaluation.get("image_manifest") or evaluation.get("manifest"),
+        dataset_root=evaluation["dataset"],
+    )
 
     confusion = [[0 for _ in range(3)] for _ in range(3)]
     container_accuracies: list[float] = []
     multi_counts = {"tp": 0, "fp": 0, "fn": 0}
     target_counts = {"tp": 0, "fp": 0, "fn": 0}
     target_distances: list[float] = []
+    target_distances_mm: list[float] = []
     best_container_ious: list[float] = []
     unmatched_samples: list[dict[str, Any]] = []
     matched_containers = 0
@@ -108,6 +140,11 @@ def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
 
         image_total_cells = 0
         image_correct_cells = 0
+        image_multi_counts = {"tp": 0, "fp": 0, "fn": 0}
+        image_target_counts = {"tp": 0, "fp": 0, "fn": 0}
+        image_target_distances: list[float] = []
+        image_target_distances_mm: list[float] = []
+        image_confusion = [[0 for _ in range(3)] for _ in range(3)]
         total_gt_containers += len(gt_containers)
 
         for gt_container, pred_container, iou in matches:
@@ -119,26 +156,66 @@ def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
             gt_matrix = count_matrix(gt_cells)
             pred_matrix = count_matrix(pred_cells)
             correct, total = _update_confusion(confusion, gt_matrix, pred_matrix)
+            _update_confusion(image_confusion, gt_matrix, pred_matrix)
             image_correct_cells += correct
             image_total_cells += total
             _update_multi_counts(multi_counts, gt_matrix, pred_matrix)
+            _update_multi_counts(image_multi_counts, gt_matrix, pred_matrix)
 
             gt_targets = choose_removal_targets(gt_cells)
             pred_targets = choose_removal_targets(pred_cells)
-            match_count, distances = _match_targets(gt_targets, pred_targets, target_distance)
+            match_count, distances, distances_mm = _match_targets(
+                gt_targets,
+                pred_targets,
+                target_distance,
+                target_distance_mm=target_distance_mm,
+                calibration_artifact=calibration_artifact,
+            )
             target_counts["tp"] += match_count
             target_counts["fn"] += max(0, len(gt_targets) - match_count)
             target_counts["fp"] += max(0, len(pred_targets) - match_count)
+            image_target_counts["tp"] += match_count
+            image_target_counts["fn"] += max(0, len(gt_targets) - match_count)
+            image_target_counts["fp"] += max(0, len(pred_targets) - match_count)
             target_distances.extend(distances)
+            target_distances_mm.extend(distances_mm)
+            image_target_distances.extend(distances)
+            image_target_distances_mm.extend(distances_mm)
 
+        image_cost_sensitive = cost_sensitive_metrics_from_legacy(image_confusion, image_target_counts)
         image_summaries.append(
             {
                 "image": image_path.name,
+                **image_manifest_metadata.get(image_path.name, {}),
                 "gt_containers": len(gt_containers),
                 "pred_containers": len(pred_containers),
                 "matched_containers": sum(1 for _, pred, _ in matches if pred is not None),
                 "best_container_iou": max((iou for _, _, iou in matches), default=None),
                 "cell_accuracy": image_correct_cells / image_total_cells if image_total_cells else None,
+                "cell_correct": image_correct_cells,
+                "cell_total": image_total_cells,
+                "multi_tp": image_multi_counts["tp"],
+                "multi_fp": image_multi_counts["fp"],
+                "multi_fn": image_multi_counts["fn"],
+                "target_tp": image_target_counts["tp"],
+                "target_fp": image_target_counts["fp"],
+                "target_fn": image_target_counts["fn"],
+                "target_mean_coordinate_error_px": (
+                    sum(image_target_distances) / len(image_target_distances)
+                    if image_target_distances
+                    else None
+                ),
+                "target_mean_coordinate_error_mm": (
+                    sum(image_target_distances_mm) / len(image_target_distances_mm)
+                    if image_target_distances_mm
+                    else None
+                ),
+                "cost_total": image_cost_sensitive["total_cost"],
+                "normalized_cost_per_cell": image_cost_sensitive["normalized_cost_per_cell"],
+                "critical_error_total": image_cost_sensitive["critical_error_total"],
+                "critical_error_rate_per_cell": image_cost_sensitive["critical_error_rate_per_cell"],
+                "critical_error_counts": image_cost_sensitive["critical_error_counts"],
+                "cost_sensitive": image_cost_sensitive,
             }
         )
         if len(unmatched_samples) < 25:
@@ -167,8 +244,14 @@ def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
             "mean_coordinate_error_px": (
                 sum(target_distances) / len(target_distances) if target_distances else None
             ),
+            "mean_coordinate_error_mm": (
+                sum(target_distances_mm) / len(target_distances_mm) if target_distances_mm else None
+            ),
             "matched_distances_px": target_distances,
+            "matched_distances_mm": target_distances_mm,
+            "calibration_id": getattr(calibration_artifact, "calibration_id", None),
         },
+        "cost_sensitive": cost_sensitive_metrics_from_legacy(confusion, target_counts),
         "container_recall": matched_containers / total_gt_containers if total_gt_containers else None,
         "container_matching": {
             "prediction_source": container_source,
@@ -184,14 +267,219 @@ def evaluate_cells_from_config(config: dict[str, Any]) -> dict[str, Any]:
         "cell_accuracy_bootstrap_ci": _bootstrap_ci(container_accuracies),
         "images": image_summaries,
     }
-    write_json(output_dir / "cell_metrics.json", metrics)
-    _write_confusion_csv(output_dir / "cell_confusion_matrix.csv", confusion)
+    metrics_path = output_dir / "cell_metrics.json"
+    confusion_path = output_dir / "cell_confusion_matrix.csv"
+    write_json(metrics_path, metrics)
+    _write_confusion_csv(confusion_path, confusion)
+    register_run_artifacts(
+        output_dir,
+        command,
+        config=config,
+        command_args=command_args,
+        input_paths=_evaluation_input_paths(evaluation),
+        output_paths=[metrics_path, confusion_path],
+    )
     return metrics
+
+
+def _load_image_manifest_metadata(
+    manifest_path: Any,
+    *,
+    dataset_root: str | Path,
+) -> dict[str, dict[str, str]]:
+    path = Path(manifest_path) if manifest_path else _find_image_manifest(dataset_root)
+    if path is None:
+        return {}
+    fields = {
+        "image_id",
+        "session_id",
+        "group_id",
+        "tray_id",
+        "site",
+        "greenhouse",
+        "capture_date",
+        "target_species",
+        "days_after_sowing",
+        "grid_rows",
+        "grid_cols",
+        "camera_id",
+        "split",
+        "calibration_id",
+        "lighting",
+        "watering_state",
+        "operator_id",
+    }
+    metadata: dict[str, dict[str, str]] = {}
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            summary = {field: str(row[field]) for field in fields if row.get(field)}
+            if not summary:
+                continue
+            for key in _manifest_image_keys(row):
+                metadata[key] = summary
+    return metadata
+
+
+def _evaluation_input_paths(evaluation: dict[str, Any]) -> list[Any]:
+    paths: list[Any] = []
+    if evaluation.get("gt_scene") or evaluation.get("pred_scene"):
+        paths.extend([evaluation.get("gt_scene"), evaluation.get("pred_scene")])
+    else:
+        paths.extend([evaluation.get("dataset"), evaluation.get("predictions")])
+    paths.extend(
+        [
+            evaluation.get("calibration"),
+            evaluation.get("calibration_artifact"),
+            evaluation.get("image_manifest"),
+            evaluation.get("manifest"),
+        ]
+    )
+    return [path for path in paths if path]
+
+
+def _find_image_manifest(dataset_root: str | Path) -> Path | None:
+    root = Path(dataset_root)
+    for relative in ("manifests/image_manifest.csv", "image_manifest.csv"):
+        candidate = root / relative
+        if candidate.exists() and candidate.is_file():
+            return candidate
+    return None
+
+
+def _manifest_image_keys(row: dict[str, str]) -> set[str]:
+    keys = set()
+    for column in ("image", "image_id", "file_path"):
+        value = row.get(column)
+        if not value:
+            continue
+        path = Path(value)
+        keys.add(value)
+        keys.add(path.name)
+        keys.add(path.stem)
+    return keys
+
+
+def _evaluate_scene_state_cells(evaluation: dict[str, Any], output_dir: Path) -> dict[str, Any]:
+    from seedling_cells.evaluation import evaluate_scene_states, load_scene_state
+
+    if not evaluation.get("gt_scene") or not evaluation.get("pred_scene"):
+        raise ValueError("SceneState evaluation requires evaluation.gt_scene and evaluation.pred_scene")
+    target_distance = float(evaluation.get("target_match_distance_px", 25.0))
+    target_distance_mm = _optional_float(evaluation.get("target_match_distance_mm"))
+    gt_scene = load_scene_state(evaluation["gt_scene"])
+    pred_scene = load_scene_state(evaluation["pred_scene"])
+    scene_metrics = evaluate_scene_states(
+        gt_scene,
+        pred_scene,
+        target_match_distance_px=target_distance,
+        target_match_distance_mm=target_distance_mm,
+    )
+    metrics = _scene_state_metrics_as_cell_metrics(scene_metrics)
+    write_json(output_dir / "cell_metrics.json", metrics)
+    _write_confusion_csv(output_dir / "cell_confusion_matrix.csv", metrics["cell_confusion_matrix"])
+    return metrics
+
+
+def _scene_state_metrics_as_cell_metrics(scene_metrics: dict[str, Any]) -> dict[str, Any]:
+    cell_metrics = scene_metrics["cell_metrics"]
+    target_metrics = scene_metrics["target_metrics"]
+    cost_sensitive = scene_metrics.get("cost_sensitive", {})
+    if not isinstance(cost_sensitive, dict):
+        cost_sensitive = {}
+    legacy_confusion = _legacy_confusion_from_scene_metrics(cell_metrics["confusion"])
+    matched_distances_px = [
+        float(match["distance_px"])
+        for match in target_metrics.get("matches", [])
+        if match.get("pred_target_id") is not None and match.get("distance_px") is not None
+    ]
+    matched_distances_mm = [
+        float(match["distance_mm"])
+        for match in target_metrics.get("matches", [])
+        if match.get("pred_target_id") is not None and match.get("distance_mm") is not None
+    ]
+    target_counts = {
+        "tp": int(target_metrics.get("tp", 0)),
+        "fp": int(target_metrics.get("fp", 0)),
+        "fn": int(target_metrics.get("fn", 0)),
+    }
+    image_summary = {
+        "image": scene_metrics.get("pred_scene_id") or scene_metrics.get("gt_scene_id"),
+        "cell_accuracy": cell_metrics.get("accuracy"),
+        "cell_correct": cell_metrics.get("correct_cells"),
+        "cell_total": cell_metrics.get("total_cells"),
+        "target_tp": target_counts["tp"],
+        "target_fp": target_counts["fp"],
+        "target_fn": target_counts["fn"],
+        "target_mean_coordinate_error_px": target_metrics.get("mean_error_px"),
+        "target_mean_coordinate_error_mm": target_metrics.get("mean_error_mm"),
+        "cost_total": cost_sensitive.get("total_cost"),
+        "normalized_cost_per_cell": cost_sensitive.get("normalized_cost_per_cell"),
+        "critical_error_total": cost_sensitive.get("critical_error_total"),
+        "critical_error_rate_per_cell": cost_sensitive.get("critical_error_rate_per_cell"),
+        "critical_error_counts": cost_sensitive.get("critical_error_counts", {}),
+    }
+    return {
+        "schema_mode": "scene_state",
+        "cell_accuracy": cell_metrics.get("accuracy"),
+        "cell_macro": _macro_metrics(legacy_confusion),
+        "cell_confusion_matrix": legacy_confusion,
+        "multi_seedling_cell": _scene_multi_counts(legacy_confusion),
+        "removal_targets": {
+            **_prf(target_counts),
+            "mean_coordinate_error_px": target_metrics.get("mean_error_px"),
+            "mean_coordinate_error_mm": target_metrics.get("mean_error_mm"),
+            "matched_distances_px": matched_distances_px,
+            "matched_distances_mm": matched_distances_mm,
+            "calibration_id": None,
+            "expert_keep_remove": target_metrics.get("expert_keep_remove", {}),
+        },
+        "cost_sensitive": cost_sensitive,
+        "container_recall": None,
+        "container_matching": {
+            "prediction_source": "scene_state",
+            "iou_threshold": None,
+            "total_gt_containers": None,
+            "matched_containers": None,
+            "best_iou_summary": _summary([]),
+            "best_iou_counts": _iou_counts([], 0.0),
+            "unmatched_samples": [],
+        },
+        "prediction_coverage": {
+            "dataset_images": 1,
+            "prediction_images": 1,
+            "missing_predictions": cell_metrics.get("missing_predictions", []),
+            "extra_predictions": cell_metrics.get("unexpected_predictions", []),
+        },
+        "suspected_augmented_eval_images": [],
+        "cell_accuracy_bootstrap_ci": {
+            "mean": cell_metrics.get("accuracy"),
+            "low_95": None,
+            "high_95": None,
+            "n": 1,
+        },
+        "images": [image_summary],
+        "scene_state_metrics": scene_metrics,
+    }
 
 
 def _load_predictions(path: str | Path) -> dict[str, dict[str, Any]]:
     raw = json.loads(Path(path).read_text(encoding="utf-8"))
     return {item["image"]: item for item in raw.get("images", [])}
+
+
+def _load_calibration_artifact(path: Any) -> Any:
+    if path is None or path == "":
+        return None
+    from seedling_calibration.schemas import CalibrationArtifact
+
+    return CalibrationArtifact.from_json(path)
+
+
+def _optional_float(value: Any) -> float | None:
+    if value is None or value == "":
+        return None
+    return float(value)
 
 
 def _dataset_dirs(dataset: str | Path, split: str | None) -> tuple[Path, Path]:
@@ -264,6 +552,33 @@ def _category(count: int) -> int:
     return 2 if count > 1 else count
 
 
+def _legacy_confusion_from_scene_metrics(confusion: dict[str, dict[str, int]]) -> list[list[int]]:
+    legacy = [[0 for _ in range(3)] for _ in range(3)]
+    for gt_state, pred_counts in confusion.items():
+        gt_category = _legacy_cell_category(gt_state)
+        for pred_state, count in pred_counts.items():
+            pred_category = _legacy_cell_category(pred_state)
+            legacy[gt_category][pred_category] += int(count)
+    return legacy
+
+
+def _legacy_cell_category(state: str) -> int:
+    if state == "multiple_crop":
+        return 2
+    if state in {"single_crop", "crop_and_weed"}:
+        return 1
+    return 0
+
+
+def _scene_multi_counts(confusion: list[list[int]]) -> dict[str, Any]:
+    counts = {
+        "tp": confusion[2][2],
+        "fp": confusion[0][2] + confusion[1][2],
+        "fn": confusion[2][0] + confusion[2][1],
+    }
+    return _prf(counts)
+
+
 def _update_confusion(
     confusion: list[list[int]],
     gt_matrix: list[list[int]],
@@ -302,25 +617,53 @@ def _match_targets(
     gt_targets: list[dict[str, Any]],
     pred_targets: list[dict[str, Any]],
     max_distance: float,
-) -> tuple[int, list[float]]:
+    target_distance_mm: float | None = None,
+    calibration_artifact: Any = None,
+) -> tuple[int, list[float], list[float]]:
     used_pred: set[int] = set()
     distances: list[float] = []
+    distances_mm: list[float] = []
     for gt in gt_targets:
         best_index = None
         best_distance = float("inf")
+        best_distance_mm = None
         gt_center = [float(value) for value in gt["remove_center"]]
         for index, pred in enumerate(pred_targets):
             if index in used_pred:
                 continue
             pred_center = [float(value) for value in pred["remove_center"]]
             distance = center_distance(gt_center, pred_center)
+            if distance > max_distance:
+                continue
+            distance_mm = _calibrated_center_distance_mm(gt_center, pred_center, calibration_artifact)
+            if target_distance_mm is not None and (
+                distance_mm is None or distance_mm > target_distance_mm
+            ):
+                continue
             if distance < best_distance:
                 best_distance = distance
                 best_index = index
-        if best_index is not None and best_distance <= max_distance:
+                best_distance_mm = distance_mm
+        if best_index is not None:
             used_pred.add(best_index)
             distances.append(best_distance)
-    return len(distances), distances
+            if best_distance_mm is not None:
+                distances_mm.append(best_distance_mm)
+    return len(distances), distances, distances_mm
+
+
+def _calibrated_center_distance_mm(
+    gt_center_px: list[float],
+    pred_center_px: list[float],
+    calibration_artifact: Any,
+) -> float | None:
+    if calibration_artifact is None:
+        return None
+    from seedling_calibration.transforms import image_px_to_tray_mm
+
+    gt_mm = image_px_to_tray_mm(gt_center_px, calibration_artifact)
+    pred_mm = image_px_to_tray_mm(pred_center_px, calibration_artifact)
+    return center_distance(gt_mm, pred_mm)
 
 
 def _accuracy(confusion: list[list[int]]) -> float | None:

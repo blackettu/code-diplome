@@ -1,0 +1,51 @@
+{
+  "runs": [
+    {
+      "run_id": "ui_snapshot_smoke_seedling_ui_report_export_tray_report",
+      "command": "seedling-ui:report-export",
+      "run_dir": "reports\\ui_snapshot_smoke",
+      "created_at": "2026-06-18T16:08:11.019343+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "reports\\software_readiness_smoke\\scene_state.json",
+          "artifact_type": "scene_state",
+          "role": "input",
+          "command": "seedling-ui:report-export",
+          "sha256": "723c0322ded79afe3a59d94ba489350d3bd7842f72d947b3ae8f1685298184b6",
+          "bytes": 2077,
+          "created_at": "2026-06-18T16:08:11.016059+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_smoke\\tray_report.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-ui:report-export",
+          "sha256": "ba5b14ff5500712ad9005ae10c01224f93ea79317fa8754b3e4d15156a86d872",
+          "bytes": 1749,
+          "created_at": "2026-06-18T16:08:11.017408+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_smoke\\tray_report.run_snapshot.json",
+          "artifact_type": "tray_report.run_snapshot",
+          "role": "output",
+          "command": "seedling-ui:report-export",
+          "sha256": "68804f26e3b0a89eb8e96e4b8021082f0c362b65946a56bf3c23902a88bdcc77",
+          "bytes": 1755,
+          "created_at": "2026-06-18T16:08:11.019151+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "title": null,
+        "scene_id": "software_readiness_scene",
+        "scene_kind": "scene_state",
+        "targets": 1,
+        "replay_steps": 0
+      }
+    }
+  ]
+}

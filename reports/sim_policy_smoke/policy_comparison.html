@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Simulation Policy Comparison</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; color: #1f2528; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 28px; font-size: 13px; }
+    td, th { border: 1px solid #ddd; padding: 6px 8px; text-align: left; vertical-align: top; }
+    th { background: #f2f2ed; }
+    code { font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <h1>Simulation Policy Comparison</h1>
+  <section><h2>Policies</h2><table><thead><tr><th>scene_id</th><th>policy</th><th>requested_policy</th><th>steps</th><th>reward_total</th><th>successes</th><th>crop_damage</th><th>remaining_targets</th><th>command_target_order</th></tr></thead><tbody><tr><td>scene_000000</td><td>raster_scan</td><td>raster_scan</td><td>6</td><td>2.1228536952945163</td><td>6</td><td>1</td><td>5</td><td>target_000000,target_000001,target_000002,target_000003,target_000005,target_000006</td></tr>
+<tr><td>scene_000000</td><td>route_planning</td><td>route_planning</td><td>10</td><td>89.15537578423401</td><td>10</td><td>0</td><td>1</td><td>target_000001,target_000002,target_000005,target_000003,target_000000,target_000008,target_000010,target_000009,target_000007,target_000006</td></tr>
+<tr><td>scene_000000</td><td>risk_aware_rule</td><td>risk_aware_rule</td><td>10</td><td>89.15537578423401</td><td>10</td><td>0</td><td>1</td><td>target_000001,target_000002,target_000005,target_000003,target_000000,target_000008,target_000010,target_000009,target_000007,target_000006</td></tr></tbody></table></section>
+</body>
+</html>

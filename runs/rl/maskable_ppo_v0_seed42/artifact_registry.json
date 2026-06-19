@@ -1,0 +1,65 @@
+{
+  "runs": [
+    {
+      "run_id": "maskable_ppo_v0_seed42",
+      "command": "rl-train:dry-run",
+      "run_dir": "runs\\rl\\maskable_ppo_v0_seed42",
+      "created_at": "2026-06-17T17:57:53.628417+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "runs\\rl\\maskable_ppo_v0_seed42\\rl_config.json",
+          "artifact_type": "rl_config",
+          "role": "output",
+          "command": "rl-train:dry-run",
+          "sha256": "67dbaaac64be0ac9bba4cf857540e360c474a560420696304ff547ea2aead5c8",
+          "bytes": 373,
+          "created_at": "2026-06-17T17:57:53.624298+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "runs\\rl\\maskable_ppo_v0_seed42\\train_summary.json",
+          "artifact_type": "train_summary",
+          "role": "output",
+          "command": "rl-train:dry-run",
+          "sha256": "9a3dc5eccca20644ffbc743f462e49a1e3b177850da2a2eea6bbdac6ccaae31d",
+          "bytes": 989,
+          "created_at": "2026-06-17T17:57:53.625322+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "runs\\rl\\maskable_ppo_v0_seed42\\training_log.jsonl",
+          "artifact_type": "jsonl",
+          "role": "output",
+          "command": "rl-train:dry-run",
+          "sha256": "1bf7452fede4dd583be30a3317a37e2a4847080f6ede2777301aab11702a6534",
+          "bytes": 365,
+          "created_at": "2026-06-17T17:57:53.626599+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "runs\\rl\\maskable_ppo_v0_seed42\\rl_metrics.jsonl",
+          "artifact_type": "jsonl",
+          "role": "output",
+          "command": "rl-train:dry-run",
+          "sha256": "716168cd587cdd9499d47d980f30130c36964640f2741cf86eede66c0ff6fe55",
+          "bytes": 615,
+          "created_at": "2026-06-17T17:57:53.627425+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "runs\\rl\\maskable_ppo_v0_seed42\\rl_metrics.csv",
+          "artifact_type": "rl_metrics",
+          "role": "output",
+          "command": "rl-train:dry-run",
+          "sha256": "de5abdb6c6b88f6948a4461a95bbcbc2fbb716fa59e7ff71e855189a55a8e8f4",
+          "bytes": 190,
+          "created_at": "2026-06-17T17:57:53.628274+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {}
+    }
+  ]
+}

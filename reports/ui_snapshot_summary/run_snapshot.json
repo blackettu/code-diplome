@@ -1,0 +1,102 @@
+{
+  "command": "seedling-reports:build",
+  "command_args": {
+    "command": "build",
+    "model_registry": null,
+    "out": "reports\\ui_snapshot_summary",
+    "root": "reports\\ui_snapshot_smoke",
+    "title": "Seedling Experiment Report"
+  },
+  "config": {
+    "command_args": {
+      "command": "build",
+      "model_registry": null,
+      "out": "reports\\ui_snapshot_summary",
+      "root": "reports\\ui_snapshot_smoke",
+      "title": "Seedling Experiment Report"
+    },
+    "inputs": [
+      "reports\\ui_snapshot_smoke",
+      "configs\\registry\\model_registry_v0_1.yaml"
+    ],
+    "metadata": {
+      "annotation_feedback_rows": 0,
+      "artifacts": 1,
+      "dataset_rows": 0,
+      "error_budget_rows": 0,
+      "hardware_rows": 0,
+      "model_rows": 4,
+      "object_rows": 0,
+      "post_action_rows": 0,
+      "rl_rows": 0,
+      "run_snapshot_rows": 1,
+      "safety_rows": 0,
+      "task_rows": 0
+    },
+    "outputs": [
+      "reports\\ui_snapshot_summary\\artifact_registry.csv",
+      "reports\\ui_snapshot_summary\\model_registry.csv",
+      "reports\\ui_snapshot_summary\\dataset_summary.csv",
+      "reports\\ui_snapshot_summary\\object_level_results.csv",
+      "reports\\ui_snapshot_summary\\task_level_results.csv",
+      "reports\\ui_snapshot_summary\\run_snapshot_results.csv",
+      "reports\\ui_snapshot_summary\\rl_results.csv",
+      "reports\\ui_snapshot_summary\\hardware_dry_run_results.csv",
+      "reports\\ui_snapshot_summary\\safety_results.csv",
+      "reports\\ui_snapshot_summary\\post_action_results.csv",
+      "reports\\ui_snapshot_summary\\error_budget_results.csv",
+      "reports\\ui_snapshot_summary\\annotation_feedback_results.csv",
+      "reports\\ui_snapshot_summary\\experiment_report.html",
+      "reports\\ui_snapshot_summary\\report_summary.json"
+    ]
+  },
+  "config_hash": "f20fb077ad993ac32a838282228d781480be2ac73465b3cf41f4613562cfea29",
+  "environment": {
+    "created_at_utc": "2026-06-18T16:08:41.687506+00:00",
+    "packages": {
+      "Pillow": "12.2.0",
+      "PyYAML": "6.0.3",
+      "numpy": "2.4.4",
+      "opencv-python": null,
+      "pillow-heif": null,
+      "ultralytics": null
+    },
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "inputs": [
+    "reports\\ui_snapshot_smoke",
+    "configs\\registry\\model_registry_v0_1.yaml"
+  ],
+  "metadata": {
+    "annotation_feedback_rows": 0,
+    "artifacts": 1,
+    "dataset_rows": 0,
+    "error_budget_rows": 0,
+    "hardware_rows": 0,
+    "model_rows": 4,
+    "object_rows": 0,
+    "post_action_rows": 0,
+    "rl_rows": 0,
+    "run_snapshot_rows": 1,
+    "safety_rows": 0,
+    "task_rows": 0
+  },
+  "outputs": [
+    "reports\\ui_snapshot_summary\\artifact_registry.csv",
+    "reports\\ui_snapshot_summary\\model_registry.csv",
+    "reports\\ui_snapshot_summary\\dataset_summary.csv",
+    "reports\\ui_snapshot_summary\\object_level_results.csv",
+    "reports\\ui_snapshot_summary\\task_level_results.csv",
+    "reports\\ui_snapshot_summary\\run_snapshot_results.csv",
+    "reports\\ui_snapshot_summary\\rl_results.csv",
+    "reports\\ui_snapshot_summary\\hardware_dry_run_results.csv",
+    "reports\\ui_snapshot_summary\\safety_results.csv",
+    "reports\\ui_snapshot_summary\\post_action_results.csv",
+    "reports\\ui_snapshot_summary\\error_budget_results.csv",
+    "reports\\ui_snapshot_summary\\annotation_feedback_results.csv",
+    "reports\\ui_snapshot_summary\\experiment_report.html",
+    "reports\\ui_snapshot_summary\\report_summary.json"
+  ],
+  "schema_version": "command_run_snapshot_v0_1"
+}

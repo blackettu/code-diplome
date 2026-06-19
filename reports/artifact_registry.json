@@ -1,0 +1,115 @@
+{
+  "runs": [
+    {
+      "run_id": "reports",
+      "command": "seedling-experiments:rl:evaluate-baselines",
+      "run_dir": "reports",
+      "created_at": "2026-06-17T17:16:10.686087+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "configs\\rl\\maskable_ppo_v0.yaml",
+          "artifact_type": "config",
+          "role": "input",
+          "command": "seedling-experiments:rl:evaluate-baselines",
+          "sha256": "db1d878e5ad0a476a8290367cf70efa91679d24912856579e631ee843fd7b718",
+          "bytes": 456,
+          "created_at": "2026-06-17T17:16:10.685088+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\unified_rl_baselines.json",
+          "artifact_type": "unified_rl_baselines",
+          "role": "output",
+          "command": "seedling-experiments:rl:evaluate-baselines",
+          "sha256": "82193b734e6a5b8f089bbd44dab3d9a656de5fde39b7b16595360e1795267e1d",
+          "bytes": 2011,
+          "created_at": "2026-06-17T17:16:10.686003+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "episodes": 1,
+        "policies": [
+          "noop",
+          "raster_scan",
+          "nearest_neighbor",
+          "route_planning",
+          "risk_aware_rule"
+        ]
+      }
+    },
+    {
+      "run_id": "reports_unified_sim_smoke",
+      "command": "seedling-experiments:sim",
+      "run_dir": "reports",
+      "created_at": "2026-06-17T17:17:07.660861+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "configs\\simulation\\tray_env_v0.yaml",
+          "artifact_type": "config",
+          "role": "input",
+          "command": "seedling-experiments:sim",
+          "sha256": "8692e4e5dcb6377f7b15daeea24f9347488bb0e3d0d11e2045517ebe8f5ce0d8",
+          "bytes": 600,
+          "created_at": "2026-06-17T17:17:07.660320+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\unified_sim_smoke.json",
+          "artifact_type": "unified_sim_smoke",
+          "role": "output",
+          "command": "seedling-experiments:sim",
+          "sha256": "0c15a26755273892b2c74137bf1bd356f11b32248547aee6467bd67354f9b0ef",
+          "bytes": 271,
+          "created_at": "2026-06-17T17:17:07.660797+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "run_id": "reports_unified_rl_baselines",
+      "command": "seedling-experiments:rl:evaluate-baselines",
+      "run_dir": "reports",
+      "created_at": "2026-06-17T17:17:07.705949+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "configs\\rl\\maskable_ppo_v0.yaml",
+          "artifact_type": "config",
+          "role": "input",
+          "command": "seedling-experiments:rl:evaluate-baselines",
+          "sha256": "db1d878e5ad0a476a8290367cf70efa91679d24912856579e631ee843fd7b718",
+          "bytes": 456,
+          "created_at": "2026-06-17T17:17:07.704996+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\unified_rl_baselines.json",
+          "artifact_type": "unified_rl_baselines",
+          "role": "output",
+          "command": "seedling-experiments:rl:evaluate-baselines",
+          "sha256": "82193b734e6a5b8f089bbd44dab3d9a656de5fde39b7b16595360e1795267e1d",
+          "bytes": 2011,
+          "created_at": "2026-06-17T17:17:07.705785+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "episodes": 1,
+        "policies": [
+          "noop",
+          "raster_scan",
+          "nearest_neighbor",
+          "route_planning",
+          "risk_aware_rule"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "runs": [
+    {
+      "run_id": "rl_eval_replay_smoke",
+      "command": "rl-evaluate:baseline",
+      "run_dir": "reports\\rl_eval_replay_smoke",
+      "created_at": "2026-06-17T17:35:59.641670+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "reports\\rl_eval_replay_smoke\\rl_eval_metrics.json",
+          "artifact_type": "rl_eval_metrics",
+          "role": "output",
+          "command": "rl-evaluate:baseline",
+          "sha256": "8721a6f38daceb1719e8d3440d0efd21f8c0d185fca084e2ca98b83c75c511d7",
+          "bytes": 843,
+          "created_at": "2026-06-17T17:35:59.640563+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\rl_eval_replay_smoke\\critical_events.json",
+          "artifact_type": "critical_events",
+          "role": "output",
+          "command": "rl-evaluate:baseline",
+          "sha256": "ca52912c8a6671b0379021120fba870c27b43af41ea4423b882c957604660236",
+          "bytes": 29,
+          "created_at": "2026-06-17T17:35:59.641044+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\rl_eval_replay_smoke\\replays\\route_planning_episode_0000.json",
+          "artifact_type": "route_planning_episode_0000",
+          "role": "output",
+          "command": "rl-evaluate:baseline",
+          "sha256": "e02960a547ece79d4a5e08c17c3893ce7805b81239c8271657647126f311add2",
+          "bytes": 65973,
+          "created_at": "2026-06-17T17:35:59.641589+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {}
+    }
+  ]
+}

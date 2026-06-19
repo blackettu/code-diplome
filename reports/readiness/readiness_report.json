@@ -1,0 +1,215 @@
+{
+  "schema_version": "readiness_report_v0_1",
+  "ok": true,
+  "software_ready": true,
+  "physical_validation_required": true,
+  "root": "reports\\software_readiness_smoke",
+  "repo_root": ".",
+  "counts": {
+    "pass": 18,
+    "external_required": 2
+  },
+  "items": [
+    {
+      "item_id": "DOD-001",
+      "requirement": "SceneState / CellState / ActionTarget / ActionCommand schemas exist.",
+      "status": "pass",
+      "evidence": [
+        "seedling_core\\schemas.py"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-002",
+      "requirement": "Detector models connect through DetectorAdapter and registries.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision\\adapters\\base.py",
+        "configs\\registry\\models_v0_1.yaml"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-003",
+      "requirement": "Policies connect through DecisionPolicy and registry.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision\\policies\\base.py",
+        "configs\\registry\\policies_v0_1.yaml"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-004",
+      "requirement": "Robot and simulator connect through RobotAdapter.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot\\adapters\\base.py",
+        "seedling_robot\\adapters\\simulator.py",
+        "seedling_robot\\adapters\\dry_run_serial.py"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-005",
+      "requirement": "Action execution is gated by SafetyGate contracts.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision\\safety_gate.py",
+        "docs\\SAFETY_CONCEPT.md"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-006",
+      "requirement": "Calibration artifact and error map evidence exists.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration\\schemas.py",
+        "seedling_calibration\\cli.py",
+        "reports\\software_readiness_smoke\\calibration\\calibration.json",
+        "reports\\software_readiness_smoke\\calibration\\error_map.json"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-007",
+      "requirement": "Model registry exists.",
+      "status": "pass",
+      "evidence": [
+        "configs\\registry\\model_registry_v0_1.yaml"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-008",
+      "requirement": "Dataset registry exists.",
+      "status": "pass",
+      "evidence": [
+        "configs\\datasets\\dataset_v0_1.yaml"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-009",
+      "requirement": "Simulation environment exists.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl\\envs.py",
+        "configs\\simulation\\tray_env_v0.yaml"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-010",
+      "requirement": "RL training block exists.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl\\training.py",
+        "configs\\rl\\maskable_ppo_v0.yaml"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-011",
+      "requirement": "RL has been compared with baseline policies in generated artifacts.",
+      "status": "pass",
+      "evidence": [
+        "reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.json"
+      ],
+      "notes": "Validated generated comparison evidence containing both RL and baseline policies."
+    },
+    {
+      "item_id": "DOD-012",
+      "requirement": "Replay viewer exists.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui\\replay_viewer.py"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-013",
+      "requirement": "Offline analysis UI exists.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui\\offline_viewer.py"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-014",
+      "requirement": "Dry-run mode without dangerous actuation exists.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot\\dry_run_runner.py",
+        "seedling_robot\\adapters\\dry_run_serial.py",
+        "reports\\software_readiness_smoke\\robot\\dry_run_plan_report.json"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-015",
+      "requirement": "Actions are logged in command logs or replay artifacts.",
+      "status": "pass",
+      "evidence": [
+        "reports\\software_readiness_smoke\\robot\\dry_run_plan_commands.json",
+        "reports\\software_readiness_smoke\\robot\\dry_run_plan_replay.json"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-016",
+      "requirement": "Metrics are generated from artifacts.",
+      "status": "pass",
+      "evidence": [
+        "reports\\software_readiness_smoke\\hardware_dry_run_results.csv",
+        "reports\\software_readiness_smoke\\safety_results.csv"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-017",
+      "requirement": "Tests cover grid, calibration, safety, simulation and policies.",
+      "status": "pass",
+      "evidence": [
+        "tests\\unit\\test_grid.py",
+        "tests\\unit\\test_calibration.py",
+        "tests\\unit\\test_decision_and_safety.py",
+        "tests\\unit\\test_simulation.py",
+        "tests\\integration\\test_scene_policy_sim.py"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "DOD-018",
+      "requirement": "Documentation describes limitations and blocks autonomous dangerous actuation.",
+      "status": "pass",
+      "evidence": [
+        "docs\\SAFETY_CONCEPT.md",
+        "docs\\OPERATOR_MANUAL_DRAFT.md",
+        "docs\\ROBOT_PROTOCOL.md"
+      ],
+      "notes": ""
+    },
+    {
+      "item_id": "EXT-001",
+      "requirement": "Physical gantry HIL validation is externally verified.",
+      "status": "external_required",
+      "evidence": [],
+      "notes": "Requires a real supervised stand run and operator safety review; software artifacts alone are not proof. No candidate evidence artifact was found."
+    },
+    {
+      "item_id": "EXT-002",
+      "requirement": "Delayed biological post-action validation is externally verified.",
+      "status": "external_required",
+      "evidence": [],
+      "notes": "Requires real 24h/48h/72h observations under a documented biological protocol. No candidate evidence artifact was found."
+    }
+  ],
+  "summary_path": "reports\\readiness\\readiness_report.json",
+  "csv_path": "reports\\readiness\\readiness_report.csv",
+  "html_path": "reports\\readiness\\readiness_report.html",
+  "run_snapshot": "reports\\readiness\\run_snapshot.json",
+  "artifact_registry": "reports\\readiness\\artifact_registry.json"
+}

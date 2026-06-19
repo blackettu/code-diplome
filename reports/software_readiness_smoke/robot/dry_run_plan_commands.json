@@ -1,0 +1,60 @@
+{
+  "commands": [
+    {
+      "kind": "home",
+      "port": "DRY_RUN"
+    },
+    {
+      "kind": "motion_command",
+      "command": {
+        "command_id": "route_planning_cmd_0001",
+        "point_mm": [
+          20.0,
+          30.0,
+          0.0
+        ],
+        "speed": {
+          "xy_mm_s": 50.0,
+          "z_mm_s": 10.0
+        },
+        "mode": "dry_run_pointer",
+        "safety_token": "ALLOW_DRY_RUN",
+        "metadata": {
+          "target_id": "target_smoke_001",
+          "action_type": "move_and_mark",
+          "tool_profile": "pointer_only",
+          "safety_gate_result": "ALLOW_DRY_RUN"
+        }
+      },
+      "safety_decision": {
+        "result": "ALLOW_DRY_RUN",
+        "allowed": true,
+        "reasons": [],
+        "command_id": "route_planning_cmd_0001",
+        "target_id": "target_smoke_001"
+      }
+    },
+    {
+      "kind": "move_to",
+      "point_mm": [
+        20.0,
+        30.0,
+        0.0
+      ],
+      "speed": {
+        "xy_mm_s": 50.0,
+        "z_mm_s": 10.0
+      },
+      "mode": "dry_run_pointer"
+    },
+    {
+      "kind": "mark_or_act",
+      "profile": {
+        "profile_id": "pointer_only",
+        "dwell_ms": 0,
+        "metadata": {}
+      },
+      "mode": "dry_run_pointer"
+    }
+  ]
+}

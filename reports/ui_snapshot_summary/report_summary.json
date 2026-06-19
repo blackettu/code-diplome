@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "out": "reports\\ui_snapshot_summary",
+  "artifacts": 1,
+  "model_rows": 4,
+  "dataset_rows": 0,
+  "object_rows": 0,
+  "task_rows": 0,
+  "run_snapshot_rows": 1,
+  "rl_rows": 0,
+  "hardware_rows": 0,
+  "safety_rows": 0,
+  "post_action_rows": 0,
+  "error_budget_rows": 0,
+  "annotation_feedback_rows": 0,
+  "artifact_registry": "reports\\ui_snapshot_summary\\artifact_registry.json",
+  "run_snapshot": "reports\\ui_snapshot_summary\\run_snapshot.json"
+}

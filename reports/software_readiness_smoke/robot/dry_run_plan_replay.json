@@ -1,0 +1,76 @@
+{
+  "replay_id": "dry_run_route_planning_software_readiness_scene",
+  "scene_id": "software_readiness_scene",
+  "steps": [
+    {
+      "step_index": 1,
+      "event_type": "robot_execution",
+      "payload": {
+        "ok": true,
+        "command": {
+          "command_id": "route_planning_cmd_0001",
+          "target_id": "target_smoke_001",
+          "action_type": "move_and_mark",
+          "robot_point_mm": [
+            20.0,
+            30.0,
+            0.0
+          ],
+          "tool_profile": "pointer_only",
+          "requires_operator_confirmation": false,
+          "safety_gate_result": "ALLOW_DRY_RUN",
+          "created_by_policy": "route_planning",
+          "metadata": {
+            "target_type": "remove_extra_crop",
+            "coordinate_source": "robot_point_mm",
+            "route_planning_method": "greedy_nearest_neighbor",
+            "route_index": 1,
+            "leg_distance_mm": 36.05551275463989,
+            "cumulative_route_distance_mm": 36.05551275463989
+          }
+        },
+        "safety_decision": {
+          "result": "ALLOW_DRY_RUN",
+          "allowed": true,
+          "reasons": [],
+          "command_id": "route_planning_cmd_0001",
+          "target_id": "target_smoke_001"
+        },
+        "outcome": {
+          "motion_command": {
+            "command_id": "route_planning_cmd_0001",
+            "point_mm": [
+              20.0,
+              30.0,
+              0.0
+            ],
+            "speed": {
+              "xy_mm_s": 50.0,
+              "z_mm_s": 10.0
+            },
+            "mode": "dry_run_pointer",
+            "safety_token": "ALLOW_DRY_RUN",
+            "metadata": {
+              "target_id": "target_smoke_001",
+              "action_type": "move_and_mark",
+              "tool_profile": "pointer_only",
+              "safety_gate_result": "ALLOW_DRY_RUN"
+            }
+          },
+          "tool_result": {
+            "ok": true,
+            "profile": {
+              "profile_id": "pointer_only",
+              "dwell_ms": 0,
+              "metadata": {}
+            },
+            "message": "dry-run pointer mark serialized"
+          }
+        },
+        "message": "dry-run command serialized"
+      },
+      "created_at": "2026-06-18T19:44:48.512163+00:00"
+    }
+  ],
+  "metadata": {}
+}

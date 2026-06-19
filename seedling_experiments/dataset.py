@@ -11,6 +11,7 @@ from typing import Any
 from .config import write_json
 from .image_io import register_heif_if_available
 from .yolo import label_path_for, list_images, read_labels, write_data_yaml
+from seedling_data.manifests import read_group_map
 
 register_heif_if_available()
 
@@ -71,6 +72,10 @@ def audit_yolo_dataset(
         images = list_images(images_dir)
         class_counts: Counter[int] = Counter()
         missing_labels: list[str] = []
+        empty_labels: list[str] = []
+        invalid_labels: list[dict[str, str]] = []
+        unknown_class_ids: list[dict[str, int | str]] = []
+        bbox_out_of_range: list[dict[str, int | str | float]] = []
         corrupt_images: list[str] = []
         suspected_augmented_images: list[str] = []
         bbox_widths: list[float] = []
@@ -86,8 +91,27 @@ def audit_yolo_dataset(
             if not label_path.exists():
                 missing_labels.append(image_path.name)
                 continue
-            labels = read_labels(label_path)
+            try:
+                labels = read_labels(label_path)
+            except ValueError as exc:
+                invalid_labels.append({"label": label_path.name, "error": str(exc)})
+                continue
+            if not labels:
+                empty_labels.append(label_path.name)
             for label in labels:
+                if class_names is not None and label.class_id >= len(class_names):
+                    unknown_class_ids.append({"label": label_path.name, "class_id": label.class_id})
+                if not _label_in_range(label):
+                    bbox_out_of_range.append(
+                        {
+                            "label": label_path.name,
+                            "class_id": label.class_id,
+                            "x_center": label.x_center,
+                            "y_center": label.y_center,
+                            "width": label.width,
+                            "height": label.height,
+                        }
+                    )
                 class_counts[label.class_id] += 1
                 total_classes[label.class_id] += 1
                 bbox_widths.append(label.width)
@@ -109,6 +133,10 @@ def audit_yolo_dataset(
             "labels": sum(class_counts.values()),
             "class_counts": _named_counts(class_counts, class_names),
             "missing_labels": missing_labels,
+            "empty_labels": empty_labels,
+            "invalid_labels": invalid_labels,
+            "unknown_class_ids": unknown_class_ids,
+            "bbox_out_of_range": bbox_out_of_range,
             "orphan_labels": orphan_labels,
             "corrupt_images": corrupt_images,
             "suspected_augmented_images": suspected_augmented_images,
@@ -137,6 +165,8 @@ def make_grouped_split(
     test_ratio: float = 0.1,
     seed: int = 42,
     group_regex: str | None = None,
+    metadata_path: str | Path | None = None,
+    metadata_group_column: str = "group_id",
     class_names: list[str] | None = None,
     copy_images: bool = True,
 ) -> dict[str, Any]:
@@ -153,8 +183,14 @@ def make_grouped_split(
 
     groups: dict[str, list[Path]] = defaultdict(list)
     pattern = re.compile(group_regex) if group_regex else None
+    metadata_groups = read_group_map(metadata_path, metadata_group_column) if metadata_path else {}
     for image_path in images:
-        group = _group_for_image(image_path, pattern)
+        group = (
+            metadata_groups.get(image_path.name)
+            or metadata_groups.get(image_path.stem)
+            or metadata_groups.get(str(image_path.resolve()))
+            or _group_for_image(image_path, pattern)
+        )
         groups[group].append(image_path)
 
     rng = random.Random(seed)
@@ -199,6 +235,8 @@ def make_grouped_split(
         "output_root": str(output.resolve()),
         "seed": seed,
         "group_regex": group_regex,
+        "metadata_path": str(Path(metadata_path).resolve()) if metadata_path else None,
+        "metadata_group_column": metadata_group_column,
         "ratios": {"train": train_ratio, "val": val_ratio, "test": test_ratio},
         "groups": {split: len(items) for split, items in split_names.items()},
         "images": Counter(row["split"] for row in rows),
@@ -363,6 +401,20 @@ def _write_manifest(path: Path, rows: list[dict[str, str]]) -> None:
         )
         writer.writeheader()
         writer.writerows(rows)
+
+
+def _label_in_range(label: Any) -> bool:
+    return (
+        label.class_id >= 0
+        and 0.0 <= label.x_center <= 1.0
+        and 0.0 <= label.y_center <= 1.0
+        and 0.0 < label.width <= 1.0
+        and 0.0 < label.height <= 1.0
+        and 0.0 <= label.x_center - label.width / 2
+        and label.x_center + label.width / 2 <= 1.0
+        and 0.0 <= label.y_center - label.height / 2
+        and label.y_center + label.height / 2 <= 1.0
+    )
 
 
 def _summary(values: list[float]) -> dict[str, float | int | None]:

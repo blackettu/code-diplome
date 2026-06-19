@@ -1,0 +1,94 @@
+{
+  "command": "seedling-reports:software-readiness-smoke",
+  "command_args": {
+    "command": "software-readiness-smoke",
+    "out": "reports\\software_readiness_smoke",
+    "repo_root": "."
+  },
+  "config": {
+    "command_args": {
+      "command": "software-readiness-smoke",
+      "out": "reports\\software_readiness_smoke",
+      "repo_root": "."
+    },
+    "inputs": [
+      "."
+    ],
+    "metadata": {
+      "physical_validation_required": true,
+      "readiness_counts": {
+        "external_required": 2,
+        "pass": 18
+      },
+      "software_ready": true
+    },
+    "outputs": [
+      "reports\\software_readiness_smoke\\calibration\\calibration_config.json",
+      "reports\\software_readiness_smoke\\calibration\\calibration.json",
+      "reports\\software_readiness_smoke\\calibration\\error_map.json",
+      "reports\\software_readiness_smoke\\scene_state.json",
+      "reports\\software_readiness_smoke\\action_plan.json",
+      "reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.json",
+      "reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.html",
+      "reports\\software_readiness_smoke\\robot\\dry_run_plan_report.json",
+      "reports\\software_readiness_smoke\\robot\\dry_run_plan_commands.json",
+      "reports\\software_readiness_smoke\\robot\\dry_run_plan_replay.json",
+      "reports\\software_readiness_smoke\\hardware_dry_run_results.csv",
+      "reports\\software_readiness_smoke\\safety_results.csv",
+      "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.json",
+      "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.csv",
+      "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.html",
+      "reports\\software_readiness_smoke\\readiness\\readiness_report.json",
+      "reports\\software_readiness_smoke\\readiness\\readiness_report.csv",
+      "reports\\software_readiness_smoke\\readiness\\readiness_report.html",
+      "reports\\software_readiness_smoke\\software_readiness_smoke.json"
+    ]
+  },
+  "config_hash": "9007cea48098e1379999974a868855f63d206a139369830a15889ea4ff506a37",
+  "environment": {
+    "created_at_utc": "2026-06-18T19:44:48.748634+00:00",
+    "packages": {
+      "Pillow": "12.2.0",
+      "PyYAML": "6.0.3",
+      "numpy": "2.4.4",
+      "opencv-python": null,
+      "pillow-heif": null,
+      "ultralytics": null
+    },
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "inputs": [
+    "."
+  ],
+  "metadata": {
+    "physical_validation_required": true,
+    "readiness_counts": {
+      "external_required": 2,
+      "pass": 18
+    },
+    "software_ready": true
+  },
+  "outputs": [
+    "reports\\software_readiness_smoke\\calibration\\calibration_config.json",
+    "reports\\software_readiness_smoke\\calibration\\calibration.json",
+    "reports\\software_readiness_smoke\\calibration\\error_map.json",
+    "reports\\software_readiness_smoke\\scene_state.json",
+    "reports\\software_readiness_smoke\\action_plan.json",
+    "reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.json",
+    "reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.html",
+    "reports\\software_readiness_smoke\\robot\\dry_run_plan_report.json",
+    "reports\\software_readiness_smoke\\robot\\dry_run_plan_commands.json",
+    "reports\\software_readiness_smoke\\robot\\dry_run_plan_replay.json",
+    "reports\\software_readiness_smoke\\hardware_dry_run_results.csv",
+    "reports\\software_readiness_smoke\\safety_results.csv",
+    "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.json",
+    "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.csv",
+    "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.html",
+    "reports\\software_readiness_smoke\\readiness\\readiness_report.json",
+    "reports\\software_readiness_smoke\\readiness\\readiness_report.csv",
+    "reports\\software_readiness_smoke\\readiness\\readiness_report.html",
+    "reports\\software_readiness_smoke\\software_readiness_smoke.json"
+  ],
+  "schema_version": "command_run_snapshot_v0_1"
+}

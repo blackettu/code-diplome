@@ -1,0 +1,41 @@
+{
+  "scene_id": "software_readiness_scene",
+  "policy": "route_planning",
+  "plan": {
+    "plan_id": "route_planning_software_readiness_scene",
+    "policy_id": "route_planning",
+    "commands": [
+      {
+        "command_id": "route_planning_cmd_0001",
+        "target_id": "target_smoke_001",
+        "action_type": "move_and_mark",
+        "robot_point_mm": [
+          20.0,
+          30.0,
+          0.0
+        ],
+        "tool_profile": "pointer_only",
+        "requires_operator_confirmation": false,
+        "safety_gate_result": "not_evaluated",
+        "created_by_policy": "route_planning",
+        "metadata": {
+          "target_type": "remove_extra_crop",
+          "coordinate_source": "robot_point_mm",
+          "route_planning_method": "greedy_nearest_neighbor",
+          "route_index": 1,
+          "leg_distance_mm": 36.05551275463989,
+          "cumulative_route_distance_mm": 36.05551275463989
+        }
+      }
+    ],
+    "review_target_ids": [],
+    "blocked_target_ids": [],
+    "metadata": {
+      "review_reasons_by_target": {},
+      "blocked_reasons_by_target": {}
+    }
+  },
+  "commands": 1,
+  "review_targets": 0,
+  "blocked_targets": 0
+}

@@ -1,0 +1,72 @@
+version: model_registry_v0_1
+models:
+  - model_id: baseline_green_detector_v0
+    model_type: detector
+    framework: opencv
+    artifact_uri: baseline://green
+    config_uri: configs/registry/models_v0_1.yaml
+    metrics_uri: reports/experiment_summary/object_level_results.csv
+    dataset_version: zks_v0_1
+    ontology_version: ontology_v0_1
+    calibration_requirements:
+      required: false
+    input_schema: ImageInputV1
+    output_schema: DetectionResultV1
+    status: draft
+    safety_level: offline_only
+    tags: [baseline, hsv, cpu]
+    metadata:
+      backend: seedling_vision.adapters.BaselineGreenDetector
+      notes: "CPU green-threshold baseline for smoke tests and offline comparisons."
+  - model_id: route_planning_policy_v0
+    model_type: policy
+    framework: seedling_decision
+    artifact_uri: builtin://seedling_decision.policies.RoutePlanningPolicy
+    config_uri: configs/registry/policies_v0_1.yaml
+    metrics_uri: reports/scenario_compare/scenario_compare.json
+    calibration_requirements:
+      required: true
+      coordinate_frame: robot_mm
+    input_schema: SceneState
+    output_schema: ActionPlan
+    status: draft
+    safety_level: dry_run
+    tags: [baseline, route_planning, tsp_like]
+    metadata:
+      backend: seedling_decision.policies.RoutePlanningPolicy
+      requires_safety_gate: true
+  - model_id: maskable_ppo_v0_seed42
+    model_type: rl_policy
+    framework: sb3_contrib
+    artifact_uri: runs/rl/maskable_ppo_v0_seed42/model.zip
+    config_uri: configs/rl/maskable_ppo_v0.yaml
+    metrics_uri: runs/rl/eval/rl_eval_metrics.json
+    calibration_requirements:
+      required: true
+      allowed_modes: [simulation_only, dry_run]
+    input_schema: SeedlingTrayEnvObservationV1
+    output_schema: ActionIndexV1
+    status: draft
+    safety_level: simulation_only
+    tags: [rl, maskable_ppo]
+    metadata:
+      requires_action_mask: true
+      direct_hardware_access: false
+  - model_id: recurrent_ppo_v0_seed42
+    model_type: rl_policy
+    framework: sb3_contrib
+    artifact_uri: runs/rl/recurrent_ppo_v0_seed42/model.zip
+    config_uri: configs/rl/recurrent_ppo_v0.yaml
+    metrics_uri: runs/rl/recurrent_eval/rl_eval_metrics.json
+    calibration_requirements:
+      required: true
+      allowed_modes: [simulation_only, dry_run]
+    input_schema: SeedlingTrayEnvObservationV1
+    output_schema: ActionIndexV1
+    status: draft
+    safety_level: simulation_only
+    tags: [rl, recurrent_ppo, partial_observability]
+    metadata:
+      requires_action_mask: true
+      recurrent: true
+      direct_hardware_access: false

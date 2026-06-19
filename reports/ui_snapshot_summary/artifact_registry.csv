@@ -1,0 +1,2 @@
+artifact_type,role,path,sha256,bytes,created_at
+run_snapshot,discovered,reports\ui_snapshot_smoke\tray_report.run_snapshot.json,68804f26e3b0a89eb8e96e4b8021082f0c362b65946a56bf3c23902a88bdcc77,1755,2026-06-18T16:08:41.650525+00:00

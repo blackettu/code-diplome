@@ -1,0 +1,88 @@
+{
+  "command": "rl",
+  "episodes": 1,
+  "mode": "evaluate-baselines",
+  "ok": true,
+  "results": [
+    {
+      "actions_per_tray": 1.0,
+      "critical_error_rate": 0.0,
+      "details": [
+        {
+          "actions": 1,
+          "episode": 0,
+          "reward": -5.0
+        }
+      ],
+      "episodes": 1,
+      "policy": "noop",
+      "review_rate": 0.0,
+      "reward_mean": -5.0,
+      "successful_target_rate": 0.0
+    },
+    {
+      "actions_per_tray": 20.0,
+      "critical_error_rate": 0.0,
+      "details": [
+        {
+          "actions": 20,
+          "episode": 0,
+          "reward": 182.42446502092807
+        }
+      ],
+      "episodes": 1,
+      "policy": "raster_scan",
+      "review_rate": 0.0,
+      "reward_mean": 182.42446502092807,
+      "successful_target_rate": 1.0
+    },
+    {
+      "actions_per_tray": 20.0,
+      "critical_error_rate": 0.0,
+      "details": [
+        {
+          "actions": 20,
+          "episode": 0,
+          "reward": 185.2412688957499
+        }
+      ],
+      "episodes": 1,
+      "policy": "nearest_neighbor",
+      "review_rate": 0.0,
+      "reward_mean": 185.2412688957499,
+      "successful_target_rate": 1.0
+    },
+    {
+      "actions_per_tray": 20.0,
+      "critical_error_rate": 0.0,
+      "details": [
+        {
+          "actions": 20,
+          "episode": 0,
+          "reward": 185.2412688957499
+        }
+      ],
+      "episodes": 1,
+      "policy": "route_planning",
+      "review_rate": 0.0,
+      "reward_mean": 185.2412688957499,
+      "successful_target_rate": 1.0
+    },
+    {
+      "actions_per_tray": 20.0,
+      "critical_error_rate": 0.0,
+      "details": [
+        {
+          "actions": 20,
+          "episode": 0,
+          "reward": 182.42446502092807
+        }
+      ],
+      "episodes": 1,
+      "policy": "risk_aware_rule",
+      "review_rate": 0.0,
+      "reward_mean": 182.42446502092807,
+      "successful_target_rate": 1.0
+    }
+  ]
+}

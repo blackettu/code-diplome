@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Architecture Backlog Audit</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; color: #1f2528; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 28px; font-size: 13px; }
+    td, th { border: 1px solid #ddd; padding: 6px 8px; text-align: left; vertical-align: top; }
+    th { background: #f2f2ed; }
+    code { font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <h1>Architecture Backlog Audit</h1>
+  <section><h2>Backlog Items</h2><table><thead><tr><th>item_id</th><th>priority</th><th>title</th><th>status</th><th>evidence</th><th>missing_evidence</th><th>notes</th></tr></thead><tbody><tr><td>A-001</td><td>P0</td><td>Перейти на pyproject.toml и пакетную структуру</td><td>pass</td><td>pyproject.toml, seedling_experiments/__main__.py</td><td></td><td></td></tr>
+<tr><td>A-002</td><td>P0</td><td>Разделить requirements на base/vision/training/rl/robot/dev</td><td>pass</td><td>requirements/base.txt, requirements/vision.txt, requirements/rl.txt, requirements/robot.txt, requirements/dev.txt</td><td></td><td></td></tr>
+<tr><td>A-003</td><td>P0</td><td>Ввести единый загрузчик YAML-конфигов с валидацией</td><td>pass</td><td>seedling_core/config.py, seedling_experiments/config.py</td><td></td><td></td></tr>
+<tr><td>A-004</td><td>P0</td><td>Создать seedling_core.schemas на Pydantic/dataclasses</td><td>pass</td><td>seedling_core/schemas.py, tests/unit/test_schemas.py</td><td></td><td></td></tr>
+<tr><td>A-005</td><td>P1</td><td>Добавить run_snapshot как общий сервис</td><td>pass</td><td>seedling_core/run_snapshot.py</td><td></td><td></td></tr>
+<tr><td>A-006</td><td>P1</td><td>Ввести artifact registry</td><td>pass</td><td>seedling_reports/registry.py, seedling_core/run_snapshot.py, tests/unit/test_reports_and_viewers.py, tests/unit/test_cli_smoke.py</td><td></td><td></td></tr>
+<tr><td>A-007</td><td>P1</td><td>Создать миграционный слой для текущего predictions.json</td><td>pass</td><td>seedling_vision/migration.py, tests/unit/test_vision_migration.py</td><td></td><td></td></tr>
+<tr><td>A-008</td><td>P2</td><td>Добавить pre-commit / lint / formatting</td><td>pass</td><td>.pre-commit-config.yaml, .github/workflows/ci.yml, pyproject.toml</td><td></td><td></td></tr>
+<tr><td>B-001</td><td>P0</td><td>Добавить configs/ontology/ontology_v0_1.yaml</td><td>pass</td><td>configs/ontology/ontology_v0_1.yaml</td><td></td><td></td></tr>
+<tr><td>B-002</td><td>P0</td><td>Реализовать seedling_data.ontology</td><td>pass</td><td>seedling_data/ontology.py, tests/unit/test_ontology_and_adapters.py</td><td></td><td></td></tr>
+<tr><td>B-003</td><td>P0</td><td>Создать DATASET_CARD_TEMPLATE.md</td><td>pass</td><td>docs/DATASET_CARD_TEMPLATE.md</td><td></td><td></td></tr>
+<tr><td>B-004</td><td>P0</td><td>Создать ANNOTATION_GUIDE.md</td><td>pass</td><td>docs/ANNOTATION_GUIDE.md</td><td></td><td></td></tr>
+<tr><td>B-005</td><td>P0</td><td>Расширить audit raw/prepared</td><td>pass</td><td>seedling_experiments/dataset.py, tests/unit/test_dataset_split.py</td><td></td><td></td></tr>
+<tr><td>B-006</td><td>P0</td><td>Реализовать image_manifest.csv generator</td><td>pass</td><td>seedling_data/manifests.py, tests/unit/test_data_registry_annotations.py</td><td></td><td></td></tr>
+<tr><td>B-007</td><td>P0</td><td>Реализовать group-aware split по group_id из metadata</td><td>pass</td><td>seedling_experiments/dataset.py, tests/unit/test_dataset_split.py</td><td></td><td></td></tr>
+<tr><td>B-008</td><td>P0</td><td>Добавить near-duplicate check</td><td>pass</td><td>seedling_data/duplicates.py, tests/unit/test_data_registry_annotations.py</td><td></td><td></td></tr>
+<tr><td>B-009</td><td>P1</td><td>Добавить cell_annotations.jsonl schema</td><td>pass</td><td>seedling_data/annotations.py, docs/ANNOTATION_GUIDE.md, tests/unit/test_data_registry_annotations.py</td><td></td><td></td></tr>
+<tr><td>B-010</td><td>P1</td><td>Добавить action_points.jsonl schema</td><td>pass</td><td>seedling_data/annotations.py, docs/ANNOTATION_GUIDE.md, tests/unit/test_data_registry_annotations.py</td><td></td><td></td></tr>
+<tr><td>B-011</td><td>P1</td><td>Реализовать audit cell annotations</td><td>pass</td><td>seedling_data/annotations.py, tests/unit/test_data_registry_annotations.py</td><td></td><td></td></tr>
+<tr><td>B-012</td><td>P1</td><td>Реализовать audit action points</td><td>pass</td><td>seedling_data/annotations.py, tests/unit/test_data_registry_annotations.py</td><td></td><td></td></tr>
+<tr><td>B-013</td><td>P1</td><td>Создать dataset summary report</td><td>pass</td><td>seedling_data/registry.py, tests/unit/test_data_registry_annotations.py</td><td></td><td></td></tr>
+<tr><td>B-014</td><td>P2</td><td>Добавить changelog датасета</td><td>pass</td><td>seedling_data/changelog.py, docs/DATASET_CHANGELOG_TEMPLATE.md, tests/unit/test_data_registry_annotations.py</td><td></td><td></td></tr>
+<tr><td>C-001</td><td>P0</td><td>Создать DetectorAdapter interface</td><td>pass</td><td>seedling_vision/adapters/base.py</td><td></td><td></td></tr>
+<tr><td>C-002</td><td>P0</td><td>Обернуть текущий Ultralytics YOLO в UltralyticsYOLODetector</td><td>pass</td><td>seedling_vision/adapters/ultralytics_yolo.py, tests/unit/test_vision_tools.py</td><td></td><td></td></tr>
+<tr><td>C-003</td><td>P0</td><td>Обернуть baseline-green как detector adapter</td><td>pass</td><td>seedling_vision/adapters/baseline_green.py, tests/unit/test_registry_selector_feedback.py</td><td></td><td></td></tr>
+<tr><td>C-004</td><td>P0</td><td>Создать RecordedPredictionDetector</td><td>pass</td><td>seedling_vision/adapters/recorded_prediction.py, tests/unit/test_ontology_and_adapters.py</td><td></td><td></td></tr>
+<tr><td>C-005</td><td>P1</td><td>Добавить ONNX detector adapter</td><td>pass</td><td>seedling_vision/adapters/onnx.py, tests/unit/test_vision_tools.py</td><td></td><td></td></tr>
+<tr><td>C-006</td><td>P1</td><td>Реализовать uncertainty estimator</td><td>pass</td><td>seedling_vision/uncertainty.py, tests/unit/test_vision_tools.py</td><td></td><td></td></tr>
+<tr><td>C-007</td><td>P1</td><td>Добавить postprocessing контейнеров как отдельный модуль</td><td>pass</td><td>seedling_vision/postprocess.py, tests/unit/test_vision_tools.py</td><td></td><td></td></tr>
+<tr><td>C-008</td><td>P1</td><td>Добавить model metadata</td><td>pass</td><td>seedling_core/registry.py, configs/registry/model_registry_v0_1.yaml, tests/unit/test_registry_selector_feedback.py</td><td></td><td></td></tr>
+<tr><td>C-009</td><td>P2</td><td>Добавить batch inference</td><td>pass</td><td>seedling_vision/batch.py, seedling_vision/cli.py, tests/unit/test_vision_tools.py</td><td></td><td></td></tr>
+<tr><td>C-010</td><td>P2</td><td>Добавить visual overlay report</td><td>pass</td><td>seedling_vision/overlays.py, tests/unit/test_vision_tools.py</td><td></td><td></td></tr>
+<tr><td>D-001</td><td>P0</td><td>Вынести grid assignment в seedling_cells.grid</td><td>pass</td><td>seedling_cells/grid.py, tests/unit/test_grid.py</td><td></td><td></td></tr>
+<tr><td>D-002</td><td>P0</td><td>Поддержать homography-based grid</td><td>pass</td><td>seedling_cells/cell_state.py, tests/unit/test_grid.py</td><td></td><td></td></tr>
+<tr><td>D-003</td><td>P0</td><td>Реализовать CellStateBuilder</td><td>pass</td><td>seedling_cells/cell_state.py, tests/unit/test_target_generation.py</td><td></td><td></td></tr>
+<tr><td>D-004</td><td>P0</td><td>Реализовать target generation module</td><td>pass</td><td>seedling_cells/target_generation.py, tests/unit/test_target_generation.py</td><td></td><td></td></tr>
+<tr><td>D-005</td><td>P0</td><td>Переписать evaluate-cells на новые схемы</td><td>pass</td><td>seedling_experiments/evaluate.py, tests/unit/test_evaluate_cells_metrics.py</td><td></td><td></td></tr>
+<tr><td>D-006</td><td>P0</td><td>Добавить диагностику container matching</td><td>pass</td><td>seedling_experiments/evaluate.py, seedling_vision/postprocess.py, tests/unit/test_evaluate_cells_metrics.py</td><td></td><td></td></tr>
+<tr><td>D-007</td><td>P0</td><td>Добавить target error в px и mm</td><td>pass</td><td>seedling_experiments/evaluate.py, tests/unit/test_evaluate_cells_metrics.py</td><td></td><td></td></tr>
+<tr><td>D-008</td><td>P1</td><td>Добавить поддержку richer cell states</td><td>pass</td><td>seedling_cells/evaluation.py, tests/unit/test_scene_state_evaluation.py</td><td></td><td></td></tr>
+<tr><td>D-009</td><td>P1</td><td>Добавить экспертный keep/remove evaluator</td><td>pass</td><td>seedling_cells/evaluation.py, tests/unit/test_scene_state_evaluation.py</td><td></td><td></td></tr>
+<tr><td>D-010</td><td>P1</td><td>Добавить cost-sensitive metrics</td><td>pass</td><td>seedling_cells/evaluation.py, seedling_reports/diagnostics.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>D-011</td><td>P2</td><td>Добавить bootstrap по кассетам/group_id</td><td>pass</td><td>seedling_reports/diagnostics.py, tests/unit/test_evaluate_cells_metrics.py</td><td></td><td></td></tr>
+<tr><td>D-012</td><td>P2</td><td>Добавить error taxonomy report</td><td>pass</td><td>seedling_reports/diagnostics.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>E-001</td><td>P0</td><td>Создать CalibrationConfig и CalibrationArtifact schemas</td><td>pass</td><td>seedling_calibration/schemas.py</td><td></td><td></td></tr>
+<tr><td>E-002</td><td>P0</td><td>Реализовать image_px → tray_mm transform</td><td>pass</td><td>seedling_calibration/transforms.py, tests/unit/test_calibration.py</td><td></td><td></td></tr>
+<tr><td>E-003</td><td>P0</td><td>Реализовать tray_mm → robot_frame_mm transform</td><td>pass</td><td>seedling_calibration/transforms.py, tests/unit/test_calibration.py</td><td></td><td></td></tr>
+<tr><td>E-004</td><td>P0</td><td>Добавить calibration validator</td><td>pass</td><td>seedling_calibration/validator.py, tests/unit/test_calibration.py</td><td></td><td></td></tr>
+<tr><td>E-005</td><td>P1</td><td>Добавить error map generation</td><td>pass</td><td>seedling_calibration/estimation.py, docs/CALIBRATION_PROTOCOL.md, tests/unit/test_calibration.py</td><td></td><td></td></tr>
+<tr><td>E-006</td><td>P1</td><td>Добавить coordinate conversion в targets</td><td>pass</td><td>seedling_calibration/transforms.py, tests/unit/test_calibration.py</td><td></td><td></td></tr>
+<tr><td>E-007</td><td>P1</td><td>Добавить CLI calibration estimate/validate/error-map</td><td>pass</td><td>seedling_calibration/cli.py, tests/unit/test_calibration.py</td><td></td><td></td></tr>
+<tr><td>E-008</td><td>P2</td><td>Добавить калибровку камеры intrinsics</td><td>pass</td><td>seedling_calibration/intrinsics.py, tests/unit/test_calibration.py</td><td></td><td></td></tr>
+<tr><td>F-001</td><td>P0</td><td>Создать DecisionPolicy interface</td><td>pass</td><td>seedling_decision/policies/base.py</td><td></td><td></td></tr>
+<tr><td>F-002</td><td>P0</td><td>Реализовать NoOpPolicy</td><td>pass</td><td>seedling_decision/policies/builtin.py</td><td></td><td></td></tr>
+<tr><td>F-003</td><td>P0</td><td>Реализовать RasterScanPolicy</td><td>pass</td><td>seedling_decision/policies/builtin.py</td><td></td><td></td></tr>
+<tr><td>F-004</td><td>P0</td><td>Реализовать NearestNeighborPolicy</td><td>pass</td><td>seedling_decision/policies/builtin.py</td><td></td><td></td></tr>
+<tr><td>F-005</td><td>P0</td><td>Реализовать RiskAwareRulePolicy</td><td>pass</td><td>seedling_decision/policies/builtin.py</td><td></td><td></td></tr>
+<tr><td>F-006</td><td>P0</td><td>Реализовать ActionMaskBuilder</td><td>pass</td><td>seedling_decision/action_masks.py, tests/unit/test_decision_and_safety.py</td><td></td><td></td></tr>
+<tr><td>F-007</td><td>P0</td><td>Реализовать SafetyGate</td><td>pass</td><td>seedling_decision/safety_gate.py, seedling_robot/adapters/dry_run_serial.py, tests/unit/test_decision_and_safety.py, tests/unit/test_dry_run_and_feedback.py</td><td></td><td></td></tr>
+<tr><td>F-008</td><td>P0</td><td>Добавить forbidden zones</td><td>pass</td><td>seedling_decision/action_masks.py, seedling_decision/policies/builtin.py, seedling_decision/safety_gate.py, tests/unit/test_decision_and_safety.py</td><td></td><td></td></tr>
+<tr><td>F-009</td><td>P1</td><td>Реализовать HumanReviewPolicy</td><td>pass</td><td>seedling_decision/policies/builtin.py</td><td></td><td></td></tr>
+<tr><td>F-010</td><td>P1</td><td>Добавить policy comparison metrics</td><td>pass</td><td>seedling_reports/scenario.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>F-011</td><td>P2</td><td>Добавить route planning TSP-like baseline</td><td>pass</td><td>seedling_decision/policies/builtin.py</td><td></td><td></td></tr>
+<tr><td>G-001</td><td>P0</td><td>Создать SimScene schema</td><td>pass</td><td>seedling_sim/schemas.py, tests/unit/test_simulation.py</td><td></td><td></td></tr>
+<tr><td>G-002</td><td>P0</td><td>Реализовать logical tray simulator</td><td>pass</td><td>seedling_sim/logical_tray.py, tests/unit/test_simulation.py</td><td></td><td></td></tr>
+<tr><td>G-003</td><td>P0</td><td>Реализовать detection noise model</td><td>pass</td><td>seedling_sim/detection_noise.py, tests/unit/test_simulation.py</td><td></td><td></td></tr>
+<tr><td>G-004</td><td>P0</td><td>Реализовать actuator error model</td><td>pass</td><td>seedling_sim/actuator_model.py, tests/unit/test_simulation.py</td><td></td><td></td></tr>
+<tr><td>G-005</td><td>P0</td><td>Реализовать plant response model stub</td><td>pass</td><td>seedling_sim/plant_response_model.py, tests/unit/test_simulation.py</td><td></td><td></td></tr>
+<tr><td>G-006</td><td>P0</td><td>Реализовать scene generator</td><td>pass</td><td>seedling_sim/scene_generator.py, tests/unit/test_simulation.py</td><td></td><td></td></tr>
+<tr><td>G-007</td><td>P1</td><td>Реализовать image-backed scenes</td><td>pass</td><td>seedling_sim/image_backed.py, tests/unit/test_simulation.py</td><td></td><td></td></tr>
+<tr><td>G-008</td><td>P1</td><td>Реализовать replay logger</td><td>pass</td><td>seedling_sim/replay.py, tests/unit/test_robot_and_replay.py</td><td></td><td></td></tr>
+<tr><td>G-009</td><td>P1</td><td>Реализовать static renderer</td><td>pass</td><td>seedling_sim/renderers.py, tests/unit/test_simulation.py, tests/unit/test_rl_env.py</td><td></td><td></td></tr>
+<tr><td>G-010</td><td>P1</td><td>Реализовать policy replay viewer</td><td>pass</td><td>seedling_ui/replay_viewer.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>G-011</td><td>P2</td><td>Добавить synthetic image renderer</td><td>pass</td><td>seedling_sim/renderers.py, tests/unit/test_simulation.py</td><td></td><td></td></tr>
+<tr><td>G-012</td><td>P2</td><td>Добавить domain randomization presets</td><td>pass</td><td>seedling_sim/domain_randomization.py, tests/unit/test_simulation.py</td><td></td><td></td></tr>
+<tr><td>H-001</td><td>P0</td><td>Создать SeedlingTrayEnv Gymnasium-compatible</td><td>pass</td><td>seedling_rl/envs.py, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>H-002</td><td>P0</td><td>Определить observation/action spaces</td><td>pass</td><td>seedling_rl/envs.py, tests/unit/test_rl_env.py</td><td></td><td></td></tr>
+<tr><td>H-003</td><td>P0</td><td>Реализовать reward module</td><td>pass</td><td>seedling_rl/reward.py, tests/unit/test_rl_env.py</td><td></td><td></td></tr>
+<tr><td>H-004</td><td>P0</td><td>Реализовать baseline policy evaluation в env</td><td>pass</td><td>seedling_rl/baseline_eval.py, tests/unit/test_rl_env.py</td><td></td><td></td></tr>
+<tr><td>H-005</td><td>P0</td><td>Реализовать seedling_rl train</td><td>pass</td><td>seedling_rl/training.py, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>H-006</td><td>P0</td><td>Реализовать seedling_rl evaluate</td><td>pass</td><td>seedling_rl/training.py, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>H-007</td><td>P0</td><td>Реализовать RLPolicyAdapter</td><td>pass</td><td>seedling_rl/policy_adapter.py, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>H-008</td><td>P1</td><td>Добавить TensorBoard/logging callbacks</td><td>pass</td><td>seedling_rl/callbacks.py, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>H-009</td><td>P1</td><td>Добавить vectorized env training</td><td>pass</td><td>seedling_rl/vectorized_env.py, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>H-010</td><td>P1</td><td>Добавить curriculum</td><td>pass</td><td>seedling_rl/curriculum.py, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>H-011</td><td>P1</td><td>Добавить recurrent policy option</td><td>pass</td><td>seedling_rl/policy_adapter.py, configs/rl/recurrent_ppo_v0.yaml, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>H-012</td><td>P2</td><td>Добавить offline replay evaluation</td><td>pass</td><td>seedling_rl/offline_replay.py, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>H-013</td><td>P2</td><td>Добавить hyperparameter sweep</td><td>pass</td><td>seedling_rl/sweep.py, tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>I-001</td><td>P0</td><td>Создать RobotAdapter interface</td><td>pass</td><td>seedling_robot/adapters/base.py, docs/ROBOT_PROTOCOL.md</td><td></td><td></td></tr>
+<tr><td>I-002</td><td>P0</td><td>Реализовать SimulatorRobotAdapter</td><td>pass</td><td>seedling_robot/adapters/simulator.py, tests/unit/test_robot_and_replay.py</td><td></td><td></td></tr>
+<tr><td>I-003</td><td>P0</td><td>Реализовать motion command schema</td><td>pass</td><td>seedling_robot/protocol.py, tests/unit/test_robot_and_replay.py</td><td></td><td></td></tr>
+<tr><td>I-004</td><td>P0</td><td>Реализовать dry-run serial adapter stub</td><td>pass</td><td>seedling_robot/adapters/dry_run_serial.py, tests/unit/test_dry_run_and_feedback.py, tests/unit/test_robot_and_replay.py</td><td></td><td></td></tr>
+<tr><td>I-005</td><td>P0</td><td>Добавить homing/limit switch state в telemetry</td><td>pass</td><td>seedling_robot/protocol.py, seedling_decision/safety_gate.py, seedling_robot/adapters/dry_run_serial.py, tests/unit/test_decision_and_safety.py, tests/unit/test_dry_run_and_feedback.py</td><td></td><td></td></tr>
+<tr><td>I-006</td><td>P1</td><td>Описать serial protocol в docs/ROBOT_PROTOCOL.md</td><td>pass</td><td>docs/ROBOT_PROTOCOL.md</td><td></td><td></td></tr>
+<tr><td>I-007</td><td>P1</td><td>Добавить motion replay</td><td>pass</td><td>seedling_robot/motion_replay.py, tests/unit/test_dry_run_and_feedback.py, tests/unit/test_robot_and_replay.py</td><td></td><td></td></tr>
+<tr><td>I-008</td><td>P1</td><td>Добавить gantry dry-run test CLI</td><td>pass</td><td>seedling_robot/dry_run_runner.py, seedling_robot/cli.py, tests/unit/test_robot_and_replay.py</td><td></td><td></td></tr>
+<tr><td>I-009</td><td>P2</td><td>Добавить hardware-in-the-loop mode</td><td>external_required</td><td>seedling_robot/hil_runner.py, seedling_robot/adapters/real_gantry_serial.py, docs/ROBOT_PROTOCOL.md</td><td></td><td>Software scaffold exists if evidence is present; real hardware validation remains external.</td></tr>
+<tr><td>J-001</td><td>P0</td><td>Создать offline viewer</td><td>pass</td><td>seedling_ui/offline_viewer.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>J-002</td><td>P0</td><td>Создать simulation replay viewer</td><td>pass</td><td>seedling_ui/replay_viewer.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>J-003</td><td>P0</td><td>Показывать reasons for review/block</td><td>pass</td><td>seedling_ui/offline_viewer.py, seedling_decision/policies/builtin.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>J-004</td><td>P1</td><td>Добавить model/policy selector</td><td>pass</td><td>seedling_ui/cli.py, seedling_core/registry.py, tests/unit/test_registry_selector_feedback.py</td><td></td><td></td></tr>
+<tr><td>J-005</td><td>P1</td><td>Добавить scenario comparison</td><td>pass</td><td>seedling_reports/scenario.py</td><td></td><td></td></tr>
+<tr><td>J-006</td><td>P1</td><td>Добавить report export</td><td>pass</td><td>seedling_ui/report_export.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>J-007</td><td>P2</td><td>Добавить annotation feedback mode</td><td>pass</td><td>seedling_ui/feedback.py, seedling_ui/offline_viewer.py, tests/unit/test_registry_selector_feedback.py</td><td></td><td></td></tr>
+<tr><td>K-001</td><td>P0</td><td>Создать unified experiment CLI</td><td>pass</td><td>seedling_experiments/cli.py, tests/unit/test_cli_smoke.py</td><td></td><td></td></tr>
+<tr><td>K-002</td><td>P0</td><td>Реализовать experiment registry</td><td>pass</td><td>seedling_experiments/cli.py, seedling_experiments/config.py, seedling_reports/registry.py, tests/unit/test_cli_smoke.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>K-003</td><td>P0</td><td>Автоматически собирать dataset_summary.csv</td><td>pass</td><td>seedling_reports/tables.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>K-004</td><td>P0</td><td>Автоматически собирать object_level_results.csv</td><td>pass</td><td>seedling_reports/tables.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>K-005</td><td>P0</td><td>Автоматически собирать task_level_results.csv</td><td>pass</td><td>seedling_reports/tables.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>K-006</td><td>P1</td><td>Добавить artifact_registry.csv</td><td>pass</td><td>seedling_reports/registry.py, seedling_reports/tables.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>K-007</td><td>P1</td><td>Добавить HTML report generator</td><td>pass</td><td>seedling_reports/html.py, seedling_reports/cli.py, tests/unit/test_reports_and_viewers.py</td><td></td><td></td></tr>
+<tr><td>K-008</td><td>P2</td><td>Добавить compare-runs</td><td>pass</td><td>seedling_reports/compare.py</td><td></td><td></td></tr>
+<tr><td>L-001</td><td>P0</td><td>Unit tests for schemas</td><td>pass</td><td>tests/unit/test_schemas.py</td><td></td><td></td></tr>
+<tr><td>L-002</td><td>P0</td><td>Unit tests for grid assignment</td><td>pass</td><td>tests/unit/test_grid.py</td><td></td><td></td></tr>
+<tr><td>L-003</td><td>P0</td><td>Unit tests for target generation</td><td>pass</td><td>tests/unit/test_target_generation.py</td><td></td><td></td></tr>
+<tr><td>L-004</td><td>P0</td><td>Unit tests for SafetyGate</td><td>pass</td><td>tests/unit/test_decision_and_safety.py</td><td></td><td></td></tr>
+<tr><td>L-005</td><td>P0</td><td>Unit tests for calibration transforms</td><td>pass</td><td>tests/unit/test_calibration.py</td><td></td><td></td></tr>
+<tr><td>L-006</td><td>P0</td><td>Integration test: image → prediction → cells</td><td>pass</td><td>tests/integration/test_scene_policy_sim.py</td><td></td><td></td></tr>
+<tr><td>L-007</td><td>P0</td><td>Integration test: scene → policy → sim episode</td><td>pass</td><td>tests/integration/test_scene_policy_sim.py</td><td></td><td></td></tr>
+<tr><td>L-008</td><td>P0</td><td>Gym env checker test</td><td>pass</td><td>tests/unit/test_rl_training_and_compare.py</td><td></td><td></td></tr>
+<tr><td>L-009</td><td>P1</td><td>Regression tests for legacy outputs</td><td>pass</td><td>tests/unit/test_evaluate_cells_metrics.py</td><td></td><td></td></tr>
+<tr><td>L-010</td><td>P1</td><td>CLI smoke tests</td><td>pass</td><td>tests/unit/test_cli_smoke.py</td><td></td><td></td></tr>
+<tr><td>L-011</td><td>P2</td><td>Performance tests</td><td>pass</td><td>tests/performance/test_performance_smoke.py</td><td></td><td></td></tr>
+<tr><td>M-001</td><td>P0</td><td>Обновить docs/README.md</td><td>pass</td><td>docs/README.md</td><td></td><td></td></tr>
+<tr><td>M-002</td><td>P0</td><td>Создать docs/ARCHITECTURE.md</td><td>pass</td><td>docs/ARCHITECTURE.md</td><td></td><td></td></tr>
+<tr><td>M-003</td><td>P0</td><td>Создать docs/RL_SPEC.md</td><td>pass</td><td>docs/RL_SPEC.md</td><td></td><td></td></tr>
+<tr><td>M-004</td><td>P0</td><td>Создать docs/SIMULATION_SPEC.md</td><td>pass</td><td>docs/SIMULATION_SPEC.md</td><td></td><td></td></tr>
+<tr><td>M-005</td><td>P0</td><td>Создать docs/MODEL_PLUGIN_API.md</td><td>pass</td><td>docs/MODEL_PLUGIN_API.md</td><td></td><td></td></tr>
+<tr><td>M-006</td><td>P0</td><td>Создать docs/SAFETY_CONCEPT.md</td><td>pass</td><td>docs/SAFETY_CONCEPT.md</td><td></td><td></td></tr>
+<tr><td>M-007</td><td>P1</td><td>Создать docs/CALIBRATION_PROTOCOL.md</td><td>pass</td><td>docs/CALIBRATION_PROTOCOL.md</td><td></td><td></td></tr>
+<tr><td>M-008</td><td>P1</td><td>Создать docs/FAILURE_MODES.md</td><td>pass</td><td>docs/FAILURE_MODES.md</td><td></td><td></td></tr>
+<tr><td>M-009</td><td>P1</td><td>Создать статью-ready report template</td><td>pass</td><td>docs/ARTICLE_REPORT_TEMPLATE.md</td><td></td><td></td></tr>
+<tr><td>M-010</td><td>P2</td><td>Создать operator manual draft</td><td>pass</td><td>docs/OPERATOR_MANUAL_DRAFT.md</td><td></td><td></td></tr></tbody></table></section>
+</body>
+</html>

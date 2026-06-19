@@ -1,0 +1,2 @@
+artifact,command,config_hash,has_config,has_command_args,has_environment,python,platform,package_versions
+reports\ui_snapshot_smoke\tray_report.run_snapshot.json,seedling-ui:report-export,aa7f5f7d57202091e4d5bedaeeb2ff788a8a49d18e6cbaddc672b95f3e63c9bf,True,True,True,"3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",Windows-11-10.0.26100-SP0,"{""Pillow"": ""12.2.0"", ""PyYAML"": ""6.0.3"", ""numpy"": ""2.4.4"", ""opencv-python"": null, ""pillow-heif"": null, ""ultralytics"": null}"

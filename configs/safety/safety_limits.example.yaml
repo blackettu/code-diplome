@@ -1,0 +1,13 @@
+mode: dry_run_pointer
+allow_real_action: false
+require_operator_confirmation: true
+require_calibration_valid: true
+require_robot_homed: true
+min_distance_to_keep_mm: 5.0
+max_target_uncertainty_mm: 2.0
+max_zone_error_p95_mm: 2.0
+block_unknown_plant: true
+block_ambiguous_cell: true
+block_foreign_object: true
+block_if_interlock_false: true
+log_all_blocked_actions: true

@@ -1,0 +1,1739 @@
+{
+  "schema_version": "architecture_backlog_audit_v0_1",
+  "ok": true,
+  "architecture_doc": "docs\\seedlings_vilga_architecture_codex_rl_simulation.md",
+  "repo_root": ".",
+  "counts": {
+    "external_required": 1,
+    "pass": 132
+  },
+  "items": [
+    {
+      "item_id": "A-001",
+      "priority": "P0",
+      "title": "Перейти на pyproject.toml и пакетную структуру",
+      "acceptance": "Проект устанавливается pip install -e .; CLI доступен; старые команды работают через совместимость.",
+      "status": "pass",
+      "evidence": [
+        "pyproject.toml",
+        "seedling_experiments/__main__.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-002",
+      "priority": "P0",
+      "title": "Разделить requirements на base/vision/training/rl/robot/dev",
+      "acceptance": "Можно установить минимальный runtime без RL и robot-зависимостей.",
+      "status": "pass",
+      "evidence": [
+        "requirements/base.txt",
+        "requirements/vision.txt",
+        "requirements/rl.txt",
+        "requirements/robot.txt",
+        "requirements/dev.txt"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-003",
+      "priority": "P0",
+      "title": "Ввести единый загрузчик YAML-конфигов с валидацией",
+      "acceptance": "Ошибки путей/типов ловятся до запуска обучения.",
+      "status": "pass",
+      "evidence": [
+        "seedling_core/config.py",
+        "seedling_experiments/config.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-004",
+      "priority": "P0",
+      "title": "Создать seedling_core.schemas на Pydantic/dataclasses",
+      "acceptance": "Схемы сериализуются в JSON; есть unit-тесты round-trip.",
+      "status": "pass",
+      "evidence": [
+        "seedling_core/schemas.py",
+        "tests/unit/test_schemas.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-005",
+      "priority": "P1",
+      "title": "Добавить run_snapshot как общий сервис",
+      "acceptance": "Все команды сохраняют версию Python, платформу, command args, config hash.",
+      "status": "pass",
+      "evidence": [
+        "seedling_core/run_snapshot.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-006",
+      "priority": "P1",
+      "title": "Ввести artifact registry",
+      "acceptance": "Для каждого запуска создаётся artifact_registry.json со ссылками на входы/выходы.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/registry.py",
+        "seedling_core/run_snapshot.py",
+        "tests/unit/test_reports_and_viewers.py",
+        "tests/unit/test_cli_smoke.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-007",
+      "priority": "P1",
+      "title": "Создать миграционный слой для текущего predictions.json",
+      "acceptance": "Старые prediction-файлы читаются в новый SceneState.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/migration.py",
+        "tests/unit/test_vision_migration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "A-008",
+      "priority": "P2",
+      "title": "Добавить pre-commit / lint / formatting",
+      "acceptance": "CI проверяет формат, типы и тесты.",
+      "status": "pass",
+      "evidence": [
+        ".pre-commit-config.yaml",
+        ".github/workflows/ci.yml",
+        "pyproject.toml"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-001",
+      "priority": "P0",
+      "title": "Добавить configs/ontology/ontology_v0_1.yaml",
+      "acceptance": "Есть классы объектов, cell states, action labels, attributes.",
+      "status": "pass",
+      "evidence": [
+        "configs/ontology/ontology_v0_1.yaml"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-002",
+      "priority": "P0",
+      "title": "Реализовать seedling_data.ontology",
+      "acceptance": "Онтология валидируется; class names совпадают с датасетом.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/ontology.py",
+        "tests/unit/test_ontology_and_adapters.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-003",
+      "priority": "P0",
+      "title": "Создать DATASET_CARD_TEMPLATE.md",
+      "acceptance": "Шаблон покрывает состав, сбор, split, ограничения, калибровку, безопасность.",
+      "status": "pass",
+      "evidence": [
+        "docs/DATASET_CARD_TEMPLATE.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-004",
+      "priority": "P0",
+      "title": "Создать ANNOTATION_GUIDE.md",
+      "acceptance": "Есть правила bbox, weeds, unknown, extra crop, action points, forbidden zones.",
+      "status": "pass",
+      "evidence": [
+        "docs/ANNOTATION_GUIDE.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-005",
+      "priority": "P0",
+      "title": "Расширить audit raw/prepared",
+      "acceptance": "Проверка missing/orphan, class ids, bbox ranges, empty labels, suspicious augmentation names.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/dataset.py",
+        "tests/unit/test_dataset_split.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-006",
+      "priority": "P0",
+      "title": "Реализовать image_manifest.csv generator",
+      "acceptance": "Для каждого изображения есть hash, размер, group_id, session_id, tray_id.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/manifests.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-007",
+      "priority": "P0",
+      "title": "Реализовать group-aware split по group_id из metadata",
+      "acceptance": "Ни один group_id не попадает в разные split.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/dataset.py",
+        "tests/unit/test_dataset_split.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-008",
+      "priority": "P0",
+      "title": "Добавить near-duplicate check",
+      "acceptance": "Проверяются hash и perceptual hash между split.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/duplicates.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-009",
+      "priority": "P1",
+      "title": "Добавить cell_annotations.jsonl schema",
+      "acceptance": "Можно хранить состояние каждой ячейки независимо от YOLO labels.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/annotations.py",
+        "docs/ANNOTATION_GUIDE.md",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-010",
+      "priority": "P1",
+      "title": "Добавить action_points.jsonl schema",
+      "acceptance": "Можно хранить action point, uncertainty, forbidden zones.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/annotations.py",
+        "docs/ANNOTATION_GUIDE.md",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-011",
+      "priority": "P1",
+      "title": "Реализовать audit cell annotations",
+      "acceptance": "Проверяются row/col, state, object links, grid size.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/annotations.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-012",
+      "priority": "P1",
+      "title": "Реализовать audit action points",
+      "acceptance": "Проверяются координаты, target types, safe distances, review flags.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/annotations.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-013",
+      "priority": "P1",
+      "title": "Создать dataset summary report",
+      "acceptance": "Генерируется Markdown/HTML с распределениями по split/classes/cells.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/registry.py",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "B-014",
+      "priority": "P2",
+      "title": "Добавить changelog датасета",
+      "acceptance": "Каждая версия данных имеет журнал изменений.",
+      "status": "pass",
+      "evidence": [
+        "seedling_data/changelog.py",
+        "docs/DATASET_CHANGELOG_TEMPLATE.md",
+        "tests/unit/test_data_registry_annotations.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-001",
+      "priority": "P0",
+      "title": "Создать DetectorAdapter interface",
+      "acceptance": "Все детекторы имеют load, predict, metadata.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/base.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-002",
+      "priority": "P0",
+      "title": "Обернуть текущий Ultralytics YOLO в UltralyticsYOLODetector",
+      "acceptance": "Predict возвращает DetectionResultV1; unit-тест на mock image.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/ultralytics_yolo.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-003",
+      "priority": "P0",
+      "title": "Обернуть baseline-green как detector adapter",
+      "acceptance": "HSV baseline выдаёт тот же формат, что YOLO.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/baseline_green.py",
+        "tests/unit/test_registry_selector_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-004",
+      "priority": "P0",
+      "title": "Создать RecordedPredictionDetector",
+      "acceptance": "Читает существующий predictions.json; нужен для тестов без GPU.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/recorded_prediction.py",
+        "tests/unit/test_ontology_and_adapters.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-005",
+      "priority": "P1",
+      "title": "Добавить ONNX detector adapter",
+      "acceptance": "Экспортированная модель подключается без Ultralytics runtime.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/adapters/onnx.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-006",
+      "priority": "P1",
+      "title": "Реализовать uncertainty estimator",
+      "acceptance": "Минимум: confidence thresholds, bbox size flags, optional entropy.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/uncertainty.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-007",
+      "priority": "P1",
+      "title": "Добавить postprocessing контейнеров как отдельный модуль",
+      "acceptance": "Evaluator может явно выбирать detections или containers.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/postprocess.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-008",
+      "priority": "P1",
+      "title": "Добавить model metadata",
+      "acceptance": "Сохраняются model_id, dataset_version, ontology_version, input/output schema.",
+      "status": "pass",
+      "evidence": [
+        "seedling_core/registry.py",
+        "configs/registry/model_registry_v0_1.yaml",
+        "tests/unit/test_registry_selector_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-009",
+      "priority": "P2",
+      "title": "Добавить batch inference",
+      "acceptance": "Поддержка пакетной обработки изображений и прогресс-логов.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/batch.py",
+        "seedling_vision/cli.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "C-010",
+      "priority": "P2",
+      "title": "Добавить visual overlay report",
+      "acceptance": "Bbox, сетка, targets, confidence, errors на изображениях.",
+      "status": "pass",
+      "evidence": [
+        "seedling_vision/overlays.py",
+        "tests/unit/test_vision_tools.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-001",
+      "priority": "P0",
+      "title": "Вынести grid assignment в seedling_cells.grid",
+      "acceptance": "Unit-тесты для 11×11, границ, поворота, bbox.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/grid.py",
+        "tests/unit/test_grid.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-002",
+      "priority": "P0",
+      "title": "Поддержать homography-based grid",
+      "acceptance": "Можно строить сетку по четырём углам, не только bbox.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/cell_state.py",
+        "tests/unit/test_grid.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-003",
+      "priority": "P0",
+      "title": "Реализовать CellStateBuilder",
+      "acceptance": "На вход detections + tray geometry, на выход список CellState.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/cell_state.py",
+        "tests/unit/test_target_generation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-004",
+      "priority": "P0",
+      "title": "Реализовать target generation module",
+      "acceptance": "Largest-bbox baseline вынесен как стратегия, не захардкожен.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/target_generation.py",
+        "tests/unit/test_target_generation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-005",
+      "priority": "P0",
+      "title": "Переписать evaluate-cells на новые схемы",
+      "acceptance": "Метрики совпадают с legacy на тестовых фикстурах.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/evaluate.py",
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-006",
+      "priority": "P0",
+      "title": "Добавить диагностику container matching",
+      "acceptance": "IoU summary, best_iou_counts, unmatched samples.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/evaluate.py",
+        "seedling_vision/postprocess.py",
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-007",
+      "priority": "P0",
+      "title": "Добавить target error в px и mm",
+      "acceptance": "mm считается при наличии calibration.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/evaluate.py",
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-008",
+      "priority": "P1",
+      "title": "Добавить поддержку richer cell states",
+      "acceptance": "weed_only, crop_and_weed, unknown, ambiguous.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/evaluation.py",
+        "tests/unit/test_scene_state_evaluation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-009",
+      "priority": "P1",
+      "title": "Добавить экспертный keep/remove evaluator",
+      "acceptance": "Сравнение largest-bbox с expert action labels.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/evaluation.py",
+        "tests/unit/test_scene_state_evaluation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-010",
+      "priority": "P1",
+      "title": "Добавить cost-sensitive metrics",
+      "acceptance": "Критические ошибки получают отдельные показатели.",
+      "status": "pass",
+      "evidence": [
+        "seedling_cells/evaluation.py",
+        "seedling_reports/diagnostics.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-011",
+      "priority": "P2",
+      "title": "Добавить bootstrap по кассетам/group_id",
+      "acceptance": "CI не должен считать ячейки независимыми, если есть group_id.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/diagnostics.py",
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "D-012",
+      "priority": "P2",
+      "title": "Добавить error taxonomy report",
+      "acceptance": "Ошибки классифицируются по изображению/геометрии/биологии/решению.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/diagnostics.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-001",
+      "priority": "P0",
+      "title": "Создать CalibrationConfig и CalibrationArtifact schemas",
+      "acceptance": "JSON содержит homography, transforms, px/mm, error summary.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/schemas.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-002",
+      "priority": "P0",
+      "title": "Реализовать image_px → tray_mm transform",
+      "acceptance": "Unit-тест на контрольных точках.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/transforms.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-003",
+      "priority": "P0",
+      "title": "Реализовать tray_mm → robot_frame_mm transform",
+      "acceptance": "Поддержка tool offset.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/transforms.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-004",
+      "priority": "P0",
+      "title": "Добавить calibration validator",
+      "acceptance": "Проверяет срок действия, RMS/P95 errors, matching tray type.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/validator.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-005",
+      "priority": "P1",
+      "title": "Добавить error map generation",
+      "acceptance": "Отчёт heatmap ошибок по рабочему полю.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/estimation.py",
+        "docs/CALIBRATION_PROTOCOL.md",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-006",
+      "priority": "P1",
+      "title": "Добавить coordinate conversion в targets",
+      "acceptance": "ActionTarget получает px/mm/robot coords.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/transforms.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-007",
+      "priority": "P1",
+      "title": "Добавить CLI calibration estimate/validate/error-map",
+      "acceptance": "Команды создают артефакты и отчёты.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/cli.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "E-008",
+      "priority": "P2",
+      "title": "Добавить калибровку камеры intrinsics",
+      "acceptance": "Поддержка шахматной доски/aruco/fiducials.",
+      "status": "pass",
+      "evidence": [
+        "seedling_calibration/intrinsics.py",
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-001",
+      "priority": "P0",
+      "title": "Создать DecisionPolicy interface",
+      "acceptance": "Политики совместимы с SceneState и ActionPlan.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/base.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-002",
+      "priority": "P0",
+      "title": "Реализовать NoOpPolicy",
+      "acceptance": "Все цели отправляются на review.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-003",
+      "priority": "P0",
+      "title": "Реализовать RasterScanPolicy",
+      "acceptance": "Обход по row/col, только safe targets.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-004",
+      "priority": "P0",
+      "title": "Реализовать NearestNeighborPolicy",
+      "acceptance": "Минимизирует расстояние от текущей позиции.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-005",
+      "priority": "P0",
+      "title": "Реализовать RiskAwareRulePolicy",
+      "acceptance": "Фильтры confidence, distance, uncertainty, calibration, unknown.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-006",
+      "priority": "P0",
+      "title": "Реализовать ActionMaskBuilder",
+      "acceptance": "Маскирует unsafe/invalid/processed actions.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/action_masks.py",
+        "tests/unit/test_decision_and_safety.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-007",
+      "priority": "P0",
+      "title": "Реализовать SafetyGate",
+      "acceptance": "Нельзя исполнить action без safety decision.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/safety_gate.py",
+        "seedling_robot/adapters/dry_run_serial.py",
+        "tests/unit/test_decision_and_safety.py",
+        "tests/unit/test_dry_run_and_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-008",
+      "priority": "P0",
+      "title": "Добавить forbidden zones",
+      "acceptance": "Risk rules учитывают зоны вокруг keep seedlings и за пределами кассеты.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/action_masks.py",
+        "seedling_decision/policies/builtin.py",
+        "seedling_decision/safety_gate.py",
+        "tests/unit/test_decision_and_safety.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-009",
+      "priority": "P1",
+      "title": "Реализовать HumanReviewPolicy",
+      "acceptance": "UI/runtime получает список целей с причинами review.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-010",
+      "priority": "P1",
+      "title": "Добавить policy comparison metrics",
+      "acceptance": "Policies сравниваются на одном наборе сцен.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/scenario.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "F-011",
+      "priority": "P2",
+      "title": "Добавить route planning TSP-like baseline",
+      "acceptance": "Используется как сильный нерейтинговый baseline для RL.",
+      "status": "pass",
+      "evidence": [
+        "seedling_decision/policies/builtin.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-001",
+      "priority": "P0",
+      "title": "Создать SimScene schema",
+      "acceptance": "Сцены сериализуются JSON; есть валидатор.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/schemas.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-002",
+      "priority": "P0",
+      "title": "Реализовать logical tray simulator",
+      "acceptance": "Сцена 11×11, растения, targets, robot state, step outcome.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/logical_tray.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-003",
+      "priority": "P0",
+      "title": "Реализовать detection noise model",
+      "acceptance": "Параметры пропусков, false positives, bbox noise, class noise.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/detection_noise.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-004",
+      "priority": "P0",
+      "title": "Реализовать actuator error model",
+      "acceptance": "Механическая ошибка, latency, drift, zone error.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/actuator_model.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-005",
+      "priority": "P0",
+      "title": "Реализовать plant response model stub",
+      "acceptance": "Вероятностный success/damage без реальных laser параметров.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/plant_response_model.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-006",
+      "priority": "P0",
+      "title": "Реализовать scene generator",
+      "acceptance": "Генерирует сцены с empty/single/multiple/weed/unknown.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/scene_generator.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-007",
+      "priority": "P1",
+      "title": "Реализовать image-backed scenes",
+      "acceptance": "Сцены строятся из реального изображения + predictions/annotations.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/image_backed.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-008",
+      "priority": "P1",
+      "title": "Реализовать replay logger",
+      "acceptance": "Каждый шаг эпизода сохраняет obs/action/reward/info.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/replay.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-009",
+      "priority": "P1",
+      "title": "Реализовать static renderer",
+      "acceptance": "PNG/HTML overlay: grid, plants, targets, robot path.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/renderers.py",
+        "tests/unit/test_simulation.py",
+        "tests/unit/test_rl_env.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-010",
+      "priority": "P1",
+      "title": "Реализовать policy replay viewer",
+      "acceptance": "Можно пошагово смотреть действия агента.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/replay_viewer.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-011",
+      "priority": "P2",
+      "title": "Добавить synthetic image renderer",
+      "acceptance": "Простая 2D-генерация изображений для визуализации.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/renderers.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "G-012",
+      "priority": "P2",
+      "title": "Добавить domain randomization presets",
+      "acceptance": "Lighting/focus/wet substrate/noise/calibration drift.",
+      "status": "pass",
+      "evidence": [
+        "seedling_sim/domain_randomization.py",
+        "tests/unit/test_simulation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-001",
+      "priority": "P0",
+      "title": "Создать SeedlingTrayEnv Gymnasium-compatible",
+      "acceptance": "reset/step/render; проходит env checker.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/envs.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-002",
+      "priority": "P0",
+      "title": "Определить observation/action spaces",
+      "acceptance": "Structured observation + action mask.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/envs.py",
+        "tests/unit/test_rl_env.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-003",
+      "priority": "P0",
+      "title": "Реализовать reward module",
+      "acceptance": "Конфигурируемые веса reward/penalty.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/reward.py",
+        "tests/unit/test_rl_env.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-004",
+      "priority": "P0",
+      "title": "Реализовать baseline policy evaluation в env",
+      "acceptance": "NoOp/Raster/Nearest/RuleBased оцениваются как политики.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/baseline_eval.py",
+        "tests/unit/test_rl_env.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-005",
+      "priority": "P0",
+      "title": "Реализовать seedling_rl train",
+      "acceptance": "PPO/MaskablePPO запуск по YAML.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/training.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-006",
+      "priority": "P0",
+      "title": "Реализовать seedling_rl evaluate",
+      "acceptance": "Сохраняет metrics, videos/replays, critical errors.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/training.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-007",
+      "priority": "P0",
+      "title": "Реализовать RLPolicyAdapter",
+      "acceptance": "Обученный агент подключается как DecisionPolicy.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/policy_adapter.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-008",
+      "priority": "P1",
+      "title": "Добавить TensorBoard/logging callbacks",
+      "acceptance": "reward, critical_error, review_rate, distance.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/callbacks.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-009",
+      "priority": "P1",
+      "title": "Добавить vectorized env training",
+      "acceptance": "Параллельная генерация сцен.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/vectorized_env.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-010",
+      "priority": "P1",
+      "title": "Добавить curriculum",
+      "acceptance": "Сначала простые сцены, потом mixed/uncertain.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/curriculum.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-011",
+      "priority": "P1",
+      "title": "Добавить recurrent policy option",
+      "acceptance": "Для частичной наблюдаемости и delayed verification.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/policy_adapter.py",
+        "configs/rl/recurrent_ppo_v0.yaml",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-012",
+      "priority": "P2",
+      "title": "Добавить offline replay evaluation",
+      "acceptance": "Агент прогоняется по логам без влияния на физику.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/offline_replay.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "H-013",
+      "priority": "P2",
+      "title": "Добавить hyperparameter sweep",
+      "acceptance": "Несколько seeds и configs, отчёт по stability.",
+      "status": "pass",
+      "evidence": [
+        "seedling_rl/sweep.py",
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-001",
+      "priority": "P0",
+      "title": "Создать RobotAdapter interface",
+      "acceptance": "Simulator/DryRun/Real имеют общий API.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/adapters/base.py",
+        "docs/ROBOT_PROTOCOL.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-002",
+      "priority": "P0",
+      "title": "Реализовать SimulatorRobotAdapter",
+      "acceptance": "Выполняет move/mark в симуляторе, пишет telemetry.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/adapters/simulator.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-003",
+      "priority": "P0",
+      "title": "Реализовать motion command schema",
+      "acceptance": "Команда содержит point, speed, mode, safety token.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/protocol.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-004",
+      "priority": "P0",
+      "title": "Реализовать dry-run serial adapter stub",
+      "acceptance": "Безопасный режим без опасного воздействия.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/adapters/dry_run_serial.py",
+        "tests/unit/test_dry_run_and_feedback.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-005",
+      "priority": "P0",
+      "title": "Добавить homing/limit switch state в telemetry",
+      "acceptance": "SafetyGate видит robot_homed и limit status.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/protocol.py",
+        "seedling_decision/safety_gate.py",
+        "seedling_robot/adapters/dry_run_serial.py",
+        "tests/unit/test_decision_and_safety.py",
+        "tests/unit/test_dry_run_and_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-006",
+      "priority": "P1",
+      "title": "Описать serial protocol в docs/ROBOT_PROTOCOL.md",
+      "acceptance": "Команды/ответы/ошибки/таймауты документированы.",
+      "status": "pass",
+      "evidence": [
+        "docs/ROBOT_PROTOCOL.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-007",
+      "priority": "P1",
+      "title": "Добавить motion replay",
+      "acceptance": "Команды можно проигрывать в симуляторе.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/motion_replay.py",
+        "tests/unit/test_dry_run_and_feedback.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-008",
+      "priority": "P1",
+      "title": "Добавить gantry dry-run test CLI",
+      "acceptance": "Наведение на контрольные точки и отчёт ошибки.",
+      "status": "pass",
+      "evidence": [
+        "seedling_robot/dry_run_runner.py",
+        "seedling_robot/cli.py",
+        "tests/unit/test_robot_and_replay.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "I-009",
+      "priority": "P2",
+      "title": "Добавить hardware-in-the-loop mode",
+      "acceptance": "Реальная рама, безопасный указатель, лог ошибок.",
+      "status": "external_required",
+      "evidence": [
+        "seedling_robot/hil_runner.py",
+        "seedling_robot/adapters/real_gantry_serial.py",
+        "docs/ROBOT_PROTOCOL.md"
+      ],
+      "missing_evidence": [],
+      "notes": "Software scaffold exists if evidence is present; real hardware validation remains external."
+    },
+    {
+      "item_id": "J-001",
+      "priority": "P0",
+      "title": "Создать offline viewer",
+      "acceptance": "Загружает изображение, predictions, cell state, targets.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/offline_viewer.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-002",
+      "priority": "P0",
+      "title": "Создать simulation replay viewer",
+      "acceptance": "Play/pause/step/reset, timeline actions.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/replay_viewer.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-003",
+      "priority": "P0",
+      "title": "Показывать reasons for review/block",
+      "acceptance": "Оператор видит, почему цель заблокирована.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/offline_viewer.py",
+        "seedling_decision/policies/builtin.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-004",
+      "priority": "P1",
+      "title": "Добавить model/policy selector",
+      "acceptance": "Можно выбрать detector и policy из registry.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/cli.py",
+        "seedling_core/registry.py",
+        "tests/unit/test_registry_selector_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-005",
+      "priority": "P1",
+      "title": "Добавить scenario comparison",
+      "acceptance": "На одной сцене сравниваются rule-based и RL.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/scenario.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-006",
+      "priority": "P1",
+      "title": "Добавить report export",
+      "acceptance": "HTML/Markdown отчёт по кассете/эпизоду.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/report_export.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "J-007",
+      "priority": "P2",
+      "title": "Добавить annotation feedback mode",
+      "acceptance": "Оператор может пометить ошибку модели для доразметки.",
+      "status": "pass",
+      "evidence": [
+        "seedling_ui/feedback.py",
+        "seedling_ui/offline_viewer.py",
+        "tests/unit/test_registry_selector_feedback.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-001",
+      "priority": "P0",
+      "title": "Создать unified experiment CLI",
+      "acceptance": "prepare/train/val/predict/evaluate/sim/rl имеют единый стиль.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/cli.py",
+        "tests/unit/test_cli_smoke.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-002",
+      "priority": "P0",
+      "title": "Реализовать experiment registry",
+      "acceptance": "Каждая команда регистрирует входы/выходы.",
+      "status": "pass",
+      "evidence": [
+        "seedling_experiments/cli.py",
+        "seedling_experiments/config.py",
+        "seedling_reports/registry.py",
+        "tests/unit/test_cli_smoke.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-003",
+      "priority": "P0",
+      "title": "Автоматически собирать dataset_summary.csv",
+      "acceptance": "Таблица для статьи строится из артефактов.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/tables.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-004",
+      "priority": "P0",
+      "title": "Автоматически собирать object_level_results.csv",
+      "acceptance": "Источник: test_metrics.json.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/tables.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-005",
+      "priority": "P0",
+      "title": "Автоматически собирать task_level_results.csv",
+      "acceptance": "Источник: cell_metrics.json.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/tables.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-006",
+      "priority": "P1",
+      "title": "Добавить artifact_registry.csv",
+      "acceptance": "Для статьи и воспроизводимости.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/registry.py",
+        "seedling_reports/tables.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-007",
+      "priority": "P1",
+      "title": "Добавить HTML report generator",
+      "acceptance": "Единый отчёт эксперимента с картинками/таблицами.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/html.py",
+        "seedling_reports/cli.py",
+        "tests/unit/test_reports_and_viewers.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "K-008",
+      "priority": "P2",
+      "title": "Добавить compare-runs",
+      "acceptance": "Сравнение моделей, thresholds, RL seeds.",
+      "status": "pass",
+      "evidence": [
+        "seedling_reports/compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-001",
+      "priority": "P0",
+      "title": "Unit tests for schemas",
+      "acceptance": "Все схемы проходят serialization round-trip.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_schemas.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-002",
+      "priority": "P0",
+      "title": "Unit tests for grid assignment",
+      "acceptance": "Границы, углы, centers, invalid cells.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_grid.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-003",
+      "priority": "P0",
+      "title": "Unit tests for target generation",
+      "acceptance": "Largest-bbox, expert labels, unknown/review.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_target_generation.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-004",
+      "priority": "P0",
+      "title": "Unit tests for SafetyGate",
+      "acceptance": "Каждое unsafe condition блокирует action.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_decision_and_safety.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-005",
+      "priority": "P0",
+      "title": "Unit tests for calibration transforms",
+      "acceptance": "Known points map correctly.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_calibration.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-006",
+      "priority": "P0",
+      "title": "Integration test: image → prediction → cells",
+      "acceptance": "Mock detector, small fixture dataset.",
+      "status": "pass",
+      "evidence": [
+        "tests/integration/test_scene_policy_sim.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-007",
+      "priority": "P0",
+      "title": "Integration test: scene → policy → sim episode",
+      "acceptance": "Rule-based policy completes fixture scene.",
+      "status": "pass",
+      "evidence": [
+        "tests/integration/test_scene_policy_sim.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-008",
+      "priority": "P0",
+      "title": "Gym env checker test",
+      "acceptance": "SeedlingTrayEnv проходит проверку API.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_rl_training_and_compare.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-009",
+      "priority": "P1",
+      "title": "Regression tests for legacy outputs",
+      "acceptance": "Новые метрики совпадают с legacy на фикстурах.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_evaluate_cells_metrics.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-010",
+      "priority": "P1",
+      "title": "CLI smoke tests",
+      "acceptance": "Каждая команда запускается на tiny dataset.",
+      "status": "pass",
+      "evidence": [
+        "tests/unit/test_cli_smoke.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "L-011",
+      "priority": "P2",
+      "title": "Performance tests",
+      "acceptance": "Batch inference and sim training не деградируют.",
+      "status": "pass",
+      "evidence": [
+        "tests/performance/test_performance_smoke.py"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-001",
+      "priority": "P0",
+      "title": "Обновить docs/README.md",
+      "acceptance": "Карта новых модулей и команд.",
+      "status": "pass",
+      "evidence": [
+        "docs/README.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-002",
+      "priority": "P0",
+      "title": "Создать docs/ARCHITECTURE.md",
+      "acceptance": "Диаграммы, слои, схемы данных, режимы работы.",
+      "status": "pass",
+      "evidence": [
+        "docs/ARCHITECTURE.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-003",
+      "priority": "P0",
+      "title": "Создать docs/RL_SPEC.md",
+      "acceptance": "Env, obs, actions, rewards, metrics, limitations.",
+      "status": "pass",
+      "evidence": [
+        "docs/RL_SPEC.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-004",
+      "priority": "P0",
+      "title": "Создать docs/SIMULATION_SPEC.md",
+      "acceptance": "Scene schema, noise model, renderer, replay.",
+      "status": "pass",
+      "evidence": [
+        "docs/SIMULATION_SPEC.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-005",
+      "priority": "P0",
+      "title": "Создать docs/MODEL_PLUGIN_API.md",
+      "acceptance": "Detector/Policy/Robot adapters.",
+      "status": "pass",
+      "evidence": [
+        "docs/MODEL_PLUGIN_API.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-006",
+      "priority": "P0",
+      "title": "Создать docs/SAFETY_CONCEPT.md",
+      "acceptance": "SafetyGate, modes, blocked actions, interlocks.",
+      "status": "pass",
+      "evidence": [
+        "docs/SAFETY_CONCEPT.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-007",
+      "priority": "P1",
+      "title": "Создать docs/CALIBRATION_PROTOCOL.md",
+      "acceptance": "Калибровка и error budget.",
+      "status": "pass",
+      "evidence": [
+        "docs/CALIBRATION_PROTOCOL.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-008",
+      "priority": "P1",
+      "title": "Создать docs/FAILURE_MODES.md",
+      "acceptance": "Таксономия отказов и меры снижения.",
+      "status": "pass",
+      "evidence": [
+        "docs/FAILURE_MODES.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-009",
+      "priority": "P1",
+      "title": "Создать статью-ready report template",
+      "acceptance": "Автоматические таблицы и source artifacts.",
+      "status": "pass",
+      "evidence": [
+        "docs/ARTICLE_REPORT_TEMPLATE.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    },
+    {
+      "item_id": "M-010",
+      "priority": "P2",
+      "title": "Создать operator manual draft",
+      "acceptance": "Режимы scan/review/sim/dry-run/safe stop.",
+      "status": "pass",
+      "evidence": [
+        "docs/OPERATOR_MANUAL_DRAFT.md"
+      ],
+      "missing_evidence": [],
+      "notes": ""
+    }
+  ]
+}

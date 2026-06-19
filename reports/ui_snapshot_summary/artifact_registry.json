@@ -1,0 +1,198 @@
+{
+  "runs": [
+    {
+      "run_id": "ui_snapshot_summary_seedling_reports_build_artifact_registry",
+      "command": "seedling-reports:build",
+      "run_dir": "reports\\ui_snapshot_summary",
+      "created_at": "2026-06-18T16:08:41.794088+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "reports\\ui_snapshot_smoke",
+          "artifact_type": "directory",
+          "role": "input",
+          "command": "seedling-reports:build",
+          "sha256": null,
+          "bytes": null,
+          "created_at": "2026-06-18T16:08:41.774743+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "configs\\registry\\model_registry_v0_1.yaml",
+          "artifact_type": "config",
+          "role": "input",
+          "command": "seedling-reports:build",
+          "sha256": "f9507cbcb41ef26b7aa3776de2f49be4fc4e043c66030e729b271fe2fb058f3b",
+          "bytes": 2576,
+          "created_at": "2026-06-18T16:08:41.775581+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\artifact_registry.csv",
+          "artifact_type": "artifact_registry",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "f89199c3b417fc33fc41d4236538442ff0b105a518192c12cc6e066fc746a75e",
+          "bytes": 233,
+          "created_at": "2026-06-18T16:08:41.776430+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\model_registry.csv",
+          "artifact_type": "model_registry",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "53bbe96584f46fb61e1a7d2bc5d32cf9320abfb9756adbe07b88197f9f6f011a",
+          "bytes": 1640,
+          "created_at": "2026-06-18T16:08:41.777806+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\dataset_summary.csv",
+          "artifact_type": "dataset_summary",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "18feaf87fab2b1f73c757fe481e8cca8652f1f05418ebbd75be18160425c5163",
+          "bytes": 136,
+          "created_at": "2026-06-18T16:08:41.779232+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\object_level_results.csv",
+          "artifact_type": "object_level_results",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "0075d87e7cf8b9bf256300eb5c9a02e8291c9e5739e7b84c2b85d8526b0f8cd0",
+          "bytes": 69,
+          "created_at": "2026-06-18T16:08:41.780347+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\task_level_results.csv",
+          "artifact_type": "task_level_results",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "4416a4c04d761bb4151754bffe89381a33bf6b8eaba32da0019d2a1ae4d31b72",
+          "bytes": 414,
+          "created_at": "2026-06-18T16:08:41.781360+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\run_snapshot_results.csv",
+          "artifact_type": "run_snapshot_results",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "5dd45a6d1e015f0c07fe82bf5f0ba25c9e203d77eb98468e239bcd63167f760d",
+          "bytes": 522,
+          "created_at": "2026-06-18T16:08:41.782353+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\rl_results.csv",
+          "artifact_type": "rl_results",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "9cb01bf32e5ac3f26b07557b747dc4802b197728cbc9f99acd80219417e7ebf1",
+          "bytes": 217,
+          "created_at": "2026-06-18T16:08:41.785400+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\hardware_dry_run_results.csv",
+          "artifact_type": "hardware_dry_run_results",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "ae2ee291aeeeec1c40a7b64ac814c28edfc6b05b30a230e289ed355fb30e0fea",
+          "bytes": 352,
+          "created_at": "2026-06-18T16:08:41.786613+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\safety_results.csv",
+          "artifact_type": "safety_results",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "7c2b75710a7da9630fe6be9b5cbea81fb9f977c12fc0b3540e5c90657cf23079",
+          "bytes": 409,
+          "created_at": "2026-06-18T16:08:41.787627+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\post_action_results.csv",
+          "artifact_type": "post_action_results",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "67517575cc2da0baae89e27b80f2a73da83f8291cfe3f8601f5b13674811229a",
+          "bytes": 202,
+          "created_at": "2026-06-18T16:08:41.788533+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\error_budget_results.csv",
+          "artifact_type": "error_budget_results",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "dbe75bc2dd6b0528dd2fed037403954c64c2229573ad302b49f467d16d28c216",
+          "bytes": 199,
+          "created_at": "2026-06-18T16:08:41.789420+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\annotation_feedback_results.csv",
+          "artifact_type": "annotation_feedback_results",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "5b41db0aa51e2d4c6471a3ce63e25af4d18c13377505aa44bc11f694386d859c",
+          "bytes": 163,
+          "created_at": "2026-06-18T16:08:41.790283+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\experiment_report.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "a88cd56a76e310ab7557aba2c625dff0778b2ff06bfba10c54fd8b0357a19aec",
+          "bytes": 4995,
+          "created_at": "2026-06-18T16:08:41.791512+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\report_summary.json",
+          "artifact_type": "report_summary",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "7131a1b3f31e0505f91e8270a291be5d6e1d044b4e8151db5e9dfb79dc0b97f5",
+          "bytes": 416,
+          "created_at": "2026-06-18T16:08:41.792919+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_summary\\run_snapshot.json",
+          "artifact_type": "run_snapshot",
+          "role": "output",
+          "command": "seedling-reports:build",
+          "sha256": "7cce716d19a82feb8dfd114eedf060be0576aebd066c249beb0afe69d0a6e691",
+          "bytes": 3728,
+          "created_at": "2026-06-18T16:08:41.793962+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "artifacts": 1,
+        "model_rows": 4,
+        "dataset_rows": 0,
+        "object_rows": 0,
+        "task_rows": 0,
+        "run_snapshot_rows": 1,
+        "rl_rows": 0,
+        "hardware_rows": 0,
+        "safety_rows": 0,
+        "post_action_rows": 0,
+        "error_budget_rows": 0,
+        "annotation_feedback_rows": 0
+      }
+    }
+  ]
+}

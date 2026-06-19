@@ -1,0 +1,12 @@
+{
+  "command": "sim",
+  "config": "configs/simulation/tray_env_v0.yaml",
+  "event": "target_step",
+  "first_action": 0,
+  "ok": true,
+  "reward": 7.221292327104919,
+  "scene_id": "rl_scene_000001",
+  "targets": 18,
+  "terminated": false,
+  "truncated": false
+}

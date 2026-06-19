@@ -1,0 +1,29 @@
+{
+  "observations": [
+    {
+      "observation_id": "obs_chessboard_001",
+      "target_type": "chessboard",
+      "image_points_px": [
+        [120.0, 90.0],
+        [520.0, 92.0],
+        [518.0, 392.0],
+        [118.0, 390.0],
+        [220.0, 165.0],
+        [420.0, 166.0]
+      ],
+      "object_points_mm": [
+        [0.0, 0.0, 0.0],
+        [80.0, 0.0, 0.0],
+        [80.0, 60.0, 0.0],
+        [0.0, 60.0, 0.0],
+        [20.0, 15.0, 0.0],
+        [60.0, 15.0, 0.0]
+      ],
+      "image_size_px": [640, 480],
+      "metadata": {
+        "pattern": "example_4x3_inner_corners",
+        "square_size_mm": 20.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "runs": [
+    {
+      "run_id": "software_readiness_compare_seedling_reports_compare_runs_compare_runs",
+      "command": "seedling-reports:compare-runs",
+      "run_dir": "reports\\software_readiness_compare",
+      "created_at": "2026-06-18T16:02:14.007109+00:00",
+      "config_path": null,
+      "snapshot_path": "reports\\software_readiness_compare\\run_snapshot.json",
+      "artifacts": [
+        {
+          "path": "reports\\software_readiness_smoke",
+          "artifact_type": "directory",
+          "role": "input",
+          "command": "seedling-reports:compare-runs",
+          "sha256": null,
+          "bytes": null,
+          "created_at": "2026-06-18T16:02:14.002997+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_compare\\compare_runs.csv",
+          "artifact_type": "compare_runs",
+          "role": "output",
+          "command": "seedling-reports:compare-runs",
+          "sha256": "8153ba2f9b5fb4a4664e711dfc2f827df51310b0b34f6446a9aad5bdea6f719a",
+          "bytes": 1571,
+          "created_at": "2026-06-18T16:02:14.004184+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_compare\\compare_runs.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-reports:compare-runs",
+          "sha256": "3088a29c97b4f465c031b2400d2bdf9a099b2f4e13e5f05127433050ca514b9d",
+          "bytes": 3312,
+          "created_at": "2026-06-18T16:02:14.005195+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_compare\\compare_runs_summary.json",
+          "artifact_type": "compare_runs_summary",
+          "role": "output",
+          "command": "seedling-reports:compare-runs",
+          "sha256": "9f2026b73e56baa1d17f8b1a77ee6c6325fce5f762753cf01d00dd6abc4c071d",
+          "bytes": 173,
+          "created_at": "2026-06-18T16:02:14.006073+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_compare\\run_snapshot.json",
+          "artifact_type": "run_snapshot",
+          "role": "output",
+          "command": "seedling-reports:compare-runs",
+          "sha256": "62d1aceb43df480aa4974dbdd164cd24d755edc981659ed2de24283a0f714da8",
+          "bytes": 4117,
+          "created_at": "2026-06-18T16:02:14.006944+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "runs": 1,
+        "failed": 0
+      }
+    }
+  ]
+}

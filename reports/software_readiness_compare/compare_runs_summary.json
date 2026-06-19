@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "runs": 1,
+  "thresholds": {
+    "require_run_snapshots": 1.0,
+    "max_run_snapshot_missing_config_hash": 0.0
+  },
+  "passed": 1,
+  "failed": 0
+}

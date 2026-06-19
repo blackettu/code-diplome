@@ -1,0 +1,2 @@
+artifact,mode,policy,episodes,reward_mean,critical_error_rate,successful_target_rate,review_rate,actions_per_tray,total_distance_mm,mean_distance_error_mm
+reports\rl_logging_smoke\rl_eval_metrics.json,baseline,route_planning,1,185.2412688957499,0.0,1.0,0.0,20.0,1475.8731104250057,0.9173316618084192

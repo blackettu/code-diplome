@@ -1,0 +1,232 @@
+{
+  "runs": [
+    {
+      "run_id": "software_readiness_smoke_seedling_reports_software_readiness_smoke_calibration_config",
+      "command": "seedling-reports:software-readiness-smoke",
+      "run_dir": "reports\\software_readiness_smoke",
+      "created_at": "2026-06-18T19:44:48.890310+00:00",
+      "config_path": null,
+      "snapshot_path": "reports\\software_readiness_smoke\\run_snapshot.json",
+      "artifacts": [
+        {
+          "path": ".",
+          "artifact_type": "directory",
+          "role": "input",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": null,
+          "bytes": null,
+          "created_at": "2026-06-18T19:44:48.873146+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\calibration\\calibration_config.json",
+          "artifact_type": "calibration_config",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "88203c8955f8b15f7c97ca6b9bce260128ba7a9d3abeff14c0bf362760db0319",
+          "bytes": 797,
+          "created_at": "2026-06-18T19:44:48.873857+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\calibration\\calibration.json",
+          "artifact_type": "calibration",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "a8ea35d15048ddf1c37f68ce0720fe91578a0fd61a0bbbba77a426ff6eb9e482",
+          "bytes": 1315,
+          "created_at": "2026-06-18T19:44:48.874491+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\calibration\\error_map.json",
+          "artifact_type": "error_map",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "f9eb29813aeb61b89d62be99e6be649f8ae3a521df120178d5dda8fe1cc969f3",
+          "bytes": 1631,
+          "created_at": "2026-06-18T19:44:48.875336+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\scene_state.json",
+          "artifact_type": "scene_state",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "723c0322ded79afe3a59d94ba489350d3bd7842f72d947b3ae8f1685298184b6",
+          "bytes": 2077,
+          "created_at": "2026-06-18T19:44:48.876281+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\action_plan.json",
+          "artifact_type": "action_plan",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "db3311c5cda179b123e061c65de42e29cc886b4257293b216d5bae0b63e0970d",
+          "bytes": 1211,
+          "created_at": "2026-06-18T19:44:48.877523+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.json",
+          "artifact_type": "scenario_compare",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "98d2d37aa01b712192d3ca1bc510d71fdbfe0a930894c075858adae13d739c10",
+          "bytes": 1906,
+          "created_at": "2026-06-18T19:44:48.878794+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "6b4f4c347fb422c777d14daac49256ae2ebb3cba0d80f88c1e661a63e6ead333",
+          "bytes": 1780,
+          "created_at": "2026-06-18T19:44:48.879635+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\robot\\dry_run_plan_report.json",
+          "artifact_type": "dry_run_plan_report",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "d33c572c46f3812de65c918e3928feb8ca95eb8d1c941f1cc0245efe71070430",
+          "bytes": 2517,
+          "created_at": "2026-06-18T19:44:48.880871+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\robot\\dry_run_plan_commands.json",
+          "artifact_type": "dry_run_plan_commands",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "2c165ecddb1927a356c8294ef50da612d092ea1bfcfcb7a00db510b2455a1d22",
+          "bytes": 1312,
+          "created_at": "2026-06-18T19:44:48.882362+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\robot\\dry_run_plan_replay.json",
+          "artifact_type": "dry_run_plan_replay",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "983896d967a60eff85953df3970832340a4f52e26981b292e197fa01d73d907e",
+          "bytes": 2365,
+          "created_at": "2026-06-18T19:44:48.883094+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\hardware_dry_run_results.csv",
+          "artifact_type": "hardware_dry_run_results",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "999fbb561bfe297b07382477e11c66bd6474744bf09f4c303a8e59dc49587ac8",
+          "bytes": 596,
+          "created_at": "2026-06-18T19:44:48.883772+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\safety_results.csv",
+          "artifact_type": "safety_results",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "c7bd06071aaa243a90764b5527658b36526a5fce7a3273e2e08620c9bcd9af83",
+          "bytes": 634,
+          "created_at": "2026-06-18T19:44:48.884418+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.json",
+          "artifact_type": "architecture_backlog_audit",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "1e2adf5dda61b78bfff115138d0554e675f079163abf10a2957a5d64b095dbf3",
+          "bytes": 56342,
+          "created_at": "2026-06-18T19:44:48.885124+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.csv",
+          "artifact_type": "architecture_backlog_audit",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "3f2b830601a5738b810eacf68898f377ec2f4dcd7adab1e6096648c99ef878ff",
+          "bytes": 28730,
+          "created_at": "2026-06-18T19:44:48.885757+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "8ffd974a9b41e9e22c3a3d508575cb056941082d57b5ffb3aa92a43448f65532",
+          "bytes": 26597,
+          "created_at": "2026-06-18T19:44:48.886392+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\readiness\\readiness_report.json",
+          "artifact_type": "readiness_report",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "d7664ad92c1100603373cb6238c2dfb382152532b9914c3b2d99651a7c41fcc4",
+          "bytes": 6458,
+          "created_at": "2026-06-18T19:44:48.887038+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\readiness\\readiness_report.csv",
+          "artifact_type": "readiness_report",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "31909dbd1d891a0cfe41fc2fe733100359865c436857819bfd0be31de1842e76",
+          "bytes": 3465,
+          "created_at": "2026-06-18T19:44:48.887717+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\readiness\\readiness_report.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "f6d7ecee13e684a29e3f5b77e627ee9acc3a3702e01981aa1bfef4c3e127a335",
+          "bytes": 3438,
+          "created_at": "2026-06-18T19:44:48.888396+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\software_readiness_smoke.json",
+          "artifact_type": "software_readiness_smoke",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "96c24af70b30771ea486055488aa06b4963d8b9ba5cfd5ae4e284785701217de",
+          "bytes": 2121,
+          "created_at": "2026-06-18T19:44:48.889309+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\software_readiness_smoke\\run_snapshot.json",
+          "artifact_type": "run_snapshot",
+          "role": "output",
+          "command": "seedling-reports:software-readiness-smoke",
+          "sha256": "9020f6bfe1f3277cd7acbe0048eede89b868d15927e9ed27fe3243f9399f5e5d",
+          "bytes": 4375,
+          "created_at": "2026-06-18T19:44:48.890181+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "software_ready": true,
+        "physical_validation_required": true,
+        "readiness_counts": {
+          "pass": 18,
+          "external_required": 2
+        }
+      }
+    }
+  ]
+}

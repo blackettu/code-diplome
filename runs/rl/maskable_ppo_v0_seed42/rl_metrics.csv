@@ -1,0 +1,2 @@
+phase,episode,step,policy,event,reward,critical_error,review_targets,review_rate,movement_mm,distance_error_mm,total_distance_mm,mean_distance_error_mm
+train,,,,dry_run,0.0,0,0,0.0,,,0.0,

@@ -1,0 +1,11 @@
+{
+  "components_mm": {
+    "e_detection": 1.0,
+    "e_grid": 0.5,
+    "e_calibration": null,
+    "e_mechanics": 0.8,
+    "e_focus": 0.4,
+    "e_latency": 0.2,
+    "e_biological_target": 1.2
+  }
+}

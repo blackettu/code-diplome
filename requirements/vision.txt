@@ -1,0 +1,4 @@
+-r base.txt
+onnxruntime>=1.17.0
+opencv-python>=4.9.0
+pillow-heif>=0.16.0

@@ -1,0 +1,24 @@
+algorithm: recurrent_ppo
+env_config: configs/simulation/tray_env_v0.yaml
+total_timesteps: 1000000
+seed: 42
+n_envs: 1
+policy: MultiInputLstmPolicy
+recurrent: true
+learning_rate: 0.0003
+n_steps: 2048
+batch_size: 256
+gamma: 0.99
+eval:
+  episodes: 500
+  every_steps: 50000
+  compare_baselines:
+    - noop
+    - raster_scan
+    - nearest_neighbor
+    - route_planning
+    - risk_aware_rule
+outputs:
+  run_dir: runs/rl/recurrent_ppo_v0_seed42
+  save_replays: true
+  save_videos: true

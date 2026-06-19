@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "schema_version": "software_readiness_smoke_v0_1",
+  "out": "reports\\software_readiness_smoke",
+  "dry_run_ok": true,
+  "hardware_rows": 1,
+  "safety_rows": 2,
+  "readiness_counts": {
+    "pass": 18,
+    "external_required": 2
+  },
+  "architecture_backlog_counts": {
+    "external_required": 1,
+    "pass": 132
+  },
+  "architecture_backlog_audit": "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.json",
+  "software_ready": true,
+  "physical_validation_required": true,
+  "artifacts": [
+    "reports\\software_readiness_smoke\\calibration\\calibration_config.json",
+    "reports\\software_readiness_smoke\\calibration\\calibration.json",
+    "reports\\software_readiness_smoke\\calibration\\error_map.json",
+    "reports\\software_readiness_smoke\\scene_state.json",
+    "reports\\software_readiness_smoke\\action_plan.json",
+    "reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.json",
+    "reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.html",
+    "reports\\software_readiness_smoke\\robot\\dry_run_plan_report.json",
+    "reports\\software_readiness_smoke\\robot\\dry_run_plan_commands.json",
+    "reports\\software_readiness_smoke\\robot\\dry_run_plan_replay.json",
+    "reports\\software_readiness_smoke\\hardware_dry_run_results.csv",
+    "reports\\software_readiness_smoke\\safety_results.csv",
+    "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.json",
+    "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.csv",
+    "reports\\software_readiness_smoke\\architecture_backlog\\architecture_backlog_audit.html",
+    "reports\\software_readiness_smoke\\readiness\\readiness_report.json",
+    "reports\\software_readiness_smoke\\readiness\\readiness_report.csv",
+    "reports\\software_readiness_smoke\\readiness\\readiness_report.html",
+    "reports\\software_readiness_smoke\\software_readiness_smoke.json",
+    "reports\\software_readiness_smoke\\run_snapshot.json"
+  ],
+  "readiness_report": "reports\\software_readiness_smoke\\readiness\\readiness_report.json",
+  "run_snapshot": "reports\\software_readiness_smoke\\run_snapshot.json",
+  "artifact_registry": "reports\\software_readiness_smoke\\artifact_registry.json"
+}

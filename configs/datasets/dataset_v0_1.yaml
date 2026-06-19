@@ -1,0 +1,17 @@
+dataset_version: zks_v0_1
+ontology_version: ontology_v0_1
+root: data/zks_v0_1
+images_dir: images
+labels_dir: labels
+metadata:
+  image_manifest: manifests/image_manifest.csv
+  split_manifest: manifests/split_manifest.csv
+grid:
+  rows: 11
+  cols: 11
+classes:
+  0: container
+  1: crop_seedling
+notes:
+  - Weed and unknown_plant classes require explicit expert annotation before training.
+  - Pixel action points are not robot coordinates until calibration is attached.

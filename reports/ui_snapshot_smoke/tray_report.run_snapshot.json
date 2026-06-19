@@ -1,0 +1,60 @@
+{
+  "command": "seedling-ui:report-export",
+  "command_args": {
+    "command": "report-export",
+    "out": "reports\\ui_snapshot_smoke\\tray_report.html",
+    "replay": null,
+    "scene": "reports\\software_readiness_smoke\\scene_state.json",
+    "title": null
+  },
+  "config": {
+    "command_args": {
+      "command": "report-export",
+      "out": "reports\\ui_snapshot_smoke\\tray_report.html",
+      "replay": null,
+      "scene": "reports\\software_readiness_smoke\\scene_state.json",
+      "title": null
+    },
+    "inputs": [
+      "reports\\software_readiness_smoke\\scene_state.json"
+    ],
+    "metadata": {
+      "replay_steps": 0,
+      "scene_id": "software_readiness_scene",
+      "scene_kind": "scene_state",
+      "targets": 1,
+      "title": null
+    },
+    "outputs": [
+      "reports\\ui_snapshot_smoke\\tray_report.html"
+    ]
+  },
+  "config_hash": "aa7f5f7d57202091e4d5bedaeeb2ff788a8a49d18e6cbaddc672b95f3e63c9bf",
+  "environment": {
+    "created_at_utc": "2026-06-18T16:08:10.770179+00:00",
+    "packages": {
+      "Pillow": "12.2.0",
+      "PyYAML": "6.0.3",
+      "numpy": "2.4.4",
+      "opencv-python": null,
+      "pillow-heif": null,
+      "ultralytics": null
+    },
+    "platform": "Windows-11-10.0.26100-SP0",
+    "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "inputs": [
+    "reports\\software_readiness_smoke\\scene_state.json"
+  ],
+  "metadata": {
+    "replay_steps": 0,
+    "scene_id": "software_readiness_scene",
+    "scene_kind": "scene_state",
+    "targets": 1,
+    "title": null
+  },
+  "outputs": [
+    "reports\\ui_snapshot_smoke\\tray_report.html"
+  ],
+  "schema_version": "command_run_snapshot_v0_1"
+}

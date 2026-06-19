@@ -7,7 +7,7 @@ import cv2
 import numpy as np
 from PIL import Image
 
-from .config import save_run_snapshot, write_json
+from .config import register_run_artifacts, save_run_snapshot, write_json
 from .grid import Detection
 from .image_io import register_heif_if_available
 from .predict import analyze_detections
@@ -16,12 +16,15 @@ from .yolo import label_path_for, list_images, read_labels
 register_heif_if_available()
 
 
-def green_components_baseline_from_config(config: dict[str, Any]) -> dict[str, Any]:
+def green_components_baseline_from_config(
+    config: dict[str, Any],
+    command_args: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     baseline = config.get("baseline", {})
     images_dir = Path(baseline["images"])
     output_dir = Path(baseline.get("output_dir", "runs/baseline_green"))
     output_dir.mkdir(parents=True, exist_ok=True)
-    save_run_snapshot(output_dir, config, "baseline-green")
+    save_run_snapshot(output_dir, config, "baseline-green", command_args=command_args)
 
     labels_dir = Path(baseline["labels"]) if baseline.get("labels") else None
     results = []
@@ -52,7 +55,16 @@ def green_components_baseline_from_config(config: dict[str, Any]) -> dict[str, A
         )
 
     output = {"images_dir": str(images_dir.resolve()), "images": results}
-    write_json(output_dir / "predictions.json", output)
+    predictions_path = output_dir / "predictions.json"
+    write_json(predictions_path, output)
+    register_run_artifacts(
+        output_dir,
+        "baseline-green",
+        config=config,
+        command_args=command_args,
+        input_paths=[images_dir, labels_dir],
+        output_paths=[predictions_path],
+    )
     return output
 
 

@@ -1,0 +1,40 @@
+{
+  "group_key": "image",
+  "groups": 0,
+  "cell_accuracy": {
+    "mean": null,
+    "low_95": null,
+    "high_95": null,
+    "groups": 0
+  },
+  "multi_precision": {
+    "mean": null,
+    "low_95": null,
+    "high_95": null,
+    "groups": 0
+  },
+  "multi_recall": {
+    "mean": null,
+    "low_95": null,
+    "high_95": null,
+    "groups": 0
+  },
+  "target_precision": {
+    "mean": null,
+    "low_95": null,
+    "high_95": null,
+    "groups": 0
+  },
+  "target_recall": {
+    "mean": null,
+    "low_95": null,
+    "high_95": null,
+    "groups": 0
+  },
+  "container_recall": {
+    "mean": null,
+    "low_95": null,
+    "high_95": null,
+    "groups": 0
+  }
+}

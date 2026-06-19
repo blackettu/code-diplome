@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "runs": 1,
+  "thresholds": {
+    "max_rl_reward_std": 1.0,
+    "min_rl_seed_count": 1.0
+  },
+  "passed": 1,
+  "failed": 0
+}

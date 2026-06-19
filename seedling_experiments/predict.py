@@ -6,7 +6,7 @@ from typing import Any
 import numpy as np
 from PIL import Image
 
-from .config import save_run_snapshot, write_json
+from .config import register_run_artifacts, save_run_snapshot, write_json
 from .grid import Detection, assign_to_cells, bbox_iou, choose_removal_targets, count_matrix
 from .image_io import register_heif_if_available
 from .yolo import list_images
@@ -14,7 +14,7 @@ from .yolo import list_images
 register_heif_if_available()
 
 
-def predict_from_config(config: dict[str, Any]) -> dict[str, Any]:
+def predict_from_config(config: dict[str, Any], command_args: dict[str, Any] | None = None) -> dict[str, Any]:
     try:
         from ultralytics import YOLO
     except ImportError as exc:
@@ -25,7 +25,7 @@ def predict_from_config(config: dict[str, Any]) -> dict[str, Any]:
     images_dir = Path(prediction["images"])
     output_dir = Path(prediction.get("output_dir", "runs/predict"))
     output_dir.mkdir(parents=True, exist_ok=True)
-    save_run_snapshot(output_dir, config, "predict")
+    save_run_snapshot(output_dir, config, "predict", command_args=command_args)
 
     model = YOLO(model_path)
     images = list_images(images_dir)
@@ -56,7 +56,16 @@ def predict_from_config(config: dict[str, Any]) -> dict[str, Any]:
         results.append(image_result)
 
     output = {"images_dir": str(images_dir.resolve()), "images": results}
-    write_json(output_dir / "predictions.json", output)
+    predictions_path = output_dir / "predictions.json"
+    write_json(predictions_path, output)
+    register_run_artifacts(
+        output_dir,
+        "predict",
+        config=config,
+        command_args=command_args,
+        input_paths=[model_path, images_dir],
+        output_paths=[predictions_path],
+    )
     return output
 
 

@@ -1,0 +1,37 @@
+{
+  "rows": [
+    {
+      "scene_id": "scene_000000",
+      "policy": "raster_scan",
+      "requested_policy": "raster_scan",
+      "steps": 6,
+      "reward_total": 2.1228536952945163,
+      "successes": 6,
+      "crop_damage": 1,
+      "remaining_targets": 5,
+      "command_target_order": "target_000000,target_000001,target_000002,target_000003,target_000005,target_000006"
+    },
+    {
+      "scene_id": "scene_000000",
+      "policy": "route_planning",
+      "requested_policy": "route_planning",
+      "steps": 10,
+      "reward_total": 89.15537578423401,
+      "successes": 10,
+      "crop_damage": 0,
+      "remaining_targets": 1,
+      "command_target_order": "target_000001,target_000002,target_000005,target_000003,target_000000,target_000008,target_000010,target_000009,target_000007,target_000006"
+    },
+    {
+      "scene_id": "scene_000000",
+      "policy": "risk_aware_rule",
+      "requested_policy": "risk_aware_rule",
+      "steps": 10,
+      "reward_total": 89.15537578423401,
+      "successes": 10,
+      "crop_damage": 0,
+      "remaining_targets": 1,
+      "command_target_order": "target_000001,target_000002,target_000005,target_000003,target_000000,target_000008,target_000010,target_000009,target_000007,target_000006"
+    }
+  ]
+}

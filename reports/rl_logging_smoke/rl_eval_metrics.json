@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "mode": "baseline",
+  "episodes": 1,
+  "results": [
+    {
+      "policy": "route_planning",
+      "episodes": 1,
+      "reward_mean": 185.2412688957499,
+      "successful_target_rate": 1.0,
+      "critical_error_rate": 0.0,
+      "review_rate": 0.0,
+      "actions_per_tray": 20.0,
+      "total_distance_mm": 1475.8731104250057,
+      "mean_distance_error_mm": 0.9173316618084192,
+      "details": [
+        {
+          "episode": 0,
+          "reward": 185.2412688957499,
+          "actions": 20,
+          "replay_path": "reports\\rl_logging_smoke\\replays\\route_planning_episode_0000.json"
+        }
+      ]
+    }
+  ],
+  "replay_dir": "reports\\rl_logging_smoke\\replays",
+  "replay_paths": [
+    "reports\\rl_logging_smoke\\replays\\route_planning_episode_0000.json"
+  ],
+  "critical_events_path": "reports\\rl_logging_smoke\\critical_events.json",
+  "critical_events": [],
+  "metric_log_path": "reports\\rl_logging_smoke\\rl_metrics.jsonl",
+  "metric_table_path": "reports\\rl_logging_smoke\\rl_metrics.csv",
+  "metric_summary": {
+    "steps": 20,
+    "critical_errors": 0,
+    "review_targets": 0,
+    "review_rate": 0.0,
+    "total_distance_mm": 1475.8731104250057,
+    "mean_distance_error_mm": 0.9173316618084192,
+    "jsonl_path": "reports\\rl_logging_smoke\\rl_metrics.jsonl",
+    "csv_path": "reports\\rl_logging_smoke\\rl_metrics.csv"
+  }
+}

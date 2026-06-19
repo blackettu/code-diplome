@@ -1,0 +1,84 @@
+{
+  "calibration_id": "software_readiness_smoke",
+  "camera_id": "smoke_cam",
+  "tray_type": "11x11",
+  "tray_size_mm": [
+    50.0,
+    50.0
+  ],
+  "grid_rows": 11,
+  "grid_cols": 11,
+  "rows": [
+    {
+      "point_index": 0,
+      "image_px": [
+        0.0,
+        0.0
+      ],
+      "expected_tray_mm": [
+        0.0,
+        0.0
+      ],
+      "predicted_tray_mm": [
+        0.0,
+        2.724736620541429e-14
+      ],
+      "error_mm": 2.724736620541429e-14
+    },
+    {
+      "point_index": 1,
+      "image_px": [
+        100.0,
+        0.0
+      ],
+      "expected_tray_mm": [
+        50.0,
+        0.0
+      ],
+      "predicted_tray_mm": [
+        50.00000000000017,
+        4.939132560319809e-15
+      ],
+      "error_mm": 1.7060176857382162e-13
+    },
+    {
+      "point_index": 2,
+      "image_px": [
+        100.0,
+        100.0
+      ],
+      "expected_tray_mm": [
+        50.0,
+        50.0
+      ],
+      "predicted_tray_mm": [
+        49.99999999999962,
+        49.999999999999524
+      ],
+      "error_mm": 6.070048111204626e-13
+    },
+    {
+      "point_index": 3,
+      "image_px": [
+        0.0,
+        100.0
+      ],
+      "expected_tray_mm": [
+        0.0,
+        50.0
+      ],
+      "predicted_tray_mm": [
+        2.2782842381730414e-13,
+        49.99999999999957
+      ],
+      "error_mm": 4.896613953662569e-13
+    }
+  ],
+  "error_summary_mm": {
+    "p50": 3.301315819700393e-13,
+    "p95": 5.894032987573317e-13,
+    "p99": 6.034845086478364e-13,
+    "rms": 3.9939657773980297e-13,
+    "max": 6.070048111204626e-13
+  }
+}

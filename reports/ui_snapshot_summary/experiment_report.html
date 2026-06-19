@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Seedling Experiment Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; color: #1f2528; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 28px; font-size: 13px; }
+    td, th { border: 1px solid #ddd; padding: 6px 8px; text-align: left; vertical-align: top; }
+    th { background: #f2f2ed; }
+    code { font-family: Consolas, monospace; }
+  </style>
+</head>
+<body>
+  <h1>Seedling Experiment Report</h1>
+  <section><h2>Model Registry</h2><table><thead><tr><th>registry</th><th>registry_ok</th><th>model_id</th><th>model_type</th><th>framework</th><th>artifact_uri</th><th>config_uri</th><th>metrics_uri</th><th>dataset_version</th><th>ontology_version</th><th>input_schema</th><th>output_schema</th><th>status</th><th>safety_level</th><th>calibration_requirements</th><th>tags</th></tr></thead><tbody><tr><td>configs\registry\model_registry_v0_1.yaml</td><td>True</td><td>baseline_green_detector_v0</td><td>detector</td><td>opencv</td><td>baseline://green</td><td>configs/registry/models_v0_1.yaml</td><td>reports/experiment_summary/object_level_results.csv</td><td>zks_v0_1</td><td>ontology_v0_1</td><td>ImageInputV1</td><td>DetectionResultV1</td><td>draft</td><td>offline_only</td><td>{&quot;required&quot;: false}</td><td>baseline,hsv,cpu</td></tr>
+<tr><td>configs\registry\model_registry_v0_1.yaml</td><td>True</td><td>route_planning_policy_v0</td><td>policy</td><td>seedling_decision</td><td>builtin://seedling_decision.policies.RoutePlanningPolicy</td><td>configs/registry/policies_v0_1.yaml</td><td>reports/scenario_compare/scenario_compare.json</td><td>None</td><td>None</td><td>SceneState</td><td>ActionPlan</td><td>draft</td><td>dry_run</td><td>{&quot;coordinate_frame&quot;: &quot;robot_mm&quot;, &quot;required&quot;: true}</td><td>baseline,route_planning,tsp_like</td></tr>
+<tr><td>configs\registry\model_registry_v0_1.yaml</td><td>True</td><td>maskable_ppo_v0_seed42</td><td>rl_policy</td><td>sb3_contrib</td><td>runs/rl/maskable_ppo_v0_seed42/model.zip</td><td>configs/rl/maskable_ppo_v0.yaml</td><td>runs/rl/eval/rl_eval_metrics.json</td><td>None</td><td>None</td><td>SeedlingTrayEnvObservationV1</td><td>ActionIndexV1</td><td>draft</td><td>simulation_only</td><td>{&quot;allowed_modes&quot;: [&quot;simulation_only&quot;, &quot;dry_run&quot;], &quot;required&quot;: true}</td><td>rl,maskable_ppo</td></tr>
+<tr><td>configs\registry\model_registry_v0_1.yaml</td><td>True</td><td>recurrent_ppo_v0_seed42</td><td>rl_policy</td><td>sb3_contrib</td><td>runs/rl/recurrent_ppo_v0_seed42/model.zip</td><td>configs/rl/recurrent_ppo_v0.yaml</td><td>runs/rl/recurrent_eval/rl_eval_metrics.json</td><td>None</td><td>None</td><td>SeedlingTrayEnvObservationV1</td><td>ActionIndexV1</td><td>draft</td><td>simulation_only</td><td>{&quot;allowed_modes&quot;: [&quot;simulation_only&quot;, &quot;dry_run&quot;], &quot;required&quot;: true}</td><td>rl,recurrent_ppo,partial_observability</td></tr></tbody></table></section>
+<section><h2>Dataset Summary</h2><p>No rows.</p></section>
+<section><h2>Object-Level Results</h2><p>No rows.</p></section>
+<section><h2>Task-Level Results</h2><p>No rows.</p></section>
+<section><h2>Run Snapshot Results</h2><table><thead><tr><th>artifact</th><th>command</th><th>config_hash</th><th>has_config</th><th>has_command_args</th><th>has_environment</th><th>python</th><th>platform</th><th>package_versions</th></tr></thead><tbody><tr><td>reports\ui_snapshot_smoke\tray_report.run_snapshot.json</td><td>seedling-ui:report-export</td><td>aa7f5f7d57202091e4d5bedaeeb2ff788a8a49d18e6cbaddc672b95f3e63c9bf</td><td>True</td><td>True</td><td>True</td><td>3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]</td><td>Windows-11-10.0.26100-SP0</td><td>{&quot;Pillow&quot;: &quot;12.2.0&quot;, &quot;PyYAML&quot;: &quot;6.0.3&quot;, &quot;numpy&quot;: &quot;2.4.4&quot;, &quot;opencv-python&quot;: null, &quot;pillow-heif&quot;: null, &quot;ultralytics&quot;: null}</td></tr></tbody></table></section>
+<section><h2>RL Results</h2><p>No rows.</p></section>
+<section><h2>Hardware Dry-Run Results</h2><p>No rows.</p></section>
+<section><h2>Safety Results</h2><p>No rows.</p></section>
+<section><h2>Post-Action Verification Results</h2><p>No rows.</p></section>
+<section><h2>Error Budget Results</h2><p>No rows.</p></section>
+<section><h2>Annotation Feedback Results</h2><p>No rows.</p></section>
+<section><h2>Artifacts</h2><table><thead><tr><th>path</th><th>artifact_type</th><th>role</th><th>command</th><th>sha256</th><th>bytes</th><th>created_at</th><th>metadata</th></tr></thead><tbody><tr><td>reports\ui_snapshot_smoke\tray_report.run_snapshot.json</td><td>run_snapshot</td><td>discovered</td><td>None</td><td>68804f26e3b0a89eb8e96e4b8021082f0c362b65946a56bf3c23902a88bdcc77</td><td>1755</td><td>2026-06-18T16:08:41.650525+00:00</td><td>{}</td></tr></tbody></table></section>
+</body>
+</html>

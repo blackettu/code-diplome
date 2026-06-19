@@ -1,0 +1,60 @@
+{
+  "runs": [
+    {
+      "run_id": "stability_report_rl_sweep_report",
+      "command": "rl-sweep-report",
+      "run_dir": "reports\\rl_sweep_smoke\\stability_report",
+      "created_at": "2026-06-17T17:44:25.794755+00:00",
+      "config_path": null,
+      "snapshot_path": null,
+      "artifacts": [
+        {
+          "path": "reports\\rl_sweep_smoke\\sweep_plan.json",
+          "artifact_type": "rl_sweep_plan",
+          "role": "input",
+          "command": "rl-sweep-report",
+          "sha256": "1e0c5bebfd3f415cb287648cb5d41ff287b1c259a1510b71d466991354085d1e",
+          "bytes": 4502,
+          "created_at": "2026-06-17T17:44:25.793042+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\rl_sweep_smoke\\sweep_001_seed_041\\rl_eval_metrics.json",
+          "artifact_type": "rl_eval_metrics",
+          "role": "input",
+          "command": "rl-sweep-report",
+          "sha256": "04465e3692454419869d1b3fff7d5ba141e726f8dd6d6680d483f03039c9000a",
+          "bytes": 899,
+          "created_at": "2026-06-17T17:44:25.793604+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\rl_sweep_smoke\\stability_report\\sweep_stability_summary.json",
+          "artifact_type": "rl_sweep_stability_summary",
+          "role": "output",
+          "command": "rl-sweep-report",
+          "sha256": "7388f07e1f032aae0fa88597e9dc671de7b5cda2f53a4e73a2e96fb94a0354b3",
+          "bytes": 2326,
+          "created_at": "2026-06-17T17:44:25.794154+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\rl_sweep_smoke\\stability_report\\sweep_stability_summary.csv",
+          "artifact_type": "rl_sweep_stability_table",
+          "role": "output",
+          "command": "rl-sweep-report",
+          "sha256": "8dfc895fb5a37ee7b70fb905cd2b95eaf06af571ce24c0e9cefb05d2b5aaa954",
+          "bytes": 1230,
+          "created_at": "2026-06-17T17:44:25.794698+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "plan_path": "reports/rl_sweep_smoke/sweep_plan.json",
+        "metrics": [
+          "reports\\rl_sweep_smoke\\sweep_001_seed_041\\rl_eval_metrics.json"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+version: ontology_v0_1
+object_classes:
+  0:
+    name: container
+    description: Visible working area of the tray.
+    aliases:
+      - tray
+  1:
+    name: crop_seedling
+    description: Target seedling crop plant.
+    aliases:
+      - seedling
+      - seedlings
+  2:
+    name: weed
+    description: Weed plant confirmed by an expert annotation.
+    aliases: []
+  3:
+    name: unknown_plant
+    description: Plant with unresolved crop/weed status.
+    aliases:
+      - unknown
+cell_states:
+  - empty
+  - single_crop
+  - multiple_crop
+  - weed_only
+  - crop_and_weed
+  - unknown
+  - ambiguous
+  - image_quality_insufficient
+action_labels:
+  - keep
+  - remove_weed
+  - remove_extra_crop
+  - human_review_required
+  - no_action
+  - rescan
+safety_labels:
+  - safe_to_act
+  - unsafe_to_act
+  - calibration_required
+  - foreign_object_present
+attributes:
+  - tiny
+  - overlaps_neighbor_cell
+  - occluded
+  - low_confidence
+  - foreign_object

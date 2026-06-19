@@ -1,0 +1,61 @@
+{
+  "runs": [
+    {
+      "run_id": "scenario_snapshot_smoke_seedling_reports_scenario_compare_scenario_compare",
+      "command": "seedling-reports:scenario-compare",
+      "run_dir": "reports\\scenario_snapshot_smoke",
+      "created_at": "2026-06-18T15:59:53.430148+00:00",
+      "config_path": null,
+      "snapshot_path": "reports\\scenario_snapshot_smoke\\run_snapshot.json",
+      "artifacts": [
+        {
+          "path": "reports\\software_readiness_smoke\\scene_state.json",
+          "artifact_type": "scene_state",
+          "role": "input",
+          "command": "seedling-reports:scenario-compare",
+          "sha256": "723c0322ded79afe3a59d94ba489350d3bd7842f72d947b3ae8f1685298184b6",
+          "bytes": 2077,
+          "created_at": "2026-06-18T15:59:53.427233+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\scenario_snapshot_smoke\\scenario_compare.json",
+          "artifact_type": "scenario_compare",
+          "role": "output",
+          "command": "seedling-reports:scenario-compare",
+          "sha256": "951a246d0571c28a36ab44ac2dd8436e7eb22edf09448759f74e7eb6292afbad",
+          "bytes": 1460,
+          "created_at": "2026-06-18T15:59:53.428185+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\scenario_snapshot_smoke\\scenario_compare.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-reports:scenario-compare",
+          "sha256": "b5bd7a6893cea2d0baf103c4d9769664ad897ae7f04db1e908f6c122713e918c",
+          "bytes": 1588,
+          "created_at": "2026-06-18T15:59:53.429190+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\scenario_snapshot_smoke\\run_snapshot.json",
+          "artifact_type": "run_snapshot",
+          "role": "output",
+          "command": "seedling-reports:scenario-compare",
+          "sha256": "f01d78dbe3d741738b3b92d5e15605dab69820276a9e2947c7b46c4cee472c5b",
+          "bytes": 1933,
+          "created_at": "2026-06-18T15:59:53.430040+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "policies": [
+          "raster_scan",
+          "route_planning",
+          "risk_aware_rule"
+        ]
+      }
+    }
+  ]
+}

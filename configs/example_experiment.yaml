@@ -79,7 +79,9 @@ prediction:
   container_class: 0
   seedling_class: 1
   # These affect postprocessed containers/container_analysis in predictions.json.
-  # The current evaluate-cells command still reads raw detections.
+  # Legacy evaluate-cells reads raw detections unless
+  # evaluation.container_prediction_source is set to "containers".
+  # SceneState evaluate-cells uses evaluation.gt_scene/evaluation.pred_scene.
   min_container_area: 10000
   merge_distance: 50
 
@@ -87,6 +89,9 @@ evaluation:
   dataset: E:/dataset/prepared_seedlings
   split: test
   predictions: runs/yolo11n_seedlings_test_predictions/predictions.json
+  # Optional. When present, group_id/tray_id/session_id are copied into
+  # cell_metrics.images[] so reporting can bootstrap by group_id/tray_id.
+  image_manifest: E:/dataset/prepared_seedlings/manifests/image_manifest.csv
   output_dir: runs/yolo11n_seedlings_cell_eval
   grid_rows: 11
   grid_cols: 11

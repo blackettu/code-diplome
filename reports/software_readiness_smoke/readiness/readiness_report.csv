@@ -1,0 +1,21 @@
+item_id,status,requirement,evidence,notes
+DOD-001,pass,SceneState / CellState / ActionTarget / ActionCommand schemas exist.,"[""seedling_core\\schemas.py""]",
+DOD-002,pass,Detector models connect through DetectorAdapter and registries.,"[""seedling_vision\\adapters\\base.py"", ""configs\\registry\\models_v0_1.yaml""]",
+DOD-003,pass,Policies connect through DecisionPolicy and registry.,"[""seedling_decision\\policies\\base.py"", ""configs\\registry\\policies_v0_1.yaml""]",
+DOD-004,pass,Robot and simulator connect through RobotAdapter.,"[""seedling_robot\\adapters\\base.py"", ""seedling_robot\\adapters\\simulator.py"", ""seedling_robot\\adapters\\dry_run_serial.py""]",
+DOD-005,pass,Action execution is gated by SafetyGate contracts.,"[""seedling_decision\\safety_gate.py"", ""docs\\SAFETY_CONCEPT.md""]",
+DOD-006,pass,Calibration artifact and error map evidence exists.,"[""seedling_calibration\\schemas.py"", ""seedling_calibration\\cli.py"", ""reports\\software_readiness_smoke\\calibration\\calibration.json"", ""reports\\software_readiness_smoke\\calibration\\error_map.json""]",
+DOD-007,pass,Model registry exists.,"[""configs\\registry\\model_registry_v0_1.yaml""]",
+DOD-008,pass,Dataset registry exists.,"[""configs\\datasets\\dataset_v0_1.yaml""]",
+DOD-009,pass,Simulation environment exists.,"[""seedling_rl\\envs.py"", ""configs\\simulation\\tray_env_v0.yaml""]",
+DOD-010,pass,RL training block exists.,"[""seedling_rl\\training.py"", ""configs\\rl\\maskable_ppo_v0.yaml""]",
+DOD-011,pass,RL has been compared with baseline policies in generated artifacts.,"[""reports\\software_readiness_smoke\\scenario_compare\\scenario_compare.json""]",Validated generated comparison evidence containing both RL and baseline policies.
+DOD-012,pass,Replay viewer exists.,"[""seedling_ui\\replay_viewer.py""]",
+DOD-013,pass,Offline analysis UI exists.,"[""seedling_ui\\offline_viewer.py""]",
+DOD-014,pass,Dry-run mode without dangerous actuation exists.,"[""seedling_robot\\dry_run_runner.py"", ""seedling_robot\\adapters\\dry_run_serial.py"", ""reports\\software_readiness_smoke\\robot\\dry_run_plan_report.json""]",
+DOD-015,pass,Actions are logged in command logs or replay artifacts.,"[""reports\\software_readiness_smoke\\robot\\dry_run_plan_commands.json"", ""reports\\software_readiness_smoke\\robot\\dry_run_plan_replay.json""]",
+DOD-016,pass,Metrics are generated from artifacts.,"[""reports\\software_readiness_smoke\\hardware_dry_run_results.csv"", ""reports\\software_readiness_smoke\\safety_results.csv""]",
+DOD-017,pass,"Tests cover grid, calibration, safety, simulation and policies.","[""tests\\unit\\test_grid.py"", ""tests\\unit\\test_calibration.py"", ""tests\\unit\\test_decision_and_safety.py"", ""tests\\unit\\test_simulation.py"", ""tests\\integration\\test_scene_policy_sim.py""]",
+DOD-018,pass,Documentation describes limitations and blocks autonomous dangerous actuation.,"[""docs\\SAFETY_CONCEPT.md"", ""docs\\OPERATOR_MANUAL_DRAFT.md"", ""docs\\ROBOT_PROTOCOL.md""]",
+EXT-001,external_required,Physical gantry HIL validation is externally verified.,[],Requires a real supervised stand run and operator safety review; software artifacts alone are not proof. No candidate evidence artifact was found.
+EXT-002,external_required,Delayed biological post-action validation is externally verified.,[],Requires real 24h/48h/72h observations under a documented biological protocol. No candidate evidence artifact was found.

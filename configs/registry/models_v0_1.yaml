@@ -1,0 +1,39 @@
+version: models_registry_v0_1
+entries:
+  - entry_id: detector_recorded_predictions_v0
+    kind: detector
+    name: recorded_predictions
+    backend: seedling_vision.adapters.RecordedPredictionDetector
+    uri: runs/predict/predictions.json
+    status: draft
+    tags: [offline, testable]
+    metadata:
+      output_schema: DetectionResultV1
+  - entry_id: detector_ultralytics_yolo_v0
+    kind: detector
+    name: ultralytics_yolo
+    backend: seedling_vision.adapters.UltralyticsYOLODetector
+    uri: runs/detection/yolo11n/weights/best.pt
+    status: draft
+    tags: [vision, yolo]
+    metadata:
+      output_schema: DetectionResultV1
+  - entry_id: detector_onnx_v0
+    kind: detector
+    name: onnx_detector
+    backend: seedling_vision.adapters.ONNXDetector
+    uri: runs/detection/onnx/model.onnx
+    status: draft
+    tags: [vision, onnx]
+    metadata:
+      output_schema: DetectionResultV1
+      output_format: xyxy_conf_class
+  - entry_id: detector_baseline_green_v0
+    kind: detector
+    name: baseline_green
+    backend: seedling_vision.adapters.BaselineGreenDetector
+    uri: null
+    status: draft
+    tags: [baseline, hsv]
+    metadata:
+      output_schema: DetectionResultV1

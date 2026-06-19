@@ -1,0 +1,390 @@
+{
+  "replay_id": "scene_000000_route_planning",
+  "scene_id": "scene_000000",
+  "steps": [
+    {
+      "step_index": 1,
+      "event_type": "policy_start",
+      "payload": {
+        "policy": "route_planning",
+        "requested_policy": "route_planning",
+        "candidate_targets": 10,
+        "max_steps": 10
+      },
+      "created_at": "2026-06-17T17:24:00.346483+00:00"
+    },
+    {
+      "step_index": 2,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000001",
+        "ok": true,
+        "outcome": {
+          "step_index": 1,
+          "target_id": "target_000001",
+          "object_id": "plant_000009",
+          "commanded_point_mm": [
+            179.62685407488135,
+            43.467298864480064
+          ],
+          "actual_point_mm": [
+            179.926660856144,
+            41.40253865261638
+          ],
+          "distance_error_mm": 2.0864129118145427,
+          "success": true,
+          "crop_damage": false,
+          "reward": 8.151887103680817,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              -0.23576835024613435,
+              -0.22963213615816033
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346574+00:00"
+    },
+    {
+      "step_index": 3,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000002",
+        "ok": true,
+        "outcome": {
+          "step_index": 2,
+          "target_id": "target_000002",
+          "object_id": "plant_000010",
+          "commanded_point_mm": [
+            183.27749128563963,
+            43.14154195120176
+          ],
+          "actual_point_mm": [
+            182.9885943215625,
+            44.446789059905875
+          ],
+          "distance_error_mm": 1.3368363664388552,
+          "success": true,
+          "crop_damage": false,
+          "reward": 9.962247917885598,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              -0.45121545347917336,
+              0.22019431926487176
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346626+00:00"
+    },
+    {
+      "step_index": 4,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000005",
+        "ok": true,
+        "outcome": {
+          "step_index": 3,
+          "target_id": "target_000005",
+          "object_id": "plant_000018",
+          "commanded_point_mm": [
+            249.8181015022101,
+            118.45875717393103
+          ],
+          "actual_point_mm": [
+            249.3070789236149,
+            118.51784116941245
+          ],
+          "distance_error_mm": 0.5144268600648083,
+          "success": true,
+          "crop_damage": false,
+          "reward": 9.002806214714527,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              0.07963898242858787,
+              -0.057175472556209056
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346665+00:00"
+    },
+    {
+      "step_index": 5,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000003",
+        "ok": true,
+        "outcome": {
+          "step_index": 4,
+          "target_id": "target_000003",
+          "object_id": "plant_000015",
+          "commanded_point_mm": [
+            312.6900291769493,
+            84.77668912157543
+          ],
+          "actual_point_mm": [
+            312.6651199882962,
+            84.58777767804717
+          ],
+          "distance_error_mm": 0.19054658531519947,
+          "success": true,
+          "crop_damage": false,
+          "reward": 9.281956566471644,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              -0.07093235990262206,
+              0.13931913558270698
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346698+00:00"
+    },
+    {
+      "step_index": 6,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000000",
+        "ok": true,
+        "outcome": {
+          "step_index": 5,
+          "target_id": "target_000000",
+          "object_id": "plant_000006",
+          "commanded_point_mm": [
+            312.34844155765506,
+            20.733630687585293
+          ],
+          "actual_point_mm": [
+            312.4877288005126,
+            20.198022598869702
+          ],
+          "distance_error_mm": 0.5534229492173507,
+          "success": true,
+          "crop_damage": false,
+          "reward": 9.361450677464305,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              0.011634529722797573,
+              -0.11736789810696927
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346732+00:00"
+    },
+    {
+      "step_index": 7,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000008",
+        "ok": true,
+        "outcome": {
+          "step_index": 6,
+          "target_id": "target_000008",
+          "object_id": "plant_000026",
+          "commanded_point_mm": [
+            342.8370762540625,
+            145.72350023662796
+          ],
+          "actual_point_mm": [
+            342.7851036381676,
+            146.26900118563285
+          ],
+          "distance_error_mm": 0.5479712019515199,
+          "success": true,
+          "crop_damage": false,
+          "reward": 8.70857720218963,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              -0.07004154275638862,
+              0.4050511370967157
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346766+00:00"
+    },
+    {
+      "step_index": 8,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000010",
+        "ok": true,
+        "outcome": {
+          "step_index": 7,
+          "target_id": "target_000010",
+          "object_id": "plant_000046",
+          "commanded_point_mm": [
+            290.1301540517352,
+            352.18749129364227
+          ],
+          "actual_point_mm": [
+            290.0344291590038,
+            354.1224656691794
+          ],
+          "distance_error_mm": 1.937340726117574,
+          "success": true,
+          "crop_damage": false,
+          "reward": 7.874559615413499,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              0.4033757515851778,
+              -0.04473549417829086
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346801+00:00"
+    },
+    {
+      "step_index": 9,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000009",
+        "ok": true,
+        "outcome": {
+          "step_index": 8,
+          "target_id": "target_000009",
+          "object_id": "plant_000044",
+          "commanded_point_mm": [
+            188.76225756826233,
+            350.9169166975326
+          ],
+          "actual_point_mm": [
+            190.51571050344364,
+            350.2903707585771
+          ],
+          "distance_error_mm": 1.862030346024888,
+          "success": true,
+          "crop_damage": false,
+          "reward": 8.986771087911809,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              -0.07343764986238857,
+              0.13337659808711383
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346832+00:00"
+    },
+    {
+      "step_index": 10,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000007",
+        "ok": true,
+        "outcome": {
+          "step_index": 9,
+          "target_id": "target_000007",
+          "object_id": "plant_000023",
+          "commanded_point_mm": [
+            124.76088582967313,
+            145.54571981970582
+          ],
+          "actual_point_mm": [
+            124.58323684969673,
+            145.81043465175307
+          ],
+          "distance_error_mm": 0.31879947050215784,
+          "success": true,
+          "crop_damage": false,
+          "reward": 7.849556579308384,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              0.13232849481405093,
+              -0.10433059426539643
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346868+00:00"
+    },
+    {
+      "step_index": 11,
+      "event_type": "robot_execution",
+      "payload": {
+        "policy": "route_planning",
+        "target_id": "target_000006",
+        "ok": true,
+        "outcome": {
+          "step_index": 10,
+          "target_id": "target_000006",
+          "object_id": "plant_000022",
+          "commanded_point_mm": [
+            125.25019303578122,
+            143.4594928184889
+          ],
+          "actual_point_mm": [
+            126.33984214355439,
+            144.57725387722502
+          ],
+          "distance_error_mm": 1.561001269217206,
+          "success": true,
+          "crop_damage": false,
+          "reward": 9.975562819193803,
+          "info": {
+            "latency_ms": 0.0,
+            "drift_mm": [
+              0.058201131243821515,
+              -0.08622575393388751
+            ]
+          }
+        }
+      },
+      "created_at": "2026-06-17T17:24:00.346892+00:00"
+    },
+    {
+      "step_index": 12,
+      "event_type": "policy_stop",
+      "payload": {
+        "ok": true,
+        "scene_id": "scene_000000",
+        "policy": "route_planning",
+        "requested_policy": "route_planning",
+        "steps": 10,
+        "reward_total": 89.15537578423401,
+        "successes": 10,
+        "crop_damage": 0,
+        "remaining_targets": 1,
+        "command_target_order": [
+          "target_000001",
+          "target_000002",
+          "target_000005",
+          "target_000003",
+          "target_000000",
+          "target_000008",
+          "target_000010",
+          "target_000009",
+          "target_000007",
+          "target_000006"
+        ]
+      },
+      "created_at": "2026-06-17T17:24:00.346899+00:00"
+    }
+  ],
+  "metadata": {
+    "policy": "route_planning",
+    "requested_policy": "route_planning",
+    "seed": 5
+  }
+}

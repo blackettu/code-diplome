@@ -1,0 +1,68 @@
+{
+  "runs": [
+    {
+      "run_id": "ui_snapshot_compare_seedling_reports_compare_runs_compare_runs",
+      "command": "seedling-reports:compare-runs",
+      "run_dir": "reports\\ui_snapshot_compare",
+      "created_at": "2026-06-18T16:08:51.007015+00:00",
+      "config_path": null,
+      "snapshot_path": "reports\\ui_snapshot_compare\\run_snapshot.json",
+      "artifacts": [
+        {
+          "path": "reports\\ui_snapshot_smoke",
+          "artifact_type": "directory",
+          "role": "input",
+          "command": "seedling-reports:compare-runs",
+          "sha256": null,
+          "bytes": null,
+          "created_at": "2026-06-18T16:08:51.002834+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_compare\\compare_runs.csv",
+          "artifact_type": "compare_runs",
+          "role": "output",
+          "command": "seedling-reports:compare-runs",
+          "sha256": "f33fd9a62ad20aee4de4b815bc176e200f419c0c72ad5e2bc0e1ed3b0e43768d",
+          "bytes": 1510,
+          "created_at": "2026-06-18T16:08:51.003901+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_compare\\compare_runs.html",
+          "artifact_type": "html_report",
+          "role": "output",
+          "command": "seedling-reports:compare-runs",
+          "sha256": "0ac2bea0a0a6733589c47a0ed1c5791932cbe94855315092258d07257866ef88",
+          "bytes": 3307,
+          "created_at": "2026-06-18T16:08:51.004885+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_compare\\compare_runs_summary.json",
+          "artifact_type": "compare_runs_summary",
+          "role": "output",
+          "command": "seedling-reports:compare-runs",
+          "sha256": "9f2026b73e56baa1d17f8b1a77ee6c6325fce5f762753cf01d00dd6abc4c071d",
+          "bytes": 173,
+          "created_at": "2026-06-18T16:08:51.005823+00:00",
+          "metadata": {}
+        },
+        {
+          "path": "reports\\ui_snapshot_compare\\run_snapshot.json",
+          "artifact_type": "run_snapshot",
+          "role": "output",
+          "command": "seedling-reports:compare-runs",
+          "sha256": "77ea3b2a3f453088d80c490b0e5ddf8b236ba9f3bc7513c7f5192aaaa007a605",
+          "bytes": 4033,
+          "created_at": "2026-06-18T16:08:51.006843+00:00",
+          "metadata": {}
+        }
+      ],
+      "metadata": {
+        "runs": 1,
+        "failed": 0
+      }
+    }
+  ]
+}

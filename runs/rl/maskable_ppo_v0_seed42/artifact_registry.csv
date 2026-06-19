@@ -1,0 +1,6 @@
+run_id,command,run_dir,artifact_type,role,path,sha256,bytes
+maskable_ppo_v0_seed42,rl-train:dry-run,runs\rl\maskable_ppo_v0_seed42,rl_config,output,runs\rl\maskable_ppo_v0_seed42\rl_config.json,67dbaaac64be0ac9bba4cf857540e360c474a560420696304ff547ea2aead5c8,373
+maskable_ppo_v0_seed42,rl-train:dry-run,runs\rl\maskable_ppo_v0_seed42,train_summary,output,runs\rl\maskable_ppo_v0_seed42\train_summary.json,9a3dc5eccca20644ffbc743f462e49a1e3b177850da2a2eea6bbdac6ccaae31d,989
+maskable_ppo_v0_seed42,rl-train:dry-run,runs\rl\maskable_ppo_v0_seed42,jsonl,output,runs\rl\maskable_ppo_v0_seed42\training_log.jsonl,1bf7452fede4dd583be30a3317a37e2a4847080f6ede2777301aab11702a6534,365
+maskable_ppo_v0_seed42,rl-train:dry-run,runs\rl\maskable_ppo_v0_seed42,jsonl,output,runs\rl\maskable_ppo_v0_seed42\rl_metrics.jsonl,716168cd587cdd9499d47d980f30130c36964640f2741cf86eede66c0ff6fe55,615
+maskable_ppo_v0_seed42,rl-train:dry-run,runs\rl\maskable_ppo_v0_seed42,rl_metrics,output,runs\rl\maskable_ppo_v0_seed42\rl_metrics.csv,de5abdb6c6b88f6948a4461a95bbcbc2fbb716fa59e7ff71e855189a55a8e8f4,190

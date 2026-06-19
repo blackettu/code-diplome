@@ -1,0 +1,102 @@
+{
+  "scene_id": "software_readiness_scene",
+  "image_ref": "software_readiness.png",
+  "dataset_version": "software_readiness",
+  "ontology_version": "ontology_v0_1",
+  "image_size_px": [
+    100,
+    100
+  ],
+  "tray": {
+    "tray_id": "tray_smoke",
+    "grid_rows": 1,
+    "grid_cols": 1,
+    "bbox_xyxy_px": [
+      0.0,
+      0.0,
+      100.0,
+      100.0
+    ],
+    "corners_px": null,
+    "calibration_id": "software_readiness_smoke"
+  },
+  "robot": {
+    "position_mm": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "homed": true,
+    "mode": "dry_run_pointer"
+  },
+  "detections": [],
+  "cells": [
+    {
+      "cell_id": "r00_c00",
+      "row": 0,
+      "col": 0,
+      "polygon_px": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          100.0,
+          0.0
+        ],
+        [
+          100.0,
+          100.0
+        ],
+        [
+          0.0,
+          100.0
+        ]
+      ],
+      "state": "multiple_crop",
+      "polygon_mm": null,
+      "state_confidence": 1.0,
+      "object_ids": [],
+      "keep_object_id": null,
+      "removal_candidate_ids": [],
+      "human_review_required": false,
+      "risk_flags": []
+    }
+  ],
+  "targets": [
+    {
+      "target_id": "target_smoke_001",
+      "cell_id": "r00_c00",
+      "object_id": "plant_extra_001",
+      "target_type": "remove_extra_crop",
+      "action_point_px": [
+        20.0,
+        20.0
+      ],
+      "action_point_mm": [
+        10.0,
+        10.0
+      ],
+      "robot_point_mm": [
+        20.0,
+        30.0,
+        0.0
+      ],
+      "point_type": "bbox_center",
+      "uncertainty_radius_mm": 1.0,
+      "min_distance_to_keep_mm": 6.0,
+      "forbidden_zone_ids": [],
+      "decision_source": "unknown",
+      "human_review_required": false,
+      "risk_score": 0.0
+    }
+  ],
+  "safety": {
+    "calibration_valid": true,
+    "enclosure_closed": false,
+    "software_safe_mode": true,
+    "interlock_ok": true,
+    "flags": []
+  },
+  "schema_version": "seedling_scene_v0_1"
+}

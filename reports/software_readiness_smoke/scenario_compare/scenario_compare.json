@@ -1,0 +1,65 @@
+{
+  "scene_id": "software_readiness_scene",
+  "rows": [
+    {
+      "scene_id": "software_readiness_scene",
+      "policy_selector": "raster_scan",
+      "policy": "raster_scan",
+      "commands": 1,
+      "route_distance_mm": 0.0,
+      "review_targets": 0,
+      "blocked_targets": 0,
+      "rl_action_kind": null,
+      "command_target_order": "target_smoke_001",
+      "review_target_ids": "",
+      "blocked_target_ids": "",
+      "review_reasons": "{}",
+      "blocked_reasons": "{}"
+    },
+    {
+      "scene_id": "software_readiness_scene",
+      "policy_selector": "route_planning",
+      "policy": "route_planning",
+      "commands": 1,
+      "route_distance_mm": 36.05551275463989,
+      "review_targets": 0,
+      "blocked_targets": 0,
+      "rl_action_kind": null,
+      "command_target_order": "target_smoke_001",
+      "review_target_ids": "",
+      "blocked_target_ids": "",
+      "review_reasons": "{}",
+      "blocked_reasons": "{}"
+    },
+    {
+      "scene_id": "software_readiness_scene",
+      "policy_selector": "risk_aware_rule",
+      "policy": "risk_aware_rule",
+      "commands": 1,
+      "route_distance_mm": 0.0,
+      "review_targets": 0,
+      "blocked_targets": 0,
+      "rl_action_kind": null,
+      "command_target_order": "target_smoke_001",
+      "review_target_ids": "",
+      "blocked_target_ids": "",
+      "review_reasons": "{}",
+      "blocked_reasons": "{}"
+    },
+    {
+      "scene_id": "software_readiness_scene",
+      "policy_selector": "rl_no_model",
+      "policy": "rl_no_model",
+      "commands": 0,
+      "route_distance_mm": 0.0,
+      "review_targets": 0,
+      "blocked_targets": 0,
+      "rl_action_kind": "no_model",
+      "command_target_order": "",
+      "review_target_ids": "",
+      "blocked_target_ids": "",
+      "review_reasons": "{}",
+      "blocked_reasons": "{}"
+    }
+  ]
+}
